@@ -5,13 +5,13 @@
 
 //コンストラクタ
 Camera::Camera(const CVector3D& pos, const CVector3D& rot)
-	:ObjectBase(ETaskTag::eCamera)
+	:ObjectBase(ETaskTag::eCamera,true)
 	, mp_player(nullptr)
 	, mp_closet(nullptr)
 	, m_state(eState_Idle)
 	, m_camera_mode(0)
 {
-	m_remove = true;
+	//m_remove = true;
 	m_pos = pos;
 	m_rot = rot;
 }

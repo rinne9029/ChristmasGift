@@ -14,7 +14,7 @@ protected:
 	CVector3D m_scale;		//キャラクター描画サイズ
 public:
 	//コンストラクタ
-	CharaBase(ETaskTag tag);
+	CharaBase(ETaskTag tag,bool remove);
 
 	//デストラクタ
 	virtual ~CharaBase();

@@ -4,11 +4,10 @@
 #include"GameScene/GameData.h"
 
 SleepLife::SleepLife()
-	:Task(ETaskTag::eUI)
+	:Task(ETaskTag::eUI,true)
 	,mp_player(nullptr)
 	,mp_filta(nullptr)
 {
-	m_remove = true;
 	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
 	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
 }

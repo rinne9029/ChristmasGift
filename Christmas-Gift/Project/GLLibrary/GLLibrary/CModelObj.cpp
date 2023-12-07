@@ -14,6 +14,7 @@ void CMeshObj::Render(CMaterial* m) {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(SVertex) * m_vertexNum, mp_vertex_array, GL_STATIC_DRAW);
 //		delete[] mp_vertex_array;
 //		mp_vertex_array = nullptr;
+//		mp_vertex_array = nullptr;
 
 	}
 	m->Map();
@@ -22,18 +23,21 @@ void CMeshObj::Render(CMaterial* m) {
 	glEnableVertexAttribArray(CShader::eVertexLocation);
 	glEnableVertexAttribArray(CShader::eNormalLocation);
 	glEnableVertexAttribArray(CShader::eTexcoordlLocation);
+	glEnableVertexAttribArray(CShader::eTangentLocation);
 
 
 
 	glVertexAttribPointer(CShader::eVertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(CMeshObj::SVertex), 0);
 	glVertexAttribPointer(CShader::eNormalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(CMeshObj::SVertex), (void*)sizeof(CVector3D));
 	glVertexAttribPointer(CShader::eTexcoordlLocation, 2, GL_FLOAT, GL_FALSE, sizeof(CMeshObj::SVertex), (void*)(sizeof(CVector3D) + sizeof(CVector3D)));
+	glVertexAttribPointer(CShader::eTangentLocation, 3, GL_FLOAT, GL_FALSE, sizeof(CMeshObj::SVertex), (void*)(sizeof(CVector3D) + sizeof(CVector3D) + sizeof(CVector2D)));
 
 	glDrawArrays(GL_TRIANGLES,0,m_vertexNum);
 
 	glDisableVertexAttribArray(CShader::eVertexLocation);
 	glDisableVertexAttribArray(CShader::eNormalLocation);
 	glDisableVertexAttribArray(CShader::eTexcoordlLocation);
+	glDisableVertexAttribArray(CShader::eTangentLocation);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//glBindVertexArray(0);
@@ -678,6 +682,23 @@ bool CModelObj::Load(const char *path, int cut_x, int cut_y, int cut_z) {
 			m->mp_vertex_array[m->m_vertexNum].t = pTexCoord[d[1][0] - 1];			//頂点１のテクスチャーコードデータ
 			m->mp_vertex_array[m->m_vertexNum + 1].t = pTexCoord[d[1][1] - 1];		//頂点２のテクスチャーコードデータ
 			m->mp_vertex_array[m->m_vertexNum + 2].t = pTexCoord[d[1][2] - 1];
+			CVector3D tangent, binormal;
+			CalcTangentAndBinormal(
+				m->mp_vertex_array[m->m_vertexNum].v,
+				m->mp_vertex_array[m->m_vertexNum].t,
+				m->mp_vertex_array[m->m_vertexNum + 1].v,
+				m->mp_vertex_array[m->m_vertexNum + 1].t,
+				m->mp_vertex_array[m->m_vertexNum + 2].v,
+				m->mp_vertex_array[m->m_vertexNum + 2].t,
+				&tangent, &binormal);
+			m->mp_vertex_array[m->m_vertexNum].tan = tangent;
+			m->mp_vertex_array[m->m_vertexNum + 1].tan = tangent;
+			m->mp_vertex_array[m->m_vertexNum + 2].tan = tangent;
+
+			m->mp_vertex_array[m->m_vertexNum].bi = binormal;
+			m->mp_vertex_array[m->m_vertexNum + 1].bi = binormal;
+			m->mp_vertex_array[m->m_vertexNum + 2].bi = binormal;
+
 			/*
 			int v1,v2,v3;
 			int n1,n2,n3;
@@ -765,6 +786,9 @@ bool CModelObj::LoadMaterial(char *path) {
 		if (strcmp(key, "Ks") == 0) {
 			fscanf_s(fp, "%f %f %f", &mat->m_specular.x, &mat->m_specular.y, &mat->m_specular.z);
 		}else
+		if (strcmp(key, "Ke") == 0) {
+			fscanf_s(fp, "%f %f %f", &mat->m_emissive.x, &mat->m_emissive.y, &mat->m_emissive.z);
+		}else
 		if (strcmp(key, "Ns") == 0) {
 			fscanf_s(fp, "%f", &mat->m_shininess);
 		}else
@@ -774,24 +798,35 @@ bool CModelObj::LoadMaterial(char *path) {
 			mat->m_ambient.a = aplha;
 			mat->m_diffuse.a = aplha;
 		}else
-		if (strcmp(key, "map_Kd") == 0) {
+		if (strcmp(key, "map_Kd") == 0 || strcmp(key, "map_Bump") == 0){
 			char tex_file[PATH_SIZE];
+			char* t_file = tex_file+1;
 			fgets(tex_file, PATH_SIZE, fp);
-			if (char* p = strrchr(tex_file, '\n')) *p = '\0';
-			if (char* p = strrchr(tex_file, '\r')) *p = '\0';
-			strcpy_s(mat->m_texture_name, NAME_STR_SIZE, tex_file + 1);
+			char tag[32],value[32];
+			sscanf_s(t_file, "%s", tag,32);
+			if (strcmp(tag, "-bm")==0) {
+				t_file += strlen(tag) + 1;
+				sscanf_s(t_file, "%s", value,32);
+				int v = atof(value);
+				t_file += strlen(value) + 1;
+			}
+			if (char* p = strrchr(t_file, '\n')) *p = '\0';
+			if (char* p = strrchr(t_file, '\r')) *p = '\0';
+			strcpy_s(mat->m_texture_name, NAME_STR_SIZE, t_file);
 
 			char str[PATH_SIZE];
 			strcpy_s(str, PATH_SIZE, m_filePath);
 			int l = (int)strlen(str);
 			strcat_s(str, PATH_SIZE, mat->m_texture_name);
-			if (mat->mp_texture) {
-				mat->Release();
+			CTexture** tt = &mat->mp_texture;
+			if (strcmp(key, "map_Bump")==0) tt = &mat->mp_normal_map;
+			if (*tt) {
+				(*tt)->Release();
 			}
-			mat->mp_texture = new CTexture();
-			if (!mat->mp_texture->Load(str)) {
-				delete mat->mp_texture;
-				mat->mp_texture = NULL;
+			*tt = new CTexture();
+			if (!(*tt)->Load(str)) {
+				delete *tt;
+				*tt = NULL;
 			}
 		}
 	}

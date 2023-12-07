@@ -44,6 +44,7 @@
 #include "GLLibrary/CNetWork.h"
 #include "GLLibrary/CLoadThread.h"
 #include "GLLibrary/CTextureFrame.h"
+#include "GLLibrary/CRendaring.h"
 #ifdef USE_VIDEO_LIB
 #include "GLLibrary/CVideo.h"
 #endif

@@ -1,0 +1,34 @@
+# Blender 3.5.0 MTL File: '就活作品ステージ１.WallMap.blend'
+# www.blender.org
+
+newmtl BA_Metal_Brushed_01
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd BA_Metal_Brushed_01_A.png
+map_Bump -bm 0.100000 BA_Metal_Brushed_01_N.png
+
+newmtl ProBuilderDefault
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Wooden Floor_4K_Albedo.png
+map_d Wooden Floor_4K_Albedo.png
+
+newmtl RR_BathroomPaper
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd RR_RestroomPaper_A.png
+map_d RR_RestroomPaper_A.png
+map_Bump -bm 2.500000 RR_RestroomPaper_N.png

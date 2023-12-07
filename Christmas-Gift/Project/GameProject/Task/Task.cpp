@@ -1,8 +1,9 @@
 
 //コンストラクタ
-Task::Task(ETaskTag tag)
-	:m_tag(tag)
+Task::Task(ETaskTag tag,bool Remove)
+	: m_tag(tag)
 	, m_isKill(false)
+	, m_remove(Remove)
 {
 	TaskManager::Instance()->AddTask(this);
 }

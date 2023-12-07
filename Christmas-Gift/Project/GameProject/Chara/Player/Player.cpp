@@ -17,7 +17,7 @@
 #define DownSpeed 0.20f
 
 Player::Player(const CVector3D& pos, const CVector3D& scale)
-	:CharaBase(ETaskTag::ePlayer)
+	:CharaBase(ETaskTag::ePlayer,true)
 	, mp_camera(nullptr)
 	, mp_filta(nullptr)
 	, mp_sleeplife(nullptr)
@@ -31,7 +31,7 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, m_HideAnim(false)
 	, m_state(eState_Idle)
 {
-	m_remove = true;
+	//m_remove = true;
 	m_pos = pos;				//プレイヤー初期座標
 	m_scale = scale;			//プレイヤー大きさ
 	m_height = 1.9f;			//高さ
@@ -60,7 +60,7 @@ void Player::StateIdle()
 	
 
 	//歩き速度
-	m_Speed = 0.15f;
+	m_Speed = 0.10f;
 
 	//シフトキー入力&&移動している
 	if (HOLD(CInput::eButton6) && m_isFootFall)
@@ -239,6 +239,12 @@ void Player::Update()
 
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
+
+	//ノード配置確認用
+	if (PUSH(CInput::eButton12))
+	{
+		printf("CVector3D(%f,%f,%f),\n", m_pos.x,m_pos.y+1,m_pos.z);
+	}
 }
 
 //描画処理

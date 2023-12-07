@@ -5,7 +5,7 @@
 
 //コンストラクタ
 Title::Title()
-	:Task(ETaskTag::eScene)
+	:Task(ETaskTag::eScene,true)
 	,mp_filta(nullptr)
 	,m_select(0)
 	,m_fuwafuwa(0.0f)
@@ -13,7 +13,7 @@ Title::Title()
 	m_StartText = COPY_RESOURCE("StartText", CImage);
 	m_ManualText = COPY_RESOURCE("ManualText", CImage);
 	m_RankingText = COPY_RESOURCE("RankingText", CImage);
-	m_remove = true;
+	//m_remove = true;
 	GameData::Start = false;
 	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
 	mp_filta->m_FadeinCheck = true;

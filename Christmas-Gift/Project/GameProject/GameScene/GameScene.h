@@ -9,6 +9,7 @@ private:
 	int GameCount;
 	Player* mp_player;
 	Filta* mp_filta;
+
 public:
 	//GameData::StageId enumId;
 public:

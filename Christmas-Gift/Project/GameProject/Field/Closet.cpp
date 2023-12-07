@@ -1,10 +1,10 @@
 #include"Closet.h"
 
 Closet::Closet(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
-	:ObjectBase(ETaskTag::eHideBox)
+	:ObjectBase(ETaskTag::eHideBox,true)
 {
 	m_model = COPY_RESOURCE("Item", CModelObj);
-	m_remove = true;
+	//m_remove = true;
 	m_pos = pos;
 	m_rot = rot;
 	m_size = size;

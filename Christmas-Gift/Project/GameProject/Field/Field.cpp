@@ -13,109 +13,53 @@ Field* Field::ms_instance = nullptr;
 // 経路探索用ノードのテーブル
 std::list<CVector3D> Field::ms_nodes =
 {
-	CVector3D(-3.136362f, 0.0f, -27.636364f),
-	CVector3D(-3.136362f, 0.0f, -15.272726f),
-	CVector3D(-3.136362f, 0.0f, -2.909088f),
-	CVector3D(-3.136362f, 0.0f, 3.272728f),
-	CVector3D(-3.136362f, 0.0f, 9.454548f),
-	CVector3D(-3.136362f, 0.0f, 15.636364f),
-	CVector3D(-3.136362f, 0.0f, 21.818184f),
+	CVector3D(14.842143,0.420055,10.135619),	//トイレ
 
-	CVector3D(-9.409090f, 0.0f, -33.818180f),
-	CVector3D(-9.409090f, 0.0f, -21.454544f),
-	CVector3D(-9.409090f, 0.0f, -9.090908f),
-
-	CVector3D(-15.681818f, 0.0f, -40.000000f),
-	CVector3D(-15.681818f, 0.0f, -27.636364f),
-	CVector3D(-15.681818f, 0.0f, -9.090908f),
-	CVector3D(-15.681818f, 0.0f, -2.909088f),
-	CVector3D(-15.681818f, 0.0f, 3.272728f),
-
-	CVector3D(-21.954544f, 0.0f, -40.000000f),
-	CVector3D(-21.954544f, 0.0f, -27.636364f),
-	CVector3D(-21.954544f, 0.0f, -21.454544f),
-	CVector3D(-21.954544f, 0.0f, -9.090908f),
-	CVector3D(-21.954544f, 0.0f, -2.909088f),
-	CVector3D(-21.954544f, 0.0f, 9.454548f),
-	CVector3D(-21.954544f, 0.0f, 15.636364f),
-
-	CVector3D(-28.227272f, 0.0f, -33.818180f),
-	CVector3D(-28.227272f, 0.0f, -27.636364f),
-	CVector3D(-28.227272f, 0.0f, -15.272726f),
-	CVector3D(-28.227272f, 0.0f, -9.090908f),
-	CVector3D(-28.227272f, 0.0f, 3.272728f),
-	CVector3D(-28.227272f, 0.0f, 21.818184f),
-	CVector3D(-28.227272f, 0.0f, 28.000000f),
-
-	CVector3D(-34.500000f, 0.0f, -40.000000f),
-	CVector3D(-34.500000f, 0.0f, -21.454544f),
-	CVector3D(-34.500000f, 0.0f, -9.090908f),
-	CVector3D(-34.500000f, 0.0f, -2.909088f),
-	CVector3D(-34.500000f, 0.0f, 28.00000f),
-
-	CVector3D(3.136364f, 0.0f, -33.818180f),
-	CVector3D(3.136364f, 0.0f, -27.636364f),
-	CVector3D(3.136364f, 0.0f, -21.454544f),
-	CVector3D(3.136364f, 0.0f, -15.272726f),
-	CVector3D(3.136364f, 0.0f, -9.090908f),
-	CVector3D(3.136364f, 0.0f, -2.909088f),
-	CVector3D(3.136364f, 0.0f, 3.272728f),
-	CVector3D(3.136364f, 0.0f, 9.454548f),
-	CVector3D(3.136364f, 0.0f, 21.818184f),
-	CVector3D(3.136364f, 0.0f, 28.000000f),
-
-	CVector3D(9.409092f, 0.0f, -27.636364f),
-	CVector3D(9.409092f, 0.0f, -15.272726f),
-	CVector3D(9.409092f, 0.0f, 3.272728f),
-	CVector3D(9.409092f, 0.0f, 15.636364f),
-	CVector3D(9.409092f, 0.0f, 21.818184f),
-	CVector3D(9.409092f, 0.0f, 28.000000f),
-
-	CVector3D(15.681820f, 0.0f, -40.000000f),
-	CVector3D(15.681820f, 0.0f, -33.818180f),
-	CVector3D(15.681820f, 0.0f, -15.272726f),
-	CVector3D(15.681820f, 0.0f, -2.909088f),
-	CVector3D(15.681820f, 0.0f, 3.272728f),
-	CVector3D(15.681820f, 0.0f, 15.636364f),
-
-	CVector3D(21.954544f, 0.0f, -40.000000f),
-	CVector3D(21.954544f, 0.0f, -21.454544f),
-	CVector3D(21.954544f, 0.0f, -15.272726f),
-	CVector3D(21.954544f, 0.0f, -9.090908f),
-
-	CVector3D(28.227276f, 0.0f, -40.000000f),
-	CVector3D(28.227276f, 0.0f, -33.818180f),
-	CVector3D(28.227276f, 0.0f, -21.454544f),
-
-	CVector3D(34.500000f, 0.0f, -40.000000f),
-	CVector3D(34.500000f, 0.0f, -33.818180f),
-	CVector3D(34.500000f, 0.0f, -15.272726f),
-	CVector3D(34.500000f, 0.0f, -9.090908f),
-	CVector3D(34.500000f, 0.0f, -2.909088f),
-	CVector3D(34.500000f, 0.0f, 3.272728f),
+	CVector3D(14.968518,0.429452,7.185040),
+	CVector3D(7.065483,0.420055,7.377606),
+	CVector3D(-8.750116,0.410701,6.794860),
+	CVector3D(-9.055938,0.410700,3.017577),
+	CVector3D(-4.723531,0.410700,3.765090),
+	CVector3D(10.534607,0.420055,10.441194),
+	CVector3D(3.076858,0.410701,3.808710),
+	CVector3D(-2.777906,0.410700,-2.100414),
+	CVector3D(2.833257,0.410700,-1.009854),
+	CVector3D(-12.562081,0.410701,8.687845),
+	CVector3D(-3.432421,0.410702,9.018653),
+	CVector3D(-3.443469,0.410702,12.018473),
+	CVector3D(4.772832,0.420056,11.757642),
+	CVector3D(5.153012,0.420053,-4.993202),
+	CVector3D(12.891539,0.420053,-5.032509),
+	CVector3D(12.564184,0.420055,4.250151),
+	CVector3D(4.980745,0.420055,3.714080),
+	CVector3D(15.236543,0.420054,-3.170865),
+	CVector3D(15.763614,0.420054,1.320430),
+	CVector3D(15.689437,0.420055,4.891421),
+	CVector3D(7.000358,3.150262,12.407059),
+	CVector3D(9.129925,3.150262,12.287002),
+	CVector3D(9.067355,5.773851,7.233985),
 };
 
 //コンストラクタ
 Field::Field()
-	:ObjectBase(ETaskTag::eField)
+	:ObjectBase(ETaskTag::eField,true)
 {
-	m_remove = true;
 	ms_instance = this;
 
 	//コリジョンモデルの取得
 	switch (GameData::Stage)
 	{
 	case GameData::A_1:
-		m_colModel = GET_RESOURCE("FieldCol", CModel);
-		m_colWallModel = GET_RESOURCE("FieldWallCol", CModel);
+		m_colModel = GET_RESOURCE("MapCol", CModel);
+		m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
 		break;
 	case GameData::B_1:
-		m_colModel = GET_RESOURCE("FieldCol", CModel);
-		m_colWallModel = GET_RESOURCE("FieldWallCol", CModel);
+		m_colModel = GET_RESOURCE("MapCol", CModel);
+		m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
 		break;
 	case GameData::B_2:
-		m_colModel = GET_RESOURCE("FieldCol", CModel);
-		m_colWallModel = GET_RESOURCE("FieldWallCol", CModel);
+		m_colModel = GET_RESOURCE("MapCol", CModel);
+		m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
 		break;
 	}
 	
@@ -160,7 +104,6 @@ CModel* Field::GetColWallModel() const
 // 指定したレイと壁のコリジョンとのヒット判定
 bool Field::CollisionRay(const CVector3D& start, const CVector3D& end, CVector3D* outHitPos, CVector3D* outHitNormal)
 {
-	//DebugProfiler::StartTimer("FieldCollision");
 	// フィールドが作成されていなければ、スルー
 	Field* f = ms_instance;
 	if (f == nullptr) return false;
@@ -169,7 +112,6 @@ bool Field::CollisionRay(const CVector3D& start, const CVector3D& end, CVector3D
 	CModel* col = f->GetColWallModel();
 	if (col == nullptr) return false;
 
-	//DebugProfiler::EndTimer("FieldCollision");
 	// コリジョンが存在すれば、レイとのヒット判定の結果を返す
 	return col->CollisionRay(outHitPos, outHitNormal, start, end);
 	

@@ -23,7 +23,7 @@ public:
 public:
 	CTexture();
 	//空のテクスチャ生成
-	CTexture(int width, int height, GLenum format);
+	CTexture(int width, int height, GLenum format,GLenum type = GL_UNSIGNED_BYTE);
 	~CTexture();
 	static CTexture* LoadTexture(const char *path);
 	bool Load(const char *path);

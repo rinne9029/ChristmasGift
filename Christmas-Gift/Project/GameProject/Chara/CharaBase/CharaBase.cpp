@@ -6,8 +6,8 @@
 #include"Debug/DebugProfiler.h"
 
 //コンストラクタ
-CharaBase::CharaBase(ETaskTag tag)
-	:ObjectBase(tag)
+CharaBase::CharaBase(ETaskTag tag,bool remove)
+	:ObjectBase(tag,remove)
 	, m_isGround(false)
 	, m_scale(0.0f, 0.0f, 0.0f)
 {

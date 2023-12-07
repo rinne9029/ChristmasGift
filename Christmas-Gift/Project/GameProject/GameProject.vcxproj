@@ -23,6 +23,7 @@
     <ClInclude Include="Field\Closet.h" />
     <ClInclude Include="Field\Field.h" />
     <ClInclude Include="Field\FieldFloor.h" />
+    <ClInclude Include="Field\GimmickObject.h" />
     <ClInclude Include="Field\FieldWall.h" />
     <ClInclude Include="Filta\Filta.h" />
     <ClInclude Include="GameScene\GameData.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="Field\Closet.cpp" />
     <ClCompile Include="Field\Field.cpp" />
     <ClCompile Include="Field\FieldFloor.cpp" />
+    <ClCompile Include="Field\GimmickObject.cpp" />
     <ClCompile Include="Field\FieldWall.cpp" />
     <ClCompile Include="Filta\Filta.cpp" />
     <ClCompile Include="GameScene\GameData.cpp" />

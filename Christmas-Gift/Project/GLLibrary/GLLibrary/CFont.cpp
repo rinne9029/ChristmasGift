@@ -112,17 +112,18 @@ void CFont::Release() {
 	if(m_font) delete m_font;
 }
 
+
 int CFont::GetFontSize() const {
 	return m_size;
-}
-
-CFont* CFont::GetInstance(std::string name)
+}CFont* CFont::GetInstance(std::string name)
 {
 	if (m_instances.count(name) == 0) m_instances[name] = new CFont();
 	return m_instances[name];
 }
 
-void CFont::CreateInstance(std::string name, const char* font, int size)
+CFont* CFont::CreateInstance(std::string name, const char* font, int size)
 {
 	m_instances[name] = new CFont(font, size);
+
+	return m_instances[name];
 }

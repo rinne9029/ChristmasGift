@@ -6,19 +6,17 @@ EnemyManager* EnemyManager::ms_instance = nullptr;
 //敵の探索位置ノードのリスト
 std::list<SearchNode> EnemyManager::ms_searchNodes =
 {
-	SearchNode(CVector3D(-28.227272f, 0.0f, -33.818180f)),
-	SearchNode(CVector3D(-28.227272f, 0.0f, -15.272726f)),
-	SearchNode(CVector3D(-9.409090f, 0.0f, -33.818180f)),
-	SearchNode(CVector3D(-3.136362f, 0.0f, -27.636364f)),
-	SearchNode(CVector3D(3.136364f, 0.0f, 3.272728f)),
-	SearchNode(CVector3D(3.136364f, 0.0f, 9.454548f)),
-	SearchNode(CVector3D(25.090910f, 0.0f, 18.727274f)),
-	SearchNode(CVector3D(34.500000f, 0.0f, -40.000000f)),
+	CVector3D(-12.544582,0.410701,8.687490),
+	CVector3D(15.687225,0.420055,4.950093),
+	CVector3D(14.911342,0.420055,10.190742),
+	CVector3D(10.591820,0.420055,10.477141),
+	CVector3D(9.257686,5.773851,7.193727),
+	CVector3D(9.013831,0.420055,4.341067),
 };
 
 //コンストラクタ
 EnemyManager::EnemyManager()
-	:CharaBase(ETaskTag::eEnemyManager)
+	:CharaBase(ETaskTag::eEnemyManager,true)
 {
 	m_remove = true;
 }

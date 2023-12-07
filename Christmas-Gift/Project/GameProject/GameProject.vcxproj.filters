@@ -74,6 +74,9 @@
     <ClInclude Include="UI\UI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Field\GimmickObject.h">
+      <Filter>Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -201,6 +204,9 @@
     </ClCompile>
     <ClCompile Include="UI\UI.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Field\GimmickObject.cpp">
+      <Filter>Field</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

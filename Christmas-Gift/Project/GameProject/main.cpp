@@ -134,6 +134,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton9, 'E');
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eButton11, 'Q');
+	CInput::SetButton(0, CInput::eButton12, 'K');	//ノード配置確認：デバッグ用
 	CInput::SetButton(0, CInput::eUp, 'W');
 	CInput::SetButton(0, CInput::eDown, 'S');
 	CInput::SetButton(0, CInput::eLeft, 'A');
@@ -192,6 +193,7 @@ void Init(void)
 
 			//タンスモデル読み込み
 			ADD_RESOURCE("Item", CModel::CreateModel("object/tansu2.obj"));
+			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj"));
 			
 			//タイトル画像読み込み
 			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));
@@ -201,15 +203,12 @@ void Init(void)
 			//フィルター画像読み込み
 			ADD_RESOURCE("Filta", CImage::CreateImage("Filta/Filta.png"));
 			
-			//仮ステージ壁
-			ADD_RESOURCE("FieldWall", CModel::CreateModel("Field/MapWall.obj", 8, 1, 8));
-			ADD_RESOURCE("FieldWallCol", CModel::CreateModel("Field/MapWallCol.obj", 1, 1, 1));
-			ADD_RESOURCE("FieldFloor", CModel::CreateModel("Field/MapFloor.obj", 1, 1, 1));
-			ADD_RESOURCE("FieldCol", CModel::CreateModel("Field/MapCol.obj", 1, 1, 1));
-			//ADD_RESOURCE("ChildRoom", CModel::CreateModel("Field/Cube/testRoom.obj", 1, 1, 1));
-			
+			//自作ステージ
+			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/Map.obj", 7, 4,7));
+			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/MapCol.obj", 7, 4, 7));
 
-			//ADD_RESOURCE("ChildFieldWall", CModel::CreateModel("Field/ChildRoomWall.obj", 1, 1, 1));
+			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/WallMap.obj", 7, 4, 7));
+			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/WallMapCol.obj", 7, 4, 7));
 			
 			new Filta();
 			new Title();

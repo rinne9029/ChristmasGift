@@ -20,11 +20,11 @@ NavManager* NavManager::Instance()
 
 //コンストラクタ
 NavManager::NavManager()
-	: Task(ETaskTag::eNavManager)
+	: Task(ETaskTag::eNavManager,true)
 	, m_addNodeCount(0)
 	, m_routeStartNode(nullptr)
 {
-	m_remove = true;
+	//m_remove = true;
 }
 
 //デストラクタ
@@ -228,8 +228,9 @@ int NavManager::FindConnectNavNodes(NavNode* node, float distance)
 		CVector3D hitPos, hitNormal;
 		CVector3D start = node->m_pos;
 		CVector3D end = n->m_pos;
-		start.y = 1.0f;
-		end.y = 1.0f;
+		//高さに関係なくノードを配置するならy座標を固定する
+		//start.y = 1.0f;
+		//end.y = 1.0f;
 		// まずレイを飛ばして、何かにヒットするかどうか
 		if (Field::CollisionRay(start, end, &hitPos, &hitNormal))
 		{

@@ -18,6 +18,7 @@ public:
 		eWeightsLocation,
 		eIndicesLocation,
 		eVertexColorLocation,
+		eTangentLocation,
 	};
 
 private:

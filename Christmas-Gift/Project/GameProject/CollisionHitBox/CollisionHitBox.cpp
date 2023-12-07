@@ -6,10 +6,10 @@
 #include"Debug/DebugProfiler.h"
 
 WarpRoomBox::WarpRoomBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
-	:ObjectBase(ETaskTag::eWarpRoomBox)
+	:ObjectBase(ETaskTag::eWarpRoomBox,true)
 {
 	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
-	m_remove = true;
+	//m_remove = true;
 	m_pos = pos;
 	m_rot = rot;
 	m_size = size;
@@ -68,7 +68,7 @@ void WarpRoomBox::Collision(Task* t)
 
 
 WarpChildRoomBox::WarpChildRoomBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
-	:ObjectBase(ETaskTag::eWarpChildRoomBox)
+	:ObjectBase(ETaskTag::eWarpChildRoomBox,true)
 {
 	m_pos = pos;
 	m_rot = rot;

@@ -5,6 +5,7 @@
 #include"Camera/Camera.h"
 #include"Field/Field.h"
 #include"Field/Closet.h"
+#include"Field/GimmickObject.h"
 #include"CollisionHitBox/CollisionHitBox.h"
 #include"Title/Title.h"
 #include"Filta/Filta.h"
@@ -13,12 +14,12 @@
 #include"GameData.h"
 
 GameScene::GameScene()
-	:Task(ETaskTag::eScene)
+	:Task(ETaskTag::eScene,true)
 	,GameCount(0)
 	,mp_filta(nullptr)
 	,mp_player(nullptr)
 {
-	m_remove = true;
+	//m_remove = true;
 
 	//ゲームスタート時はA_1ステージ
 	switch (GameData::Stage)
@@ -32,22 +33,30 @@ GameScene::GameScene()
 		new Camera
 		(
 			CVector3D(0, 1.5, 0),							//座標
-			CVector3D(0, DtoR(180), 0)						//回転値
+			CVector3D(0, DtoR(90), 0)						//回転値
 		);
 
 		//サンタ
 		new Player
 		(
-			CVector3D(34.500000f, 0.0f, 3.272728f),			//座標
+			CVector3D(-3.702046f, -0.589298f, 10.902628f),			//座標
 			CVector3D(0.01, 0.01, 0.01)						//モデルサイズ
 		);
 
-		//エネミー
-		new Enemy
+		new GimmickObject
 		(
-			CVector3D(-30, 0, 30),
-			CVector3D(0.01,0.01,0.01)
+			CVector3D(0.342562, 0.231580, 10.509188),	//座標
+			CVector3D(0, DtoR(270), 0),					//回転値
+			CVector3D(3, 3, 3),							//オブジェクトの大きさ
+			CVector3D(0.25,0.1,0.25),							//obbの大きさ
+			0
 		);
+		//エネミー
+		/*new Enemy
+		(
+			CVector3D(15.687225, 0.420055, 4.950093),
+			CVector3D(0.01,0.01,0.01)
+		);*/
 
 		//クローゼット
 		new Closet

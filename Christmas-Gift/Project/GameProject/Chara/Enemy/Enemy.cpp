@@ -17,7 +17,7 @@
 #define ROTATE_SPEED 6.0f
 
 Enemy::Enemy(const CVector3D& pos, const CVector3D& scale)
-	:CharaBase(ETaskTag::eEnemy)
+	:CharaBase(ETaskTag::eEnemy,true)
 	, mp_player(nullptr)
 	, m_moveDir(0.0f, 0.0f, 0.0f)
 	, m_rot_target(0.0f, 0.0f, 0.0f)
@@ -31,7 +31,6 @@ Enemy::Enemy(const CVector3D& pos, const CVector3D& scale)
 	EnemyManager::Instance()->Add(this);
 
 	m_model = COPY_RESOURCE("Father", CModelA3M);
-	m_remove = true;
 
 	m_pos = pos;			//初期座標
 	m_scale = scale;		//モデル大きさ
@@ -316,7 +315,7 @@ void Enemy::View_Color()
 
 bool Enemy::MoveTo(const CVector3D& target)
 {
-	float moveSpeed = 6.0f;
+	float moveSpeed = 2.0f;
 
 	CVector3D vec = target - m_pos;
 	vec.y = 0.0f;
@@ -408,8 +407,8 @@ bool Enemy::IsLookPlayer() const
 	// プレイヤーの位置までのレイと壁との衝突判定を行う
 	CVector3D start = m_pos;
 	CVector3D end = playerPos;
-	start.y = 1.0f;
-	end.y = 1.0f;
+	/*start.y = 1.0f;
+	end.y = 1.0f;*/
 	CVector3D hitPos, hitNormal;
 	if (Field::CollisionRay(start, end, &hitPos, &hitNormal))
 	{
@@ -483,19 +482,19 @@ void Enemy::Update()
 
 	float lineWidth = 1.0f;
 	//聴覚範囲の表示
-	Utility::DrawLine(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * ear_length, CVector4D(1, 0, 1, 1), lineWidth);
-	Utility::DrawLine(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + CMatrix::MRotationY(ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
-	Utility::DrawLine(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + CMatrix::MRotationY(-ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
+	Utility::DrawLine(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + m_dir * ear_length, CVector4D(1, 0, 1, 1), lineWidth);
+	Utility::DrawLine(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + CMatrix::MRotationY(ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
+	Utility::DrawLine(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + CMatrix::MRotationY(-ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
 	CMatrix m1;
-	m1.LookAt(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * ear_length, CVector3D(0, 1, 0));
+	m1.LookAt(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + m_dir * ear_length, CVector3D(0, 1, 0));
 	Utility::DrawSector(m1, -ear_ang, ear_ang, ear_length, color);
 
 	//視野範囲の表示
-	Utility::DrawLine(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * eye_length, CVector4D(1, 0, 1, 1), lineWidth);
-	Utility::DrawLine(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + CMatrix::MRotationY(eye_ang) * m_dir * eye_length, CVector4D(0, 1, 1, 1), lineWidth);
-	Utility::DrawLine(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + CMatrix::MRotationY(-eye_ang) * m_dir * eye_length, CVector4D(0, 1, 1, 1), lineWidth);
+	Utility::DrawLine(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + m_dir * eye_length, CVector4D(1, 0, 1, 1), lineWidth);
+	Utility::DrawLine(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + CMatrix::MRotationY(eye_ang) * m_dir * eye_length, CVector4D(0, 1, 1, 1), lineWidth);
+	Utility::DrawLine(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + CMatrix::MRotationY(-eye_ang) * m_dir * eye_length, CVector4D(0, 1, 1, 1), lineWidth);
 	CMatrix m;
-	m.LookAt(m_pos + CVector3D(0, 0.1, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * eye_length, CVector3D(0, 1, 0));
+	m.LookAt(m_pos + CVector3D(0, 0.3, 0), m_pos + CVector3D(0, 0.3, 0) + m_dir * eye_length, CVector3D(0, 1, 0));
 	Utility::DrawSector(m, -eye_ang, eye_ang, eye_length, color);
 
 	//プレイヤーカプセルの表示

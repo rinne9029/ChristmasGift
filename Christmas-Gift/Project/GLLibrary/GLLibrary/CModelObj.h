@@ -24,6 +24,8 @@ public:
 		CVector3D v;
 		CVector3D n;
 		CVector2D t;
+		CVector3D tan;
+		CVector3D bi;
 	};
 	SVertex* mp_vertex_array;
 	std::vector<int>* m_colIdex;

@@ -73,10 +73,13 @@
     <ClCompile Include="GLLibrary\Utility.cpp">
       <Filter>GLLibrary</Filter>
     </ClCompile>
-    <ClCompile Include="GLLibrary\CRect.cpp">
+    <ClCompile Include="GLLibrary\CTextureFrame.cpp">
       <Filter>GLLibrary</Filter>
     </ClCompile>
-    <ClCompile Include="GLLibrary\CTextureFrame.cpp">
+    <ClCompile Include="GLLibrary\CRendaring.cpp">
+      <Filter>GLLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="GLLibrary\CRect.cpp">
       <Filter>GLLibrary</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="GLLibrary.h" />
     <ClInclude Include="GLLibrary\CTextureFrame.h">
+      <Filter>GLLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="GLLibrary\CRendaring.h">
       <Filter>GLLibrary</Filter>
     </ClInclude>
   </ItemGroup>

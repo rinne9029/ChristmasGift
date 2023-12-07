@@ -7,14 +7,14 @@
 
 // コンストラクタ
 NavNode::NavNode(const CVector3D& pos, NodeType type)
-	: Task(ETaskTag::eNavNode)
+	: Task(ETaskTag::eNavNode,true)
 	, m_no(0)
 	, m_type(type)
 	, m_cost(-1.0f)
 	, m_nextNodeToGoal(nullptr)
 	, m_nodeColor(0.25f, 1.0f, 0.25f, 1.0f)
 {
-	m_remove = true;
+	//m_remove = true;
 	// 座標を設定
 	SetPos(pos);
 	// 経路探索管理クラスのノードリストに追加

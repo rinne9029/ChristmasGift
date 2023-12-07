@@ -29,7 +29,7 @@ private:
 
 public:
 	//コンストラクタ
-	ObjectBase(ETaskTag tag);
+	ObjectBase(ETaskTag tag,bool remove);
 	//デストラクタ
 	virtual ~ObjectBase();
 

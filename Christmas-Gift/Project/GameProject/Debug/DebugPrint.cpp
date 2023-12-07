@@ -5,9 +5,9 @@ DebugPrint* DebugPrint::ms_instance = nullptr;
 
 // コンストラクタ
 DebugPrint::DebugPrint()
-	: Task(ETaskTag::eDebug)
+	: Task(ETaskTag::eDebug,true)
 {
-	m_remove = false;
+	//m_remove = false;
 
 	m_font = FONT("DebugPrint");
 }

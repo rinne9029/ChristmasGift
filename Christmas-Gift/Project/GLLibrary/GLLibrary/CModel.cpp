@@ -125,8 +125,26 @@ CModel* CModel::CreateModel(const char* path, int cut_x, int cut_y, int cut_z) {
 	return nullptr;
 }
 
+void CModel::CalcTangentAndBinormal(
+	const CVector3D& v0, const CVector2D& uv0,
+	const CVector3D& v1, const CVector2D& uv1,
+	const CVector3D& v2, const CVector2D& uv2,
+	CVector3D* outTangent, CVector3D* outBinormal
+) {
+	CVector3D deltaPos1 = v1 - v0;
+	CVector3D deltaPos2 = v2 - v0;
+
+	CVector3D deltaUV1 = uv1 - uv0;
+	CVector3D deltaUV2 = uv2 - uv0;
+
+	float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+	*outTangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y) * r;
+	*outBinormal = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
+
+}
+
 CMaterial::CMaterial() : m_ambient(1, 1, 1, 1), m_diffuse(1, 1, 1, 1), m_specular(0, 0, 0),
-	m_emissive(0, 0, 0), m_shininess(1), m_alpha(1.0f), m_st(0, 0), mp_texture(NULL), mp_shader(nullptr) {
+	m_emissive(0, 0, 0), m_shininess(1), m_alpha(1.0f), m_st(0, 0), mp_texture(NULL), mp_normal_map(NULL), mp_shader(nullptr) {
 	memset(m_name, 0, sizeof(m_name));
 	memset(m_texture_name, 0, sizeof(m_texture_name));
 
@@ -165,13 +183,6 @@ void CMaterial::SendFragParam() {
 		/*
 		ライト設定
 		*/
-		glUniform3fv(glGetUniformLocation(mp_shader->GetProgram(), "lightPos"), CLight::LIGHT_MAX, (float*)CLight::GetPosPointer());
-		glUniform3fv(glGetUniformLocation(mp_shader->GetProgram(), "lightDir"), CLight::LIGHT_MAX, (float*)CLight::GetDirPointer());
-		glUniform3fv(glGetUniformLocation(mp_shader->GetProgram(), "lightAmbientColor"), CLight::LIGHT_MAX, (float*)CLight::GetAmbientColorPointer());
-		glUniform3fv(glGetUniformLocation(mp_shader->GetProgram(), "lightDiffuseColor"), CLight::LIGHT_MAX, (float*)CLight::GetDiffuseColorPointer());
-		glUniform1fv(glGetUniformLocation(mp_shader->GetProgram(), "lightAttenuation"), CLight::LIGHT_MAX, (float*)CLight::GetAttenuationPointer());
-		glUniform1fv(glGetUniformLocation(mp_shader->GetProgram(), "lightRadiationAngle"), CLight::LIGHT_MAX, (float*)CLight::GetRadiationAnglePointer());
-		glUniform1iv(glGetUniformLocation(mp_shader->GetProgram(), "lightType"), CLight::LIGHT_MAX, (int*)CLight::GetTypeColorPointer());
 		glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "lighting"), CLight::GetLighting());
 		const CLight::SFog& fog = CLight::GetFogParam();
 		glUniform4fv(glGetUniformLocation(mp_shader->GetProgram(), "fogColor"), 1, (float*)&fog.m_Color);
@@ -198,7 +209,9 @@ void CMaterial::SendFragParam() {
 		int EmissiveId = glGetUniformLocation(mp_shader->GetProgram(), "Emissive");
 		glUniform3fv(EmissiveId, 1, (GLfloat*)&m_emissive);
 		glUniform1f(glGetUniformLocation(mp_shader->GetProgram(), "alpha"), m_alpha);
+
 		if (mp_texture) {
+			glActiveTexture(GL_TEXTURE0);
 			glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "uSetex"), 1);
 			glUniform2fv(glGetUniformLocation(mp_shader->GetProgram(), "stscroll"), 1, m_st.v);
 			mp_texture->MapTexture();
@@ -206,8 +219,26 @@ void CMaterial::SendFragParam() {
 		else {
 			glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "uSetex"), 0);
 		}
-		GLint samplerId = glGetUniformLocation(mp_shader->GetProgram(), "sampler");
-		glUniform1i(samplerId, 0);//GL_TEXTURE0を適用
+		if (mp_normal_map) {
+			glActiveTexture(GL_TEXTURE1);
+			glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "usenormalMap"), 1);
+			mp_normal_map->MapTexture();
+		}
+		else {
+			glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "usenormalMap"), 0);
+		}
+		glActiveTexture(GL_TEXTURE0);
+//		float inv = 1.0;//凹凸反転
+//		float fGrad = 5.0;//勾配強調
+//		float fDisp = 0.15;//変位量調整
+//		float bias = 0.3;//面変位量調整
+
+//		glUniform1f(glGetUniformLocation(mp_shader->GetProgram(), "fDisp"), fDisp);
+//		glUniform1f(glGetUniformLocation(mp_shader->GetProgram(), "inv"), inv);
+//		glUniform1f(glGetUniformLocation(mp_shader->GetProgram(), "bias"), bias);
+
+		glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "sampler"), 0);//GL_TEXTURE0を適用
+		glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "normalMap"), 1);//GL_TEXTURE1を適用
 
 		glUniformMatrix4fv(glGetUniformLocation(mp_shader->GetProgram(), "ShadowTextureMatrix"), 1, FALSE, CLight::m_shadowMatrix.f);
 		glUniform1i(glGetUniformLocation(mp_shader->GetProgram(), "depth_tex"), 7);

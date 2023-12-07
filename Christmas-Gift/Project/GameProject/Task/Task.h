@@ -8,6 +8,7 @@ enum class ETaskTag
 	eField,						//ステージ
 	eFieldFloor,				//床
 	eFieldWall,					//壁
+	eFieldObject,				//ステージにあるギミックオブジェクト
 	eCamera,					//カメラ
 	ePlayer,					//プレイヤー
 	eEnemy,						//敵
@@ -55,7 +56,7 @@ private:
 
 public:
 	//コンストラクタ
-	Task(ETaskTag tag);
+	Task(ETaskTag tag ,bool Remove);
 
 	//デストラクタ
 	virtual~Task();

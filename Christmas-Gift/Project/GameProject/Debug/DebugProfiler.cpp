@@ -6,9 +6,9 @@ DebugProfiler* DebugProfiler::ms_instance = nullptr;
 
 // コンストラクタ
 DebugProfiler::DebugProfiler()
-	: Task(ETaskTag::eDebug)
+	: Task(ETaskTag::eDebug,true)
 {
-	m_remove = false;
+	//m_remove = false;
 }
 
 // デストラクタ

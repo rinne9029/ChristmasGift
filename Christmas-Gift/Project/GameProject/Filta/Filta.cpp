@@ -4,7 +4,7 @@
 #define FADETIME 90.0
 
 Filta::Filta()
-	:ObjectBase(ETaskTag::eFilta)
+	:ObjectBase(ETaskTag::eFilta,false)
 	, mp_plyaer(nullptr)
 	, m_time(0)
 	, m_transparent(0)
@@ -12,7 +12,7 @@ Filta::Filta()
 	, m_FadeoutCheck(false)
 {
 	m_filta = COPY_RESOURCE("Filta", CImage);
-	m_remove = false;
+	//m_remove = false;
 }
 
 Filta::~Filta()

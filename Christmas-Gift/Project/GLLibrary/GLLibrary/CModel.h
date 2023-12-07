@@ -33,6 +33,7 @@ public:
 	char m_texture_name[NAME_STR_SIZE];
 	CVector2D m_st;
 	CTexture *mp_texture;		//テクスチャー
+	CTexture* mp_normal_map;	//法線マップ
 	CShader* mp_shader;
 public:
 	CMaterial();
@@ -513,5 +514,17 @@ public:
 	static CModel* CreateModel(const char *path, int cut_x = 0, int cut_y = 0, int cut_z = 0);
 
 
-
+	/*!
+	@brief	接線の計算
+	@param	v0-v2			[in] 頂点座標
+	@param	uv0-uv2			[in] UV
+	@param	uv0-uv2			[in] 接線
+	@param	uv0-uv2			[in] 従法線
+	**/
+	void CalcTangentAndBinormal(
+		const CVector3D& v0, const CVector2D& uv0,
+		const CVector3D& v1, const CVector2D& uv1,
+		const CVector3D& v2, const CVector2D& uv2,
+		CVector3D* outTangent, CVector3D* outBinormal
+	);
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "GL.h"
+#include "CResource.h"
 #include <map>
 #include <string>
 #include <FTGL/ftgl.h>
@@ -11,7 +12,7 @@
 #pragma comment(lib,"ftgl_static.lib")
 #pragma comment(lib,"freetype.lib")
 #endif
-class CFont {
+class CFont : public  CResource {
 private:
 	FTPixmapFont* m_font;
 	int m_size;
@@ -40,11 +41,10 @@ public:
 	**/
 	void Release();
 
-	//フォントサイズ取得
-	int GetFontSize() const;
 
-	static CFont* GetInstance(std::string name);
-	static void CreateInstance(std::string name, const char* font = "ＭＳゴシック", int size = 24);
+	//フォントサイズ取得
+	int GetFontSize() const;	static CFont* GetInstance(std::string name);
+	static CFont* CreateInstance(std::string name, const char* font = "C:\\Windows\\Fonts\\msgothic.ttc", int size = 24);
 };
 
 #define FONT_T()	CFont::GetInstance("default")

@@ -1,7 +1,7 @@
 #include"ObjectBase.h"
 
-ObjectBase::ObjectBase(ETaskTag tag)
-	:Task(tag)
+ObjectBase::ObjectBase(ETaskTag tag,bool remove)
+	:Task(tag,remove)
 {
 }
 
