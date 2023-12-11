@@ -77,6 +77,9 @@
     <ClInclude Include="Field\GimmickObject.h">
       <Filter>Field</Filter>
     </ClInclude>
+    <ClInclude Include="Light\Light.h">
+      <Filter>Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -129,6 +132,9 @@
     </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{8cefd5a2-2632-456e-9986-472fbb53795a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{6c641b77-845b-40bb-8367-3daa33eaf3ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +213,9 @@
     </ClCompile>
     <ClCompile Include="Field\GimmickObject.cpp">
       <Filter>Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Light\Light.cpp">
+      <Filter>Light</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

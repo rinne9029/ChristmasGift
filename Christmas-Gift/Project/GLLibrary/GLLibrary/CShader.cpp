@@ -410,7 +410,7 @@ const char* lighting_frag = "#version 430\n"\
 "uniform sampler2D shadowmap_texture;\n"\
 "uniform sampler2D extra_texture;\n"\
 "uniform sampler2D desp_texture;\n"\
-"#define LIGHT_MAX 20\n"\
+"#define LIGHT_MAX 100\n"\
 "uniform vec3 lightSPos[LIGHT_MAX];\n"\
 "uniform vec3 lightPos[LIGHT_MAX];\n"\
 "uniform vec3 lightDir[LIGHT_MAX];\n"\

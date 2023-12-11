@@ -31,14 +31,6 @@ NavManager::NavManager()
 NavManager::~NavManager()
 {
 	ms_instance = nullptr;
-	/*std::list<NavNode*>::iterator it = m_nodes.begin();
-	while (it != m_nodes.end())
-	{
-		NavNode* del = *it;
-		it++;
-		delete del;
-	}
-	m_nodes.clear();*/
 }
 
 //全ノードの状態をリセット

@@ -30,6 +30,7 @@
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Item\Item.h" />
+    <ClInclude Include="Light\Light.h" />
     <ClInclude Include="Navigation\NavManager.h" />
     <ClInclude Include="Navigation\NavNode.h" />
     <ClInclude Include="ObjectBase\ObjectBase.h" />
@@ -57,6 +58,7 @@
     <ClCompile Include="GameScene\GameData.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
     <ClCompile Include="Item\Item.cpp" />
+    <ClCompile Include="Light\Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Navigation\NavManager.cpp" />
     <ClCompile Include="Navigation\NavNode.cpp" />

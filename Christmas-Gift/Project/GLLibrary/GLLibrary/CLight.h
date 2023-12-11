@@ -18,7 +18,7 @@ public:
 		eLight_Spot,		//スポットライト
 		eLight_Hemi,		//環境光
 	};
-	static const int LIGHT_MAX = 20	;
+	static const int LIGHT_MAX = 100;
 	static CVector3D	m_lightPos[LIGHT_MAX];
 	static CVector3D	m_lightDir[LIGHT_MAX];
 	static CVector3D	m_AmbientColor[LIGHT_MAX];

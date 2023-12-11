@@ -1,9 +1,11 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
+#include"Light/Light.h"
 
 class GimmickObject : public ObjectBase
 {
 private:
+	Light* mp_light;
 	CVector3D m_size;		//オブジェクトの大きさ
 	CVector3D m_obbsize;	//obbの大きさ
 public:

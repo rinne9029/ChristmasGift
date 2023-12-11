@@ -3,6 +3,7 @@
 GimmickObject::GimmickObject(CVector3D& pos,CVector3D& rot,CVector3D& size,CVector3D& obbsize, int no)
 	:ObjectBase(ETaskTag::eField,true)
 {
+	mp_light = dynamic_cast<Light*>(TaskManager::FindObject(ETaskTag::eFieldLight));
 	m_pos = pos;	//À•W
 	m_rot = rot;	//‰ñ“]’l
 	m_size = size;	//‘å‚«‚³

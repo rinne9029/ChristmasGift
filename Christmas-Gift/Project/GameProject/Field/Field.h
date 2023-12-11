@@ -19,6 +19,8 @@ private:
 	FieldFloor* m_floor;		//床描画用のクラス
 	FieldWall* m_wall;			//壁描画用のクラス
 	NavNode* m_node;
+	int m_lightNo;				//ライト番号
+	int m_roomNo;				//部屋番号
 
 public:
 	//コンストラクタ
@@ -28,6 +30,9 @@ public:
 
 	//経路探索用のノードを作成
 	void CreateNavNodes();
+
+	//ライトを作成
+	void CreateLights();
 
 	//フィールドのコリジョンを取得
 	CModel* GetColModel() const;

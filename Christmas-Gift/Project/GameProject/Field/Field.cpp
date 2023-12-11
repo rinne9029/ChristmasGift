@@ -1,6 +1,7 @@
 #include"Field.h"
 #include"FieldFloor.h"
 #include"FieldWall.h"
+#include"Light/Light.h"
 #include"../Navigation/NavManager.h"
 #include"../Navigation/NavNode.h"
 #include"../ObjectBase/ObjectBase.h"
@@ -40,6 +41,24 @@ std::list<CVector3D> Field::ms_nodes =
 	CVector3D(9.067355,5.773851,7.233985),
 };
 
+//ライト用のテーブル
+std::list<CVector3D> ms_lights =
+{
+	//キッチンとダイニングの部屋のライト
+	CVector3D(5.5,1.420053,-4.808032),
+	CVector3D(8.8,1.420053,-4.808032),
+	CVector3D(12.1,1.420053,-4.808032),
+	CVector3D(5.5,1.420053,0.808032),
+	CVector3D(8.8,1.420053,0.808032),
+	CVector3D(12.1,1.420053,0.808032),
+	CVector3D(5.5,1.420053,3.808032),
+	CVector3D(8.8,1.420053,3.808032),
+	CVector3D(12.1,1.420053,3.808032),
+
+	//
+	CVector3D(9,0,9),
+};
+
 //コンストラクタ
 Field::Field()
 	:ObjectBase(ETaskTag::eField,true)
@@ -68,8 +87,11 @@ Field::Field()
 	m_floor = new FieldFloor();
 	m_wall = new FieldWall();
 
+	m_lightNo = 2;
+
 	//経路探索用のノードを作成
 	CreateNavNodes();
+	CreateLights();
 }
 
 Field::~Field()
@@ -87,6 +109,31 @@ void Field::CreateNavNodes()
 	for (CVector3D nodePos : ms_nodes)
 	{
 		new NavNode(nodePos);
+	}
+}
+
+//ステージにライトを作成
+void Field::CreateLights()
+{
+	//テーブル内の座標にライトを作成
+	for (CVector3D lightsPos : ms_lights)
+	{
+		if (m_lightNo <= 10)	
+		{
+			//m_roomcount = 0->キッチンとダイニング
+			m_roomNo = 0;
+			//2～番は部屋用ライト番号
+			new Light(lightsPos, m_lightNo, m_roomNo);
+			m_lightNo++;
+		}
+		else if(m_lightNo <= 12)
+		{
+			m_roomNo = 1;
+			//2～番は部屋用ライト番号
+			new Light(lightsPos, m_lightNo, m_roomNo);
+			m_lightNo++;
+		}
+		
 	}
 }
 

@@ -31,7 +31,6 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, m_HideAnim(false)
 	, m_state(eState_Idle)
 {
-	//m_remove = true;
 	m_pos = pos;				//プレイヤー初期座標
 	m_scale = scale;			//プレイヤー大きさ
 	m_height = 1.9f;			//高さ
