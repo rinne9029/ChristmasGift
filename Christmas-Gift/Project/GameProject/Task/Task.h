@@ -84,6 +84,9 @@ public:
 	//XVˆ—
 	virtual void Update();
 
-	//ƒ‚ƒfƒ‹•`‰æˆ—
+	//3D•`‰æˆ—
 	virtual void Render();
+
+	//2D•`‰æˆ—
+	virtual void Draw();
 };

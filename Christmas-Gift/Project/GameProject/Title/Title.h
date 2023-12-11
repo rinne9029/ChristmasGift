@@ -19,6 +19,8 @@ public:
 	~Title();
 	//XVˆ—
 	void Update();
-	//•`‰æˆ—
+	//3D•`‰æˆ—
 	void Render();
+	//2D•`‰æˆ—
+	void Draw();
 };

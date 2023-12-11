@@ -58,6 +58,37 @@ Player::~Player()
 void Player::StateIdle()
 {
 	
+	{
+		//ライト設置テスト
+		//0番　環境光源 1番自身の光源 2～部屋の光源
+		static int idx = 2;
+		if (PUSH(CInput::eMouseL) || PUSH(CInput::eMouseR)) {
+			if (PUSH(CInput::eMouseL)) {
+				//スポットライト
+				CLight::SetType(idx, CLight::eLight_Spot);
+				//下向き
+				CLight::SetDir(idx, CVector3D(0, -1, 0));
+				//範囲は15°
+				CLight::SetRadiationAngle(idx, DtoR(80.0f));
+			}else {
+				//ポイントライト(全方位)
+				CLight::SetType(idx, CLight::eLight_Point);
+			}
+			//減衰率（低いと光の届く範囲が広い。壁を貫通しないように調整）
+			CLight::SetRange(idx, 4.0f);
+			//光源の色（アンビエント、ディフューズ）
+			CLight::SetColor(idx, CVector3D(0, 0, 0), CVector3D(1.0, 1.0, 0.9));
+			//光源の位置
+			CLight::SetPos(idx, m_pos + CVector3D(0, 3.0f, 0));
+			idx++;
+		}
+
+		//自身の光源
+		CLight::SetType(1, CLight::eLight_Point);
+		CLight::SetRange(1, 1.0f);
+		CLight::SetColor(1, CVector3D(0, 0, 0), CVector3D(0.8, 0.8, 0.7));
+		CLight::SetPos(1, m_pos + CVector3D(0, 1.0f, 0));
+	}
 
 	//歩き速度
 	m_Speed = 0.10f;

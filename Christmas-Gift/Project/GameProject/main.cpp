@@ -41,10 +41,17 @@ void MainLoop(void) {
 	TaskManager::Instance()->Update();
 	DebugProfiler::EndTimer("Update");		//タスク更新処理計測終了
 
-	//全タスクの描画
+
+	//全タスクの3D描画
 	DebugProfiler::StartTimer("Render");	//タスク描画処理計測スタート
-	TaskManager::Instance()->Render();	
+	//ディファードレンダリング
+	//ライトの数の変更はCLight.h CLight::LIGHT_MAXとCShader.cpp　413行目LIGHT_MAXの値を設定する
+	CRendaring::GetInstance()->Render([]() {
+		TaskManager::Instance()->Render();
+		});
 	DebugProfiler::EndTimer("Render");		//タスク描画処理計測終了
+	//全タスクの2D描画
+	TaskManager::Instance()->Draw();
 
 	//全タスクの判定処理
 	DebugProfiler::StartTimer("Collision");	//タスク判定処理計測スタート
@@ -154,7 +161,10 @@ void Init(void)
 	CLight::SetType(0, CLight::eLight_Direction);
 	CLight::SetPos(0, CVector3D(0, 200, 200));
 	CLight::SetDir(0, CVector3D(-1, -2, 1).GetNormalize());
-	CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
+	//基本は暗く
+	CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.0f, 0.0f, 0.0f));
+	
+	//CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
 
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 
@@ -170,14 +180,16 @@ void Init(void)
 	CShader::GetInstance("SkinMesh");
 	CSound::GetInstance();
 
-	SetCurrentDirectory("data");
-
-
 	//-----------------------------------------------------
 	//初期化の命令を書く
 	//ゲーム起動時に一度だけ呼ばれる
 	//-----------------------------------------------------
-	
+	//ディファードレンダリング用
+	//影描画機能を生成		描画範囲　光源の高さ 解像度
+	//CShadow::CreateInscance(40.0f, 20.0f, 8192, 8192);
+	//ポストエフェクトを生成		画面解像度,被写界深度オフセット
+	CRendaring::CreatInstance(SCREEN_WIDTH, SCREEN_HEIGHT, -0.05);
+
 	ADD_RESOURCE("NowLoading", CImage::CreateImage("UI/NowLoading.png"));
 	ADD_RESOURCE("NowLoading_Text", CImage::CreateImage("UI/NowLoading_Text.png"));
 	g_Loading = COPY_RESOURCE("NowLoading", CImage);

@@ -170,7 +170,7 @@ void CRendaring::Render(std::function<void()> render)
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), "lightDir"), CLight::LIGHT_MAX, (float*)CLight::GetDirPointer());
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), "lightAmbientColor"), CLight::LIGHT_MAX, (float*)CLight::GetAmbientColorPointer());
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), "lightDiffuseColor"), CLight::LIGHT_MAX, (float*)CLight::GetDiffuseColorPointer());
-		glUniform1fv(glGetUniformLocation(s->GetProgram(), "lightAttenuation"), CLight::LIGHT_MAX, (float*)CLight::GetAttenuationPointer());
+		glUniform1fv(glGetUniformLocation(s->GetProgram(), "lightRange"), CLight::LIGHT_MAX, (float*)CLight::GetRangePointer());
 		glUniform1fv(glGetUniformLocation(s->GetProgram(), "lightRadiationAngle"), CLight::LIGHT_MAX, (float*)CLight::GetRadiationAnglePointer());
 		glUniform1iv(glGetUniformLocation(s->GetProgram(), "lightType"), CLight::LIGHT_MAX, (int*)CLight::GetTypeColorPointer());
 		CVector3D vec = CCamera::GetCurrent()->GetDir();
@@ -192,11 +192,14 @@ void CRendaring::Render(std::function<void()> render)
 		s->Disable();
 		m_ligting_buffer->EndDraw();
 
-	}	CTexture* t = nullptr;
+	}
+	CTexture* t = nullptr;
 	//輪郭描画
 	if(0){
 		m_tmp_buffer->BeginDraw();
 		CTextureFrame::Draw(0, 0, m_ligting_buffer->GetWidth(), m_ligting_buffer->GetHeight(), m_ligting_buffer->GetTexture());
+		//デプステスト無効
+		glDisable(GL_DEPTH_TEST);
 		//輪郭描画用シェーダ(ここで輪郭を描画している)
 		CShader* s = CShader::GetInstance("Edge");
 		s->Enable();
@@ -215,7 +218,7 @@ void CRendaring::Render(std::function<void()> render)
 		t = m_ligting_buffer->GetTexture();
 	}
 
-	//CTextureFrame::Draw(0, 0, m_gbuffer->GetWidth(), m_gbuffer->GetHeight(), m_tmp_buffer->GetTexture());
+	//CTextureFrame::Draw(0, 0, m_gbuffer->GetWidth(), m_gbuffer->GetHeight(), m_gbuffer->GetTexture());
 	//return;
 
 	//グロー

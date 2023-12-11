@@ -16,7 +16,7 @@ public:
 	~SleepLife();
 	//XVˆ—
 	void Update();
-	//•`‰æˆ—
-	void Render();
+	//2D•`‰æˆ—
+	void Draw();
 
 };

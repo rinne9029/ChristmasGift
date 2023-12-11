@@ -18,13 +18,13 @@ public:
 		eLight_Spot,		//スポットライト
 		eLight_Hemi,		//環境光
 	};
-	static const int LIGHT_MAX = 5;
+	static const int LIGHT_MAX = 20	;
 	static CVector3D	m_lightPos[LIGHT_MAX];
 	static CVector3D	m_lightDir[LIGHT_MAX];
 	static CVector3D	m_AmbientColor[LIGHT_MAX];
 	static CVector3D	m_DiffuseColor[LIGHT_MAX];
 	static int			m_Type[LIGHT_MAX];
-	static float		m_Attenuation[LIGHT_MAX];
+	static float		m_Range[LIGHT_MAX];
 	static float		m_RadiationAngle[LIGHT_MAX];
 	static int			m_Lighting;
 	struct SFog {
@@ -86,13 +86,13 @@ public:
 
 	
 	/*!
-		@brief	光源の減衰率を設定する
+		@brief	光源の距離を設定する
 		@param	no				[in] 光源番号
-		@param	Attenuation		[in] 減衰率
+		@param	range			[in] 距離
 		@retval	無し
 	**/
-	static void SetAttenuation(int no,float Attenuation){
-		m_Attenuation[no] = Attenuation;
+	static void SetRange(int no,float range){
+		m_Range[no] = range;
 	}
 
 	/*!
@@ -189,11 +189,11 @@ public:
 	}
 	
 	/*!
-		@brief	光源の減衰率配列のアドレスを取得する（シェーダー用）
-		@retval	減衰率配列のアドレス
+		@brief	光源の距離配列のアドレスを取得する（シェーダー用）
+		@retval	距離配列のアドレス
 	**/
-	static float *GetAttenuationPointer(){
-		return m_Attenuation;
+	static float *GetRangePointer(){
+		return m_Range;
 	}
 
 	

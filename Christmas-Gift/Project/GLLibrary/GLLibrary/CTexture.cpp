@@ -10,10 +10,11 @@
 //#include "SDL_image.h"
 
 
-CTexture::CTexture() : m_data(NULL),m_bufID(0), m_wrap(GL_REPEAT), m_filter(GL_LINEAR){
+CTexture::CTexture() : m_data(NULL),m_bufID(0), m_wrap(GL_REPEAT), m_filter(GL_LINEAR/*GL_LINEAR_MIPMAP_LINEAR*/), m_type(GL_UNSIGNED_BYTE) {
 }
 CTexture::CTexture(int width, int height, GLenum format,GLenum type): CTexture()
 {
+	m_type = type;
 	m_width = width;
 	m_height = height;
 	m_wrap = GL_WRAP_BORDER;		
@@ -139,9 +140,6 @@ bool CTexture::loadTiff(const char *path) {
 		m_format = GL_RGBA;
 		m_internalFormat = 4;
 	}
-
-	m_wrap = GL_CLAMP;
-	m_filter = GL_LINEAR;
 	return true;
 }
 bool CTexture::loadBmp(const char *path){
@@ -183,9 +181,7 @@ bool CTexture::loadBmp(const char *path){
 		delete[] m_data;
 		return false;
 	}
-	
-	m_wrap = GL_CLAMP;
-	m_filter = GL_LINEAR;
+	m_type = GL_UNSIGNED_BYTE;
 	
 	
 
@@ -204,15 +200,27 @@ bool CTexture::loadPng(const char *path){
 	m_width = info.Width;
 	m_height = info.Height;
 	m_data = info.Data;
-	m_wrap = GL_REPEAT;
-	m_filter = GL_LINEAR;
 	m_internalFormat = info.Components;
 	if (m_internalFormat == 3) {
+		if (info.Depth == 16)
+			m_internalFormat = GL_RGB16;
+		else
+			m_internalFormat = GL_RGB;
 		m_format = GL_RGB;
 	} else {
+		if (info.Depth == 16)
+			m_internalFormat = GL_RGBA16;
+		else
+			m_internalFormat = GL_RGBA;
+
 		m_format = GL_RGBA;
 
 	}
+	if(info.Depth==16) 
+		m_type = GL_UNSIGNED_SHORT;
+	else
+		m_type = GL_UNSIGNED_BYTE;
+
 	return true;
 
 }
@@ -241,26 +249,28 @@ bool CTexture::Load(const char *path){
 	
 }
 void CTexture::MapTexture() {
-	
+
+	glEnable(GL_TEXTURE_2D);
 	if (m_bufID == 0) {
 		if (!m_data) return;
 		glGenTextures(1, &m_bufID);
 		glBindTexture(GL_TEXTURE_2D, m_bufID);
-		glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_width, m_height, 0, m_format, GL_UNSIGNED_BYTE, m_data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filter);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_filter);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_wrap);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_wrap);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 7);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_width, m_height, 0, m_format, m_type, m_data);
+		//glTexStorage2D(GL_TEXTURE_2D, 8, m_internalFormat, m_width, m_height);
+		//glTexSubImage2D(GL_TEXTURE_2D, 0, 0,0, m_width, m_height, m_format, m_type, m_data);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 
 		delete[] m_data;
 		m_data = nullptr;
 	}
 	//glRasterPos2f(-1.0f,-1.0f);
 	glBindTexture(GL_TEXTURE_2D,m_bufID);
-	glEnable(GL_TEXTURE_2D);
 }
 
 void CTexture::UnmapTexture() {

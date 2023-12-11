@@ -42,9 +42,14 @@ void Task::Update()
 
 }
 
-//ƒ‚ƒfƒ‹•`‰æˆ—
+//3D•`‰æˆ—
 void Task::Render()
 {
 
 }
 
+//2D•`‰æˆ—
+void Task::Draw()
+{
+
+}

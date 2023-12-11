@@ -127,7 +127,7 @@ const char* mesh_frag = "#version 430\n\n"\
 "			//Normal.w = texture2D(specurMap, texCoord + stscroll).r;\n"\
 "			ext.x = 1.0;\n"\
 "		} else {\n"\
-"			ext.x = 0.0;\n"\
+"			ext.x = 1.0;\n"\
 "		}\n"\
 "		out_color[1] = Normal;"
 "		out_color[2] = V;"
@@ -136,10 +136,10 @@ const char* mesh_frag = "#version 430\n\n"\
 "		out_color[4] = ext;\n"\
 "		float bias = 0.000001;\n"\
 /*シャドウマップ */
-"		//if ( vShadowCoord.z<1.0 && restDepth(texture2D( depth_tex, vShadowCoord.xy))  <  vShadowCoord.z-bias "\
+"		if ( vShadowCoord.z<1.0 && restDepth(texture2D( depth_tex, vShadowCoord.xy))  <  vShadowCoord.z-bias "\
 "		&& abs(vShadowCoord.x)<1.0 && abs(vShadowCoord.y)<1.0)\n"\
-"		//	out_color[3].z = 0.8;\n"\
-"		//else\n"\
+"			out_color[3].z = 0.0;\n"\
+"		else\n"\
 "			out_color[3].z = 1.0;\n"\
 "		out_color[3].w = 1;\n"\
 "	} else {\n"\
@@ -416,7 +416,7 @@ const char* lighting_frag = "#version 430\n"\
 "uniform vec3 lightDir[LIGHT_MAX];\n"\
 "uniform vec3 lightAmbientColor[LIGHT_MAX];\n"\
 "uniform vec3 lightDiffuseColor[LIGHT_MAX];\n"\
-"uniform float lightAttenuation[LIGHT_MAX];\n"\
+"uniform float lightRange[LIGHT_MAX];\n"\
 "uniform int lightType[LIGHT_MAX];\n"\
 "uniform float lightRadiationAngle[LIGHT_MAX];\n"\
 "uniform vec3 eyeVec;\n"\
@@ -457,14 +457,14 @@ const char* lighting_frag = "#version 430\n"\
 "					float l = length(L);\n"\
 "					L = normalize(L);\n"\
 "					if (l > 0)\n"\
-"						p = clamp(1 / (pow(l * lightAttenuation[i], 2)), 0.0, 1.0);\n"\
+"						p = 1.0-clamp(pow(l / lightRange[i], 5), 0.0, 1.0);\n"\
 "					else\n"\
 "						continue;\n"\
 "					if (lightType[i] == 3) {\n"\
-"						float t = dot(L, lightDir[i]);\n"\
-"						t = clamp(t + sin(lightRadiationAngle[i]), 0.0, 1.0);\n"\
+"						float t = acos(dot(L, lightDir[i]));\n"\
+"						p *= 1.0-clamp(pow(t / lightRadiationAngle[i], 5), 0.0, 1.0); \n"\
 "						//if(t<1) p = 0;\n"\
-"						p *= pow(t, 20);\n"\
+"						//p *= pow(t, 20);\n"\
 "					}\n"\
 "					L = -L;\n"\
 "				}\n"\
@@ -472,14 +472,14 @@ const char* lighting_frag = "#version 430\n"\
 "			vec3 R = reflect(-EyeVec, NormalColor);\n"\
 "			spec += metalic * pow(max(0, dot(R, L)), SpecPower) * p;\n"\
 "			if (ext.x < 1.0)\n"\
-"				NL = NL > 0 ? 1.0 : 0.9;\n"\
+"				NL = NL > 0 ? 1.0 : 0.0;\n"\
 "			else\n"\
 "				NL = clamp(NL, 0.0, 1.0);\n"\
-"			if (i == 0) NL = Shadow;\n"\
-"			diffuse += BaseColor.xyz * lightDiffuseColor[i] * NL * p;\n"\
-"			diffuse += lightAmbientColor[i].xyz * BaseColor.xyz;\n"\
+"			if (i == 0) NL = min(NL,Shadow);\n"\
+"			diffuse += lightDiffuseColor[i] * NL * p;\n"\
+"			diffuse += lightAmbientColor[i].xyz;\n"\
 "		}\n"\
-"		out_color[0] = vec4(diffuse, BaseColor.w);\n"\
+"		out_color[0] = vec4(BaseColor.xyz * min(diffuse,1.0), BaseColor.w);\n"\
 "		out_color[1] = vec4(BaseColor.xyz * spec + BaseColor.xyz * emissive, BaseColor.w);\n"\
 "	}\n"\
 "}\n";

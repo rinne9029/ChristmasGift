@@ -35,8 +35,8 @@ void SleepLife::Update()
 	
 }
 
-//•`‰æˆ—
-void SleepLife::Render()
+//2D•`‰æˆ—
+void SleepLife::Draw()
 {
 	//Ô‚Ì‡–°ƒQ[ƒW•`‰æ
 	Utility::DrawQuad(CVector2D(20, 250), CVector2D(300, 25), CVector4D(1, 0, 0, 1));

@@ -110,13 +110,23 @@ void TaskManager::Update()
 	}
 }
 
-//•`‰æˆ—
+//3D•`‰æˆ—
 void TaskManager::Render()
 {
 	//‘STask‚ÌRenderŠÖ”‚ðŒÄ‚Ño‚·
 	for (Task* task : m_taskList)
 	{
 		task->Render();
+	}
+}
+
+//2D•`‰æˆ—
+void TaskManager::Draw()
+{
+	//‘STask‚ÌDrawŠÖ”‚ðŒÄ‚Ño‚·
+	for (Task* task : m_taskList)
+	{
+		task->Draw();
 	}
 }
 

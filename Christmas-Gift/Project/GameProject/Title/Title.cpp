@@ -102,8 +102,13 @@ void Title::Update()
 	
 }
 
-//•`‰æˆ—
+//3D•`‰æˆ—
 void Title::Render()
+{
+}
+
+//2D•`‰æˆ—
+void Title::Draw()
 {
 	if (PUSH(CInput::eLeft) && m_select > 0)
 	{

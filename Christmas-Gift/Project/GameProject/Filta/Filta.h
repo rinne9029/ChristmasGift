@@ -18,5 +18,5 @@ public:
 	Filta();
 	~Filta();
 	void Update();
-	void Render();
+	void Draw();
 };

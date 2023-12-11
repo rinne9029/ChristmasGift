@@ -66,7 +66,7 @@ void Filta::Update()
 		
 }
 
-void Filta::Render()
+void Filta::Draw()
 {
 	m_filta.SetColor(1, 1, 1, m_transparent);
 	m_filta.Draw();
