@@ -40,6 +40,8 @@ public:
 
 	static Task* FindObject(ETaskTag tag);
 
+	static std::vector<Task*> FindObjects(const ETaskTag tag);
+
 	static void Collision();
 
 	

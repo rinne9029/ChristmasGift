@@ -2,7 +2,9 @@
 #include"Field/Field.h"
 #include"Field/Closet.h"
 #include"Filta/Filta.h"
+#include"Field/GimmickObject.h"
 #include"Camera/Camera.h"
+#include"Light/Light.h"
 #include"UI/UI.h"
 #include"GameScene/GameScene.h"
 #include"Navigation/NavNode.h"
@@ -35,6 +37,8 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	m_scale = scale;			//プレイヤー大きさ
 	m_height = 1.9f;			//高さ
 	m_rad = 0.3f;				//半径
+	m_lS = CVector3D(0, 0, 0);
+	m_lE = CVector3D(0, 0, 0);
 
 	//プレイヤーモデル読み込み
 	m_model = COPY_RESOURCE("Player", CModelA3M);
@@ -60,27 +64,27 @@ void Player::StateIdle()
 	{
 		//ライト設置テスト
 		//0番　環境光源 1番自身の光源 2～部屋の光源
-		static int idx = 2;
-		if (PUSH(CInput::eMouseL) || PUSH(CInput::eMouseR)) {
-			if (PUSH(CInput::eMouseL)) {
-				//スポットライト
-				CLight::SetType(idx, CLight::eLight_Spot);
-				//下向き
-				CLight::SetDir(idx, CVector3D(0, -1, 0));
-				//範囲は15°
-				CLight::SetRadiationAngle(idx, DtoR(80.0f));
-			}else {
-				//ポイントライト(全方位)
-				CLight::SetType(idx, CLight::eLight_Point);
-			}
-			//減衰率（低いと光の届く範囲が広い。壁を貫通しないように調整）
-			CLight::SetRange(idx, 4.0f);
-			//光源の色（アンビエント、ディフューズ）
-			CLight::SetColor(idx, CVector3D(0, 0, 0), CVector3D(1.0, 1.0, 0.9));
-			//光源の位置
-			CLight::SetPos(idx, m_pos + CVector3D(0, 3.0f, 0));
-			idx++;
-		}
+		//static int idx = 2;
+		//if (PUSH(CInput::eMouseL) || PUSH(CInput::eMouseR)) {
+		//	if (PUSH(CInput::eMouseL)) {
+		//		//スポットライト
+		//		CLight::SetType(idx, CLight::eLight_Spot);
+		//		//下向き
+		//		CLight::SetDir(idx, CVector3D(0, -1, 0));
+		//		//範囲は15°
+		//		CLight::SetRadiationAngle(idx, DtoR(80.0f));
+		//	}else {
+		//		//ポイントライト(全方位)
+		//		CLight::SetType(idx, CLight::eLight_Point);
+		//	}
+		//	//減衰率（低いと光の届く範囲が広い。壁を貫通しないように調整）
+		//	CLight::SetRange(idx, 4.0f);
+		//	//光源の色（アンビエント、ディフューズ）
+		//	CLight::SetColor(idx, CVector3D(0, 0, 0), CVector3D(1.0, 1.0, 0.9));
+		//	//光源の位置
+		//	CLight::SetPos(idx, m_pos + CVector3D(0, 3.0f, 0));
+		//	idx++;
+		//}
 
 		//自身の光源
 		CLight::SetType(1, CLight::eLight_Point);
@@ -158,7 +162,12 @@ void Player::Update()
 	if (!mp_filta) mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
 	//睡眠ゲージ
 	if (!mp_sleeplife) mp_sleeplife = dynamic_cast<SleepLife*>(TaskManager::FindObject(ETaskTag::eUI));
-
+	
+	if (PUSH(CInput::eMouseL))
+	{
+		Shot();
+	}
+	
 	//当たり判定
 	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);
 	m_lineE = m_pos + CVector3D(0, m_rad, 0);
@@ -289,12 +298,12 @@ void Player::Render()
 		m_model.Render();
 	}
 
+	float a = 10000;
+	Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), a);
 }
 
 void Player::Collision(Task* t)
 {
-	//std::string name = "Collision";
-	//DebugProfiler::StartTimer(name);
 	CharaBase::Collision(t);
 
 	switch (t->GetTag())
@@ -366,5 +375,75 @@ void Player::Collision(Task* t)
 	}
 	break;
 	}
-	//DebugProfiler::EndTimer(name);
+}
+
+
+void Player::Shot()
+{
+	//判定するレイの距離
+	const float range = 1.5f;
+	CVector3D dir = CMatrix::MRotation(mp_camera->m_rot).GetFront();
+	//始点
+	CVector3D lineS = m_pos + mp_camera->m_pos;
+
+	//終点
+	CVector3D lineE = m_pos + mp_camera->m_pos + dir * range;
+
+	//最も近いオブジェクトへの距離
+	float dist = FLT_MAX;
+	//レイとの衝突点
+	CVector3D hit_field_point;
+	//衝突したステージオブジェクト
+	Field* hit_field = nullptr;
+	if (Field* f = dynamic_cast<Field*>(TaskManager::FindObject(ETaskTag::eField))) 
+	{
+		//接触面の法線（使わない）
+		CVector3D n;
+		if (f->GetColModel()->CollisionRay(&hit_field_point, &n, lineS, lineE))
+		{
+			//発射位置から接触面への距離
+			dist = (hit_field_point - lineS).LengthSq();
+			//接触したステージを更新
+			hit_field = f;
+		}
+	}
+	//衝突したオブジェクト
+	GimmickObject* hit_object = nullptr;
+	//全オブジェクトを探索
+	auto list = TaskManager::FindObjects(ETaskTag::eFieldObject);
+	for (auto t : list) 
+	{
+		if (GimmickObject* o = dynamic_cast<GimmickObject*>(t))
+		{
+			//レイとの衝突地点
+			CVector3D c;
+			//弾の線分でオブジェクトとの判定を行う
+			if (o->CollisionLine(lineS, lineE,mp_camera->m_dir,&c) >= 0)
+			{
+				//発射位置から最も近いオブジェクトを調べる
+				float l = (c - lineS).LengthSq();
+					if (dist > l) {
+						dist = l;
+							hit_object = o;
+					}
+			}
+		}
+	}
+	//最も近いオブジェクトに当たる
+	if (hit_object)
+	{
+		//処理を書く
+		printf("オブジェクトに当たった\n");
+	}
+	else if (hit_field)
+	{
+		//何もしない
+		printf("壁に当たった\n");
+	}
+	else
+	{
+		printf("何も当たってない\n");
+	}
+	m_lS = lineS;
+	m_lE = lineE;
 }

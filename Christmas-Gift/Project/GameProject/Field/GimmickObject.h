@@ -1,6 +1,7 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
-#include"Light/Light.h"
+
+class Light;
 
 class GimmickObject : public ObjectBase
 {
@@ -13,4 +14,5 @@ public:
 	~GimmickObject();
 	void Update();
 	void Render();
+	int CollisionLine(const CVector3D& lineS, const CVector3D& lineE,const CVector3D& dir,CVector3D* cross);
 };

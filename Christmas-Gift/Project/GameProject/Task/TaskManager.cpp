@@ -138,9 +138,18 @@ Task* TaskManager::FindObject(ETaskTag tag) {
 	return nullptr;
 }
 
+std::vector<Task*> TaskManager::FindObjects(const ETaskTag tag)
+{
+	auto& list = m_taskList;
+	std::vector<Task*> ret;
+	for (auto& b : list) {
+		if (b->GetTag() == tag)ret.push_back(b);
+	}
+	return ret;
+}
+
 //タスクのコリジョン処理
 void TaskManager::Collision() {
-	//DebugProfiler::StartTimer("コリジョン判定");
 	auto itr = m_taskList.begin();
 	//末尾まで繰り返す
 	while (itr != m_taskList.end()) {
@@ -159,6 +168,5 @@ void TaskManager::Collision() {
 		//次のオブジェクト
 		itr++;
 	}
-	//DebugProfiler::EndTimer("コリジョン判定");
 }
 

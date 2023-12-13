@@ -162,9 +162,9 @@ void Init(void)
 	CLight::SetPos(0, CVector3D(0, 200, 200));
 	CLight::SetDir(0, CVector3D(-1, -2, 1).GetNormalize());
 	//Šî–{‚ÍˆÃ‚­
-	CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.0f, 0.0f, 0.0f));
+	//CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.0f, 0.0f, 0.0f));
 	
-	//CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
+	CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
 
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 

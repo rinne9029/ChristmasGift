@@ -23,6 +23,12 @@ enum class ETaskTag
 	eFilta,						//フィルター
 	eDebug,						//デバッグ用
 };
+//レイヤー
+enum TaskLayer {
+	eDefault,
+	eOption,
+	eMax
+};
 
 //タスククラス
 class Task

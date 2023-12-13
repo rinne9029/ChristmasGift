@@ -49,6 +49,7 @@ GameScene::GameScene()
 			CVector3D(0.342562, 0.231580, 10.509188),	//座標
 			CVector3D(0, DtoR(270), 0),					//回転値
 			CVector3D(3, 3, 3),							//オブジェクトの大きさ
+			//CVector3D(2,2,2),
 			CVector3D(0.25,0.1,0.25),					//obbの大きさ
 			0
 		);

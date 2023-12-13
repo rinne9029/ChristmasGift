@@ -4,6 +4,7 @@
 class Camera;
 class Filta;
 class SleepLife;
+class Light;
 
 class Player : public CharaBase {
 public:
@@ -17,12 +18,18 @@ private:
 	Camera* mp_camera;		//カメラ
 	Filta* mp_filta;		//フィルター
 	SleepLife* mp_sleeplife;//睡眠ゲージ
+	Light* mp_light;
 	CModelA3M m_model;		//モデルデータ
 	float m_Speed;			//移動速度
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスに入るときのプレイヤーの座標
 	int m_HideCount;
 	bool m_HideAnim;
+
+	
+	//デバッグ用
+	CVector3D m_lS;
+	CVector3D m_lE;
 
 	//アニメーションID
 	enum class AnimId
@@ -66,4 +73,7 @@ public:
 
 	//衝突処理
 	void Collision(Task* t);
+
+	//レティクル
+	void Shot();
 };
