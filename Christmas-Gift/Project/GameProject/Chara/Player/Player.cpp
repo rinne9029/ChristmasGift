@@ -162,6 +162,8 @@ void Player::Update()
 	if (!mp_filta) mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
 	//睡眠ゲージ
 	if (!mp_sleeplife) mp_sleeplife = dynamic_cast<SleepLife*>(TaskManager::FindObject(ETaskTag::eUI));
+	//ライト
+	if (!mp_light)mp_light = dynamic_cast<Light*>(TaskManager::FindObject(ETaskTag::eFieldLight));
 	
 	if (PUSH(CInput::eMouseL))
 	{
@@ -434,6 +436,7 @@ void Player::Shot()
 	{
 		//処理を書く
 		printf("オブジェクトに当たった\n");
+		
 	}
 	else if (hit_field)
 	{

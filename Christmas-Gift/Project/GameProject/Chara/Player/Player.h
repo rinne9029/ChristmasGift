@@ -18,7 +18,7 @@ private:
 	Camera* mp_camera;		//カメラ
 	Filta* mp_filta;		//フィルター
 	SleepLife* mp_sleeplife;//睡眠ゲージ
-	Light* mp_light;
+	Light* mp_light;		//ライト
 	CModelA3M m_model;		//モデルデータ
 	float m_Speed;			//移動速度
 	float key_ang;			//方向ベクトルの角度

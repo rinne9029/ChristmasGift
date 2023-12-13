@@ -23,12 +23,6 @@ enum class ETaskTag
 	eFilta,						//フィルター
 	eDebug,						//デバッグ用
 };
-//レイヤー
-enum TaskLayer {
-	eDefault,
-	eOption,
-	eMax
-};
 
 //タスククラス
 class Task
@@ -36,8 +30,6 @@ class Task
 public:
 	ETaskTag m_tag;			//オブジェクトごとの種類名
 	bool m_remove;			//オブジェクトごとの削除フラグ
-
-	CModelObj m_model;		//オブジェクトモデル
 
 	CVector3D m_pos;		//オブジェクト座標
 	CVector3D m_rot;		//オブジェクト回転値

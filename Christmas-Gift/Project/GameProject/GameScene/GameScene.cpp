@@ -51,7 +51,7 @@ GameScene::GameScene()
 			CVector3D(3, 3, 3),							//オブジェクトの大きさ
 			//CVector3D(2,2,2),
 			CVector3D(0.25,0.1,0.25),					//obbの大きさ
-			0
+			0											//オブジェクトナンバー
 		);
 
 		//エネミー

@@ -13,6 +13,7 @@ protected:
 	bool m_isGround;		//着地フラグ
 	CVector3D m_scale;		//キャラクター描画サイズ
 public:
+	
 	//コンストラクタ
 	CharaBase(ETaskTag tag,bool remove);
 

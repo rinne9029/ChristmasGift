@@ -8,13 +8,12 @@ Light::Light(CVector3D& pos,int no,int room)
 	m_pos = pos;
 	m_no = no;
 	m_roomNo = room;
-
 }
 
 //デストラクタ
 Light::~Light()
 {
-
+	
 }
 
 //更新処理
