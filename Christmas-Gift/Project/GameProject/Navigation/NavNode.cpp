@@ -14,7 +14,6 @@ NavNode::NavNode(const CVector3D& pos, NodeType type)
 	, m_nextNodeToGoal(nullptr)
 	, m_nodeColor(0.25f, 1.0f, 0.25f, 1.0f)
 {
-	//m_remove = true;
 	// 座標を設定
 	SetPos(pos);
 	// 経路探索管理クラスのノードリストに追加

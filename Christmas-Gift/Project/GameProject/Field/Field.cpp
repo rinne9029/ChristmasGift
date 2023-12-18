@@ -120,17 +120,14 @@ void Field::CreateLights()
 	{
 		if (m_lightNo <= 10)	
 		{
-			//m_roomcount = 0->キッチンとダイニング
-			m_roomNo = 0;
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, m_roomNo);
+			new Light(lightsPos, m_lightNo, ERoomNo::eKitchen_Dining_Room);
 			m_lightNo++;
 		}
 		else if(m_lightNo <= 12)
 		{
-			m_roomNo = 1;
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, m_roomNo);
+			new Light(lightsPos, m_lightNo, ERoomNo::eLiving_Room);
 			m_lightNo++;
 		}
 		

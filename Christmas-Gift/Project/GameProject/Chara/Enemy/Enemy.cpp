@@ -375,7 +375,7 @@ bool Enemy::IsEyeFoundPlayer()
 bool Enemy::IsEarFoundPlayer()
 {
 	//プレイヤーの移動を音で聞き分ける処理
-	if (!mp_player->m_isFootFall)	
+	if (!mp_player->m_islegsound)
 		return false;
 
 	//音の聞き取り角度

@@ -61,7 +61,7 @@ void Camera::Update()
 	}
 	if (!mp_closet)
 	{
-		mp_closet = dynamic_cast<Closet*>(TaskManager::FindObject(ETaskTag::eHideBox));
+		//mp_closet = dynamic_cast<Closet*>(TaskManager::FindObject(ETaskTag::eHideBox));
 	}
 
 	switch (m_state) {

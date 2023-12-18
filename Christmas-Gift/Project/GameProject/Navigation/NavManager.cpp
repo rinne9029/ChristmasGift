@@ -24,7 +24,7 @@ NavManager::NavManager()
 	, m_addNodeCount(0)
 	, m_routeStartNode(nullptr)
 {
-	//m_remove = true;
+	
 }
 
 //デストラクタ

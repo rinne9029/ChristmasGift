@@ -9,7 +9,7 @@ class Light;
 class Player : public CharaBase {
 public:
 	bool m_hide;			//ステルス状態フラグ
-	bool m_isFootFall;		//足音のフラグ
+	bool m_islegsound;		//足音のフラグ
 	bool m_CheckKill;		//プレイヤー死亡フラグ
 
 	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
@@ -19,12 +19,13 @@ private:
 	Filta* mp_filta;		//フィルター
 	SleepLife* mp_sleeplife;//睡眠ゲージ
 	Light* mp_light;		//ライト
-	CModelA3M m_model;		//モデルデータ
-	float m_Speed;			//移動速度
+
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスに入るときのプレイヤーの座標
 	int m_HideCount;
 	bool m_HideAnim;
+
+	CModelA3M m_model;		//モデルデータ
 
 	
 	//デバッグ用

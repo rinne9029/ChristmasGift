@@ -26,7 +26,6 @@ private:
 	//COBB m_obb;				//箱形
 
 public:
-	CModelObj m_model;		//オブジェクトモデル
 	//コンストラクタ
 	ObjectBase(ETaskTag tag,bool remove);
 	//デストラクタ

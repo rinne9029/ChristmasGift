@@ -54,6 +54,25 @@ GameScene::GameScene()
 			0											//オブジェクトナンバー
 		);
 
+		new GimmickObject
+		(
+			CVector3D(3.342562, 1.231580, 4.7),	//座標
+			CVector3D(0, DtoR(270), 0),							//回転値
+			CVector3D(0.25,0.25, 0.25),							//オブジェクトの大きさ
+			//CVector3D(2,2,2),
+			CVector3D(0.125, 0.35, 0.25),					//obbの大きさ
+			1										//オブジェクトナンバー
+		);
+
+		new GimmickObject
+		(
+			CVector3D(-4.702046f, -0.589298f, 8.002628f),			//座標
+			CVector3D(0, DtoR(180), 0),		//回転値
+			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+			CVector3D(0.8, 2, 0.8),			//当たり判定サイズ
+			2
+		);
+
 		//エネミー
 		/*new Enemy
 		(
@@ -62,26 +81,26 @@ GameScene::GameScene()
 		);*/
 
 		//クローゼット
-		new Closet
-		(
-			CVector3D(19, -0.1, 5.6),			//座標
-			CVector3D(0, DtoR(180), 0),		//回転値
-			CVector3D(0.9, 3, 0.9)			//当たり判定サイズ
-		);
+		//new Closet
+		//(
+		//	CVector3D(-4.702046f, -1.589298f, 8.002628f),			//座標
+		//	CVector3D(0, DtoR(180), 0),		//回転値
+		//	CVector3D(0.9, 3, 0.9)			//当たり判定サイズ
+		//);
 
-		new Closet
-		(
-			CVector3D(0.8, -0.1, 19),
-			CVector3D(0, DtoR(90), 0),
-			CVector3D(0.9, 3, 0.9)
-		);
+		//new Closet
+		//(
+		//	CVector3D(0.8, -0.1, 19),
+		//	CVector3D(0, DtoR(90), 0),
+		//	CVector3D(0.9, 3, 0.9)
+		//);
 
-		new Closet
-		(
-			CVector3D(-18, -0.1, -19),
-			CVector3D(0, DtoR(90), 0),
-			CVector3D(0.9, 3, 0.9)
-		);
+		//new Closet
+		//(
+		//	CVector3D(-18, -0.1, -19),
+		//	CVector3D(0, DtoR(90), 0),
+		//	CVector3D(0.9, 3, 0.9)
+		//);
 
 		new WarpRoomBox
 		(
@@ -149,7 +168,7 @@ GameScene::GameScene()
 					CVector3D(0.01, 0.01, 0.01)
 				);
 
-				for (int i = 0; i < 4; i++)
+				/*for (int i = 0; i < 4; i++)
 				{
 					new Closet
 					(
@@ -168,7 +187,7 @@ GameScene::GameScene()
 						CVector3D(0, DtoR(0), 0),
 						CVector3D(0.9, 3, 0.9)
 					);
-				}
+				}*/
 
 				//ワープ用ボックス
 				new WarpRoomBox
@@ -208,26 +227,26 @@ GameScene::GameScene()
 		);
 
 		//クローゼット
-		new Closet
-		(
-			CVector3D(19, -0.1, 5.6),			//座標
-			CVector3D(0, DtoR(180), 0),		//回転値
-			CVector3D(0.9, 3, 0.9)			//当たり判定サイズ
-		);
+		//new Closet
+		//(
+		//	CVector3D(19, -0.1, 5.6),			//座標
+		//	CVector3D(0, DtoR(180), 0),		//回転値
+		//	CVector3D(0.9, 3, 0.9)			//当たり判定サイズ
+		//);
 
-		new Closet
-		(
-			CVector3D(-18, -0.1, -19),
-			CVector3D(0, DtoR(90), 0),
-			CVector3D(0.9, 3, 0.9)
-		);
+		//new Closet
+		//(
+		//	CVector3D(-18, -0.1, -19),
+		//	CVector3D(0, DtoR(90), 0),
+		//	CVector3D(0.9, 3, 0.9)
+		//);
 
-		new Closet
-		(
-			CVector3D(-18, -0.1, -19),
-			CVector3D(0, DtoR(90), 0),
-			CVector3D(0.9, 3, 0.9)
-		);
+		//new Closet
+		//(
+		//	CVector3D(-18, -0.1, -19),
+		//	CVector3D(0, DtoR(90), 0),
+		//	CVector3D(0.9, 3, 0.9)
+		//);
 
 		//ワープ用ボックス
 		new WarpRoomBox

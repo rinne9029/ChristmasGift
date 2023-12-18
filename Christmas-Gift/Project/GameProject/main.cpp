@@ -204,8 +204,11 @@ void Init(void)
 			ADD_RESOURCE("Father", CModel::CreateModel("Charactor/Enemy/father.a3m"));
 
 			//タンスモデル読み込み
-			ADD_RESOURCE("Item", CModel::CreateModel("object/tansu2.obj"));
-			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj"));
+			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj"));
+			//電話オブジェクト
+			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj",1,1,1));
+			//電気スイッチ
+			ADD_RESOURCE("Switch", CModel::CreateModel("object/switch.obj",1,1,1));
 			
 			//タイトル画像読み込み
 			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));

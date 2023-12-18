@@ -12,6 +12,7 @@ protected:
 	NavNode* m_navNode;
 	bool m_isGround;		//着地フラグ
 	CVector3D m_scale;		//キャラクター描画サイズ
+	float m_movespeed;		//移動速度
 public:
 	
 	//コンストラクタ

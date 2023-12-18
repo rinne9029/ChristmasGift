@@ -4,7 +4,7 @@
 class FieldWall : public ObjectBase
 {
 private:
-	
+	CModelObj m_model;
 public:
 	///<summary>
 	///コンストラクタ

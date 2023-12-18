@@ -10,23 +10,24 @@
 #include"Navigation/NavNode.h"
 #include"Navigation/NavManager.h"
 #include"GameScene/GameData.h"
-#include"Debug/DebugPrint.h"
-#include"Debug/DebugProfiler.h"
 
-//ジャンプ力
-#define JUMP 0.30f
 
-#define DownSpeed 0.20f
+#define JUMP 0.30f			//ジャンプ力
+#define WALK_SPEED 0.10f	//通常スピード
+#define DOWN_SPEED 0.05f	//しゃがみスピード
+#define RUN_SPEED 0.30f		//走りスピード
 
+
+//コンストラクタ
 Player::Player(const CVector3D& pos, const CVector3D& scale)
-	:CharaBase(ETaskTag::ePlayer,true)
+	:CharaBase(ETaskTag::ePlayer, true)
 	, mp_camera(nullptr)
 	, mp_filta(nullptr)
 	, mp_sleeplife(nullptr)
+	, mp_light(nullptr)
 	, m_hide(false)
-	, m_isFootFall(false)
+	, m_islegsound(false)
 	, m_CheckKill(false)
-	, m_Speed(0)
 	, key_ang(0.0f)
 	, m_copy_pos(0, 0, 0)
 	, m_HideCount(0)
@@ -37,8 +38,10 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	m_scale = scale;			//プレイヤー大きさ
 	m_height = 1.9f;			//高さ
 	m_rad = 0.3f;				//半径
-	m_lS = CVector3D(0, 0, 0);
-	m_lE = CVector3D(0, 0, 0);
+
+	//デバッグ用
+	m_lS = CVector3D(0, 0, 0);	//レイの始点
+	m_lE = CVector3D(0, 0, 0);	//レイの終点
 
 	//プレイヤーモデル読み込み
 	m_model = COPY_RESOURCE("Player", CModelA3M);
@@ -54,10 +57,12 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 
 }
 
+//デストラクタ
 Player::~Player()
 {
 }
 
+//通常状態
 void Player::StateIdle()
 {
 	
@@ -94,20 +99,20 @@ void Player::StateIdle()
 	}
 
 	//歩き速度
-	m_Speed = 0.10f;
+	m_movespeed = WALK_SPEED;
 
 	//シフトキー入力&&移動している
-	if (HOLD(CInput::eButton6) && m_isFootFall)
+	if (HOLD(CInput::eButton6) && m_islegsound)
 	{
 		//ダッシュ移動
-		m_Speed = 0.3f;
+		m_movespeed = RUN_SPEED;
 		GameData::BlueSleepSize -= 1.0f;
 	}
 
 	//スペースボタン入力
-	if (PUSH(CInput::eButton5) /*&& m_isGround*/)
+	if (PUSH(CInput::eButton5) && m_isGround)
 	{
-		//ジャンプ中のフラグ
+		//着地フラグOFF
 		m_isGround = false;
 		//ジャンプ
 		m_vec.y += JUMP;
@@ -127,10 +132,11 @@ void Player::StateIdle()
 
 }
 
+//しゃがみ状態
 void Player::StateSquat()
 {
 	//しゃがみスピードを代入
-	m_Speed = 0.02f;
+	m_movespeed = DOWN_SPEED;
 
 	//隠れ状態の切り替え
 	if (m_hide) m_hide = false;
@@ -138,17 +144,20 @@ void Player::StateSquat()
 	//コントロールボタン
 	if (PUSH(CInput::eButton7))
 	{
-		//通常状態へ移行
+		//立ちアニメーション
 		m_model.ChangeAnimation((int)AnimId::Stand);
+		//通常状態へ移行
 		m_state = eState_Idle;
 	}
 }
 
+//ハイド状態
 void Player::StateHide()
 {
 	//隠れている
 	m_hide = true;
 
+	//クローゼットの中心に移動
 	m_pos = m_Closet_pos;
 
 }
@@ -165,14 +174,9 @@ void Player::Update()
 	//ライト
 	if (!mp_light)mp_light = dynamic_cast<Light*>(TaskManager::FindObject(ETaskTag::eFieldLight));
 	
-	if (PUSH(CInput::eMouseL))
-	{
-		Shot();
-	}
-	
 	//当たり判定
-	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);
-	m_lineE = m_pos + CVector3D(0, m_rad, 0);
+	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);	//始点
+	m_lineE = m_pos + CVector3D(0, m_rad, 0);				//終点
 
 	//カメラ視点
 	//見下ろし視点
@@ -194,8 +198,14 @@ void Player::Update()
 	if (mp_filta->m_FadeinCheck)return;
 	if (mp_filta->m_FadeoutCheck)return;
 
+	//左クリックでレイを飛ばす
+	if (PUSH(CInput::eMouseL))
+	{
+		Shot();
+	}
+
 	//足音がでてない
-	m_isFootFall = false;
+	m_islegsound = false;
 
 	//キー方向ベクトルをリセット
 	CVector3D key_dir = CVector3D(0, 0, 0);
@@ -214,7 +224,7 @@ void Player::Update()
 		if (key_dir.LengthSq() > 0.1)
 		{
 			//足音が出ている
-			m_isFootFall = true;
+			m_islegsound = true;
 
 			//キーの方向ベクトルを角度に逆算する
 			key_ang = atan2(key_dir.x, key_dir.z);
@@ -223,7 +233,7 @@ void Player::Update()
 			CVector3D dir(sin(m_rot.y), 0, cos(m_rot.y));
 
 			//移動
-			m_pos += dir * m_Speed;
+			m_pos += dir * m_movespeed;
 
 			//移動アニメーション
 			if (m_state == eState_Idle)
@@ -281,7 +291,7 @@ void Player::Update()
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
 
-	//ノード配置確認用
+	//デバッグ用:kボタンでプレイヤーの座標を表示（ノード配置調整用）
 	if (PUSH(CInput::eButton12))
 	{
 		printf("CVector3D(%f,%f,%f),\n", m_pos.x,m_pos.y+1,m_pos.z);
@@ -300,6 +310,7 @@ void Player::Render()
 		m_model.Render();
 	}
 
+	//デバッグ用:レイの線を表示
 	float a = 10000;
 	Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), a);
 }
@@ -385,10 +396,10 @@ void Player::Shot()
 	//判定するレイの距離
 	const float range = 1.5f;
 	CVector3D dir = CMatrix::MRotation(mp_camera->m_rot).GetFront();
-	//始点
+	//レイの始点
 	CVector3D lineS = m_pos + mp_camera->m_pos;
 
-	//終点
+	//レイの終点
 	CVector3D lineE = m_pos + mp_camera->m_pos + dir * range;
 
 	//最も近いオブジェクトへの距離
@@ -419,12 +430,15 @@ void Player::Shot()
 		{
 			//レイとの衝突地点
 			CVector3D c;
+			CVector3D n;
 			//弾の線分でオブジェクトとの判定を行う
-			if (o->CollisionLine(lineS, lineE,mp_camera->m_dir,&c) >= 0)
+			//if (o->CollisionLine(lineS, lineE,mp_camera->m_dir,&c) >= 0)
+			if(o->CollisionRay(lineS,lineE,&c,&n))
 			{
 				//発射位置から最も近いオブジェクトを調べる
 				float l = (c - lineS).LengthSq();
-					if (dist > l) {
+					if (dist > l) 
+					{
 						dist = l;
 							hit_object = o;
 					}
@@ -436,6 +450,24 @@ void Player::Shot()
 	{
 		//処理を書く
 		printf("オブジェクトに当たった\n");
+
+		//電気を消す
+		auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
+		for (auto t : lightlist)
+		{
+			if (Light* l = dynamic_cast<Light*>(t))
+			{
+				if (l->m_lightOn == true && l->m_roomNo == ERoomNo::eKitchen_Dining_Room)
+				{
+					l->m_lightOn = false;
+				}
+				else
+				{
+					l->m_lightOn = true;
+				}
+
+			}
+		}
 		
 	}
 	else if (hit_field)

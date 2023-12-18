@@ -2,14 +2,13 @@
 #include"Field/Field.h"
 #include"Navigation/NavNode.h"
 #include"Navigation/NavManager.h"
-#include"Debug/DebugPrint.h"
-#include"Debug/DebugProfiler.h"
 
 //コンストラクタ
 CharaBase::CharaBase(ETaskTag tag,bool remove)
 	:ObjectBase(tag,remove)
 	, m_isGround(false)
 	, m_scale(0.0f, 0.0f, 0.0f)
+	, m_movespeed(0)
 {
 	m_remove = true;
 }
