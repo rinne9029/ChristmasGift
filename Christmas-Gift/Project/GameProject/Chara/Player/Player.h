@@ -5,6 +5,7 @@ class Camera;
 class Filta;
 class SleepLife;
 class Light;
+class GimmickObject;
 
 class Player : public CharaBase {
 public:

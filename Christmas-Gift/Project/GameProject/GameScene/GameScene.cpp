@@ -4,8 +4,8 @@
 //#include"Chara/Enemy/EnemyManager.h"
 #include"Camera/Camera.h"
 #include"Field/Field.h"
-#include"Field/Closet.h"
-#include"Field/GimmickObject.h"
+#include"Field/FieldObject/Closet.h"
+#include"Field/FieldObject/Telephone.h"
 #include"Light/Light.h"
 #include"CollisionHitBox/CollisionHitBox.h"
 #include"Title/Title.h"
@@ -20,7 +20,18 @@ GameScene::GameScene()
 	,mp_filta(nullptr)
 	,mp_player(nullptr)
 {
-	//m_remove = true;
+	FILE* fp = NULL;
+	S_STATUS  character[] = { CVector3D(0,0,0) };
+	int i;
+
+	//	セーブデータをバイナリの読み込みでオープン
+	fopen_s(&fp, "SaveData.bin", "rb");
+
+	//	キャラクターのステータスをファイルから復元(キャラクター:3人)
+	fread(character, sizeof(S_STATUS), sizeof(character) / sizeof(character[0]), fp);
+
+	
+
 
 	//ゲームスタート時はA_1ステージ
 	switch (GameData::Stage)
@@ -40,38 +51,55 @@ GameScene::GameScene()
 		//サンタ
 		new Player
 		(
-			CVector3D(-3.702046f, -0.589298f, 10.902628f),			//座標
-			CVector3D(0.01, 0.01, 0.01)						//モデルサイズ
+			character[0].pos,
+			character[0].size//モデルサイズ
 		);
 
-		new GimmickObject
+		new Closet
+		(
+			CVector3D(-4.702046f, -0.589298f, 6.602628f),			//座標
+			CVector3D(0, DtoR(180), 0),		//回転値
+			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+			2
+		);
+
+		new Telephone
 		(
 			CVector3D(0.342562, 0.231580, 10.509188),	//座標
 			CVector3D(0, DtoR(270), 0),					//回転値
 			CVector3D(3, 3, 3),							//オブジェクトの大きさ
-			//CVector3D(2,2,2),
-			CVector3D(0.25,0.1,0.25),					//obbの大きさ
-			0											//オブジェクトナンバー
+					//obbの大きさ
+			0
 		);
 
-		new GimmickObject
-		(
-			CVector3D(3.342562, 1.231580, 4.7),	//座標
-			CVector3D(0, DtoR(270), 0),							//回転値
-			CVector3D(0.25,0.25, 0.25),							//オブジェクトの大きさ
-			//CVector3D(2,2,2),
-			CVector3D(0.125, 0.35, 0.25),					//obbの大きさ
-			1										//オブジェクトナンバー
-		);
+		//new GimmickObject
+		//(
+		//	CVector3D(0.342562, 0.231580, 10.509188),	//座標
+		//	CVector3D(0, DtoR(270), 0),					//回転値
+		//	CVector3D(3, 3, 3),							//オブジェクトの大きさ
+		//	//CVector3D(2,2,2),
+		//	CVector3D(0.25,0.1,0.25),					//obbの大きさ
+		//	0											//オブジェクトナンバー
+		//);
 
-		new GimmickObject
-		(
-			CVector3D(-4.702046f, -0.589298f, 8.002628f),			//座標
-			CVector3D(0, DtoR(180), 0),		//回転値
-			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
-			CVector3D(0.8, 2, 0.8),			//当たり判定サイズ
-			2
-		);
+		//new GimmickObject
+		//(
+		//	CVector3D(3.342562, 1.231580, 4.7),	//座標
+		//	CVector3D(0, DtoR(270), 0),							//回転値
+		//	CVector3D(0.25,0.25, 0.25),							//オブジェクトの大きさ
+		//	//CVector3D(2,2,2),
+		//	CVector3D(0.125, 0.35, 0.25),					//obbの大きさ
+		//	1										//オブジェクトナンバー
+		//);
+
+		//new GimmickObject
+		//(
+		//	CVector3D(-4.702046f, -0.589298f, 8.002628f),			//座標
+		//	CVector3D(0, DtoR(180), 0),		//回転値
+		//	CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+		//	CVector3D(0.8, 2, 0.8),			//当たり判定サイズ
+		//	2
+		//);
 
 		//エネミー
 		/*new Enemy
@@ -264,6 +292,7 @@ GameScene::GameScene()
 	//フェードイン実行
 	mp_filta->m_FadeinCheck = true;
 	
+	fclose(fp);
 }
 
 GameScene::~GameScene()

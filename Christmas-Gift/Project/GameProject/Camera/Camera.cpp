@@ -1,7 +1,7 @@
 #include"Camera.h"
 #include"../Chara/Player/Player.h"
 #include"Field/Field.h"
-#include"Field/Closet.h"
+#include"Field/FieldObject/Closet.h"
 
 //コンストラクタ
 Camera::Camera(const CVector3D& pos, const CVector3D& rot)

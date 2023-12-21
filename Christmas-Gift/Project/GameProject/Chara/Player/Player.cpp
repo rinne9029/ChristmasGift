@@ -1,8 +1,8 @@
 #include"Player.h"
 #include"Field/Field.h"
-#include"Field/Closet.h"
+#include"Field/FieldObject/Closet.h"
 #include"Filta/Filta.h"
-#include"Field/GimmickObject.h"
+#include"Field/FieldObject/GimmickObjectBase.h"
 #include"Camera/Camera.h"
 #include"Light/Light.h"
 #include"UI/UI.h"
@@ -154,12 +154,18 @@ void Player::StateSquat()
 //ハイド状態
 void Player::StateHide()
 {
-	//隠れている
-	m_hide = true;
-
 	//クローゼットの中心に移動
 	m_pos = m_Closet_pos;
 
+	if (PUSH(CInput::eMouseL) && m_hide)
+	{
+		m_state = eState_Idle;
+		m_pos = m_copy_pos;
+	}
+	//隠れている
+	m_hide = true;
+
+	
 }
 
 //更新処理
@@ -346,7 +352,7 @@ void Player::Collision(Task* t)
 		}
 	}
 	break;
-	case ETaskTag::eHideBox:
+	case ETaskTag::eFieldObject:
 	{
 		float dist;
 		CVector3D axis;
@@ -365,24 +371,6 @@ void Player::Collision(Task* t)
 				//押し戻し
 				float s = m_rad - dist;
 				m_pos += axis * s;
-			}
-			//触れたクローゼットの座標を保存
-			m_Closet_pos = t->m_pos;
-
-			//触れたクローゼットの正面ベクトルを保存
-			m_Closet_rot = t->m_rot;
-
-			if (PUSH(CInput::eMouseL) && !m_hide)
-			{
-				m_copy_pos = m_pos;
-				//ハイド状態
-				m_HideAnim = !m_HideAnim;
-				m_state = eState_Hide;
-			}
-			else if (PUSH(CInput::eMouseL) && m_hide)
-			{
-				m_pos = m_copy_pos;
-				m_state = eState_Idle;
 			}
 		}
 	}
@@ -421,18 +409,17 @@ void Player::Shot()
 		}
 	}
 	//衝突したオブジェクト
-	GimmickObject* hit_object = nullptr;
+	GimmickObjectBase* hit_object = nullptr;
 	//全オブジェクトを探索
 	auto list = TaskManager::FindObjects(ETaskTag::eFieldObject);
 	for (auto t : list) 
 	{
-		if (GimmickObject* o = dynamic_cast<GimmickObject*>(t))
+		if (GimmickObjectBase* o = dynamic_cast<GimmickObjectBase*>(t))
 		{
 			//レイとの衝突地点
 			CVector3D c;
 			CVector3D n;
 			//弾の線分でオブジェクトとの判定を行う
-			//if (o->CollisionLine(lineS, lineE,mp_camera->m_dir,&c) >= 0)
 			if(o->CollisionRay(lineS,lineE,&c,&n))
 			{
 				//発射位置から最も近いオブジェクトを調べる
@@ -448,27 +435,74 @@ void Player::Shot()
 	//最も近いオブジェクトに当たる
 	if (hit_object)
 	{
-		//処理を書く
-		printf("オブジェクトに当たった\n");
-
-		//電気を消す
-		auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
-		for (auto t : lightlist)
+		//当たっているオブジェクトのナンバーに応じて処理を変更
+		switch (hit_object->m_no)
 		{
-			if (Light* l = dynamic_cast<Light*>(t))
+		case 0:
+		{
+			//処理を書く
+			printf("受話器に当たった\n");
+		}
+		break;
+		case 1:
+		{
+			printf("スイッチに当たった\n");
+			//電気を消す
+			auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
+			for (auto t : lightlist)
 			{
-				if (l->m_lightOn == true && l->m_roomNo == ERoomNo::eKitchen_Dining_Room)
+				if (Light* l = dynamic_cast<Light*>(t))
 				{
-					l->m_lightOn = false;
+					switch (l->m_roomNo)
+					{
+					case ERoomNo::eKitchen_Dining_Room:
+					{
+						if (l->m_lightOn)
+						{
+							l->m_lightOn = false;
+						}
+						else
+						{
+							l->m_lightOn = true;
+						}
+					}
+					break;
+					case ERoomNo::eLiving_Room:
+					{
+						if (l->m_lightOn)
+						{
+							l->m_lightOn = false;
+						}
+						else
+						{
+							l->m_lightOn = true;
+						}
+					}
+					break;
+					}
 				}
-				else
-				{
-					l->m_lightOn = true;
-				}
-
 			}
 		}
-		
+		break;
+		case 2:
+		{
+			printf("タンスに触った\n");
+			//触れたクローゼットの座標を保存
+			m_Closet_pos = hit_object->m_pos;
+
+			//触れたクローゼットの正面ベクトルを保存
+			m_Closet_rot = hit_object->m_rot;
+
+			if (PUSH(CInput::eMouseL) && !m_hide)
+			{
+				m_copy_pos = m_pos;
+				//ハイド状態
+				//m_HideAnim = !m_HideAnim;
+				m_state = eState_Hide;
+			}
+		}
+		break;
+		}
 	}
 	else if (hit_field)
 	{

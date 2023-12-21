@@ -1,5 +1,6 @@
 #include"CharaBase.h"
 #include"Field/Field.h"
+#include"Field/FieldObject/GimmickObjectBase.h"
 #include"Navigation/NavNode.h"
 #include"Navigation/NavManager.h"
 

@@ -3,7 +3,7 @@
 #include"Chara/Player/Player.h"	//プレイヤー
 #include"Chara/Enemy/Enemy.h"	//敵
 #include"Field/Field.h"			//ステージ
-#include"Field/Closet.h"		//クローゼット
+#include"Field/FieldObject/Closet.h"		//クローゼット
 #include"Item/Item.h"			//アイテム
 #include"Filta/Filta.h"			//フィルター
 #include"Chara/Enemy/EnemyManager.h"
@@ -204,7 +204,7 @@ void Init(void)
 			ADD_RESOURCE("Father", CModel::CreateModel("Charactor/Enemy/father.a3m"));
 
 			//タンスモデル読み込み
-			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj"));
+			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
 			//電話オブジェクト
 			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj",1,1,1));
 			//電気スイッチ

@@ -10,6 +10,13 @@ private:
 	Player* mp_player;
 	Filta* mp_filta;
 
+	typedef struct
+	{
+		CVector3D		pos;
+		CVector3D		size;
+	} S_STATUS;
+
+
 public:
 	//GameData::StageId enumId;
 public:

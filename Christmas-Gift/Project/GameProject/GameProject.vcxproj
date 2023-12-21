@@ -20,10 +20,11 @@
     <ClInclude Include="CollisionHitBox\CollisionHitBox.h" />
     <ClInclude Include="Debug\DebugPrint.h" />
     <ClInclude Include="Debug\DebugProfiler.h" />
-    <ClInclude Include="Field\Closet.h" />
     <ClInclude Include="Field\Field.h" />
     <ClInclude Include="Field\FieldFloor.h" />
-    <ClInclude Include="Field\GimmickObject.h" />
+    <ClInclude Include="Field\FieldObject\Closet.h" />
+    <ClInclude Include="Field\FieldObject\GimmickObjectBase.h" />
+    <ClInclude Include="Field\FieldObject\Telephone.h" />
     <ClInclude Include="Field\FieldWall.h" />
     <ClInclude Include="Filta\Filta.h" />
     <ClInclude Include="GameScene\GameData.h" />
@@ -49,10 +50,11 @@
     <ClCompile Include="CollisionHitBox\CollisionHitBox.cpp" />
     <ClCompile Include="Debug\DebugPrint.cpp" />
     <ClCompile Include="Debug\DebugProfiler.cpp" />
-    <ClCompile Include="Field\Closet.cpp" />
     <ClCompile Include="Field\Field.cpp" />
     <ClCompile Include="Field\FieldFloor.cpp" />
-    <ClCompile Include="Field\GimmickObject.cpp" />
+    <ClCompile Include="Field\FieldObject\Closet.cpp" />
+    <ClCompile Include="Field\FieldObject\GimmickObjectBase.cpp" />
+    <ClCompile Include="Field\FieldObject\Telephone.cpp" />
     <ClCompile Include="Field\FieldWall.cpp" />
     <ClCompile Include="Filta\Filta.cpp" />
     <ClCompile Include="GameScene\GameData.cpp" />

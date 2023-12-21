@@ -41,9 +41,6 @@
     <ClInclude Include="Base\Base.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="Field\Closet.h">
-      <Filter>Field</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionHitBox\CollisionHitBox.h">
       <Filter>CollisionHitBox</Filter>
     </ClInclude>
@@ -74,11 +71,17 @@
     <ClInclude Include="UI\UI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Field\GimmickObject.h">
-      <Filter>Field</Filter>
-    </ClInclude>
     <ClInclude Include="Light\Light.h">
       <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Field\FieldObject\Closet.h">
+      <Filter>Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Field\FieldObject\GimmickObjectBase.h">
+      <Filter>Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Field\FieldObject\Telephone.h">
+      <Filter>Field\FieldObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +139,9 @@
     <Filter Include="Light">
       <UniqueIdentifier>{6c641b77-845b-40bb-8367-3daa33eaf3ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Field\FieldObject">
+      <UniqueIdentifier>{1cd9d87e-6214-4d3a-90d4-c08adaf218db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -178,9 +184,6 @@
     <ClCompile Include="Base\Base.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Field\Closet.cpp">
-      <Filter>Field</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionHitBox\CollisionHitBox.cpp">
       <Filter>CollisionHitBox</Filter>
     </ClCompile>
@@ -211,11 +214,17 @@
     <ClCompile Include="UI\UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Field\GimmickObject.cpp">
-      <Filter>Field</Filter>
-    </ClCompile>
     <ClCompile Include="Light\Light.cpp">
       <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Field\FieldObject\Closet.cpp">
+      <Filter>Field\FieldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Field\FieldObject\GimmickObjectBase.cpp">
+      <Filter>Field\FieldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Field\FieldObject\Telephone.cpp">
+      <Filter>Field\FieldObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
