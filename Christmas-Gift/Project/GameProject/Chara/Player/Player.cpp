@@ -12,7 +12,7 @@
 #include"GameScene/GameData.h"
 
 
-#define JUMP 0.30f			//ジャンプ力
+#define JUMP 0.20f			//ジャンプ力
 #define WALK_SPEED 0.10f	//通常スピード
 #define DOWN_SPEED 0.05f	//しゃがみスピード
 #define RUN_SPEED 0.30f		//走りスピード
@@ -34,8 +34,29 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, m_HideAnim(false)
 	, m_state(eState_Idle)
 {
-	m_pos = pos;				//プレイヤー初期座標
-	m_scale = scale;			//プレイヤー大きさ
+
+	FILE* fp = NULL;
+
+	//	セーブデータをバイナリの読み込みでオープン
+	fopen_s(&fp, "PlayerData.txt", "r");
+	if (!fp) return;
+
+	char buf[256] = "";
+
+	while (!feof(fp))
+	{
+		fgets(buf, 256, fp);
+		CVector3D Pos(0, 0, 0);
+		CVector3D Size(0, 0, 0);
+
+		sscanf_s(buf, "%f %f %f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Size.x, &Size.y, &Size.z);
+
+		m_pos = Pos;
+		m_scale = Size;
+	}
+
+	fclose(fp);
+
 	m_height = 1.9f;			//高さ
 	m_rad = 0.3f;				//半径
 

@@ -1,5 +1,7 @@
 #pragma once
 
+//全てのオブジェクトのベース
+
 class ObjectBase : public Task
 {
 private:
@@ -30,8 +32,4 @@ public:
 	ObjectBase(ETaskTag tag,bool remove);
 	//デストラクタ
 	virtual ~ObjectBase();
-
-	/*ETaskTag GetTag() {
-		return m_tag;
-	}*/
 };

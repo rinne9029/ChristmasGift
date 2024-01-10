@@ -1,0 +1,133 @@
+# Blender 3.5.0 MTL File: 'デバッグステージ１壁.blend'
+# www.blender.org
+
+newmtl Adler_Dark_Wood.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd AdlerWood_01_A.png
+map_d AdlerWood_01_A.png
+map_Bump -bm 1.000000 AdlerWood_01_N.png
+
+newmtl Brushed_Metal_Brass.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BrushedMetal_A.png
+map_Bump -bm 0.600000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BrushedMetal_N.png
+
+newmtl Brushed_Metal_Gold.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BrushedMetal_A.png
+map_Bump -bm 0.500000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BrushedMetal_N.png
+
+newmtl Fabric_01_White.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Fabric_01_A.png
+map_Bump -bm 1.000000 Fabric_01_N.png
+
+newmtl Fireplace_01_cast.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd fireplace_01_cast_ALBEDO.png
+map_d fireplace_01_cast_ALBEDO.png
+map_Bump -bm 1.000000 fireplace_01_cast_NORMAL.png
+
+newmtl Int_Apt_01.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Int_Apt_01_A.png
+map_d Int_Apt_01_A.png
+map_Bump -bm 1.000000 Int_Apt_01_N.png
+
+newmtl Leather_02.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Leather_A.png
+map_Bump -bm 1.770000 Leather_N.png
+
+newmtl Porcelain_01.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl White_Wood.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd White Wood.png
+map_Bump -bm 1.000000 White Wood_normal.png
+
+newmtl Wooden_Floor.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Wooden Floor_4K_Albedo.png
+map_Bump -bm 1.000000 Wooden Floor_4K_Normal.png
+
+newmtl Wooden_Floor_2.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Wooden Floor2_4K_Albedo.png
+map_Bump -bm 1.000000 Wooden Floor2_4K_Normal.png
+
+newmtl Wooden_Floor_4.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Wooden Floor4_4K_Albedo.png
+map_Bump -bm 1.000000 Wooden Floor4_4K_Normal.png

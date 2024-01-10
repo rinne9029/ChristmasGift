@@ -15,8 +15,8 @@ enum class ETaskTag
 	eEnemy,						//敵
 	eNavNode,					//ノード
 	eHideBox,					//隠れられる箱
+	eCollisionBox,				//アクション用当たり判定
 	eWarpRoomBox,				//マップ移動用透明な当たり判定
-	eWarpChildRoomBox,			//子供部屋移動用透明な当たり判定
 	eEnemyManager,				//エネミーマネージャー
 	eNavManager,				//ノードマネージャー
 	eUI,
@@ -47,7 +47,7 @@ public:
 	//箱形用
 	COBB m_obb;				//箱形
 
-	int m_kill;				//削除フラグ
+	//int m_kill;				//削除フラグ
 
 private:
 	//ETaskTag m_tag;			//タスクの種類
@@ -72,7 +72,7 @@ public:
 	}
 
 	//オブジェクト同士の当たり判定検証
-	virtual void Task::Collision(Task* t);
+	virtual void Collision(Task* t);
 
 	//削除フラグを取得
 	bool IsKill() const;
@@ -88,4 +88,6 @@ public:
 
 	//2D描画処理
 	virtual void Draw();
+
+	friend class TaskManager;
 };

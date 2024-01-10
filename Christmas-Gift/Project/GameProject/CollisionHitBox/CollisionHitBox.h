@@ -19,19 +19,4 @@ public:
 	void Collision(Task* t);
 };
 
-class WarpChildRoomBox : public ObjectBase {
-private:
-	CVector3D m_size;		//大きさ
-public:
-	//コンストラクタ
-	WarpChildRoomBox(const CVector3D& pos, const CVector3D& rot, const CVector3D& size);
-
-	//描画処理
-	void Render();
-
-	//衝突処理
-	void Collision(Task* t);
-
-};
-
 

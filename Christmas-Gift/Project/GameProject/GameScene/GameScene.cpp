@@ -10,6 +10,8 @@
 #include"CollisionHitBox/CollisionHitBox.h"
 #include"Title/Title.h"
 #include"Filta/Filta.h"
+#include"CollisionHitBox/MidPoint.h"
+#include"CollisionHitBox/EndPoint.h"
 #include"Navigation/NavManager.h"
 #include"UI/UI.h"
 #include"GameData.h"
@@ -20,6 +22,8 @@ GameScene::GameScene()
 	,mp_filta(nullptr)
 	,mp_player(nullptr)
 {
+	GameData::isGift = false;
+
 	FILE* fp = NULL;
 	S_STATUS  character[] = { CVector3D(0,0,0) };
 	int i;
@@ -51,8 +55,30 @@ GameScene::GameScene()
 		//サンタ
 		new Player
 		(
-			character[0].pos,
+			CVector3D(0, 0, 0),
 			character[0].size//モデルサイズ
+		);
+
+		//仮のプレゼント設置ポイント
+		/*new MidPoint
+		(
+			CVector3D(0, 0, 0),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1)
+		);*/
+
+		new MidPoint
+		(
+			CVector3D(5.998150, 10.053699, 0.179571),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1)
+		);
+
+		new EndPoint
+		(
+			CVector3D(4.555758, 0, 6.188184),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1)
 		);
 
 		new Closet
@@ -130,12 +156,12 @@ GameScene::GameScene()
 		//	CVector3D(0.9, 3, 0.9)
 		//);
 
-		new WarpRoomBox
+		/*new WarpRoomBox
 		(
-			CVector3D(34.5, 0, -42),
+			CVector3D(5,0,0),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 0.5, 0.5)
-		);
+		);*/
 
 		/*new WarpChildRoomBox
 		(
@@ -218,12 +244,12 @@ GameScene::GameScene()
 				}*/
 
 				//ワープ用ボックス
-				new WarpRoomBox
+				/*new WarpRoomBox
 				(
 					CVector3D(34.5, 0, 30),
 					CVector3D(0, 0, 0),
 					CVector3D(1, 0.5, 0.5)
-				);
+				);*/
 
 				new SleepLife();			//睡眠ゲージ
 		break;
@@ -277,12 +303,12 @@ GameScene::GameScene()
 		//);
 
 		//ワープ用ボックス
-		new WarpRoomBox
+		/*new WarpRoomBox
 		(
 			CVector3D(34.5, 0, -42),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 0.5, 0.5)
-		);
+		);*/
 
 		new SleepLife();			//睡眠ゲージ
 		break;
@@ -298,7 +324,7 @@ GameScene::GameScene()
 GameScene::~GameScene()
 {
 	//プレイヤーが死亡or勝利状態なら
-	if (mp_player->m_CheckKill == true)
+	if (mp_player->m_CheckKill == true || GameData::isGift == true)
 	{
 		new Title();
 	}

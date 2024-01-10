@@ -41,9 +41,6 @@
     <ClInclude Include="Base\Base.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionHitBox\CollisionHitBox.h">
-      <Filter>CollisionHitBox</Filter>
-    </ClInclude>
     <ClInclude Include="Navigation\NavManager.h">
       <Filter>Navigation</Filter>
     </ClInclude>
@@ -82,6 +79,15 @@
     </ClInclude>
     <ClInclude Include="Field\FieldObject\Telephone.h">
       <Filter>Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionHitBox\CollisionBoxBase.h">
+      <Filter>CollisionHitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionHitBox\MidPoint.h">
+      <Filter>CollisionHitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionHitBox\EndPoint.h">
+      <Filter>CollisionHitBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +190,6 @@
     <ClCompile Include="Base\Base.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionHitBox\CollisionHitBox.cpp">
-      <Filter>CollisionHitBox</Filter>
-    </ClCompile>
     <ClCompile Include="Navigation\NavManager.cpp">
       <Filter>Navigation</Filter>
     </ClCompile>
@@ -225,6 +228,15 @@
     </ClCompile>
     <ClCompile Include="Field\FieldObject\Telephone.cpp">
       <Filter>Field\FieldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionHitBox\CollisionBoxBase.cpp">
+      <Filter>CollisionHitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionHitBox\MidPoint.cpp">
+      <Filter>CollisionHitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionHitBox\EndPoint.cpp">
+      <Filter>CollisionHitBox</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

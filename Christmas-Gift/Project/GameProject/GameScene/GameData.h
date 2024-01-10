@@ -15,6 +15,7 @@ public:
 	static bool Start;
 	static bool ChengeStage;
 	static float BlueSleepSize;		//睡眠ゲージのメーター
+	static bool isGift;				//プレゼント設置フラグ
 
 
 

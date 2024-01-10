@@ -133,7 +133,7 @@ void TaskManager::Draw()
 Task* TaskManager::FindObject(ETaskTag tag) {
 
 	for (auto& b : m_taskList) {
-		if (b->GetTag() == tag && !b->m_kill) return b;
+		if (b->GetTag() == tag && !b->m_isKill) return b;
 	}
 	return nullptr;
 }
@@ -153,11 +153,11 @@ void TaskManager::Collision() {
 	auto itr = m_taskList.begin();
 	//––”ö‚Ü‚ÅŒJ‚è•Ô‚·
 	while (itr != m_taskList.end()) {
-		if (!(*itr)->m_kill) {
+		if (!(*itr)->m_isKill) {
 			auto ct = itr;
 			ct++;
 			while (ct != m_taskList.end()) {
-				if (!(*ct)->m_kill) {
+				if (!(*ct)->m_isKill) {
 					(*itr)->Collision(*ct);
 					(*ct)->Collision(*itr);
 				}
