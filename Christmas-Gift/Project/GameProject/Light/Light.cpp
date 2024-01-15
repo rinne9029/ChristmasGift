@@ -1,9 +1,9 @@
 #include "Light.h"
 
 //コンストラクタ
-Light::Light(CVector3D& pos,int no,ERoomNo roomno)
+Light::Light(CVector3D& pos,int no,int roomno)
 	:ObjectBase(ETaskTag::eFieldLight,true)
-	,m_lightOn(true)
+	,m_islight(true)
 	,m_roomNo(roomno)
 	,m_no(no)
 {
@@ -24,7 +24,7 @@ void Light::Update()
 	CLight::SetRange(m_no, 5.0f);
 	CLight::SetPos(m_no, m_pos);
 	//ライトがついている時
-	if (m_lightOn)
+	if (m_islight)
 	{
 		CLight::SetColor(m_no, CVector3D(0, 0, 0), CVector3D(1.0, 1.0, 0.9));
 	}

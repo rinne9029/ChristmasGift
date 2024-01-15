@@ -163,9 +163,9 @@ void Init(void)
 	CLight::SetPos(0, CVector3D(0, 200, 200));
 	CLight::SetDir(0, CVector3D(-1, -2, 1).GetNormalize());
 	//基本は暗く
-	//CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.0f, 0.0f, 0.0f));
-	
-	CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
+	CLight::SetColor(0, CVector3D(0.1f, 0.1f, 0.1f), CVector3D(0.1f, 0.1f, 0.1f));
+
+	//CLight::SetColor(0, CVector3D(0.2f, 0.2f, 0.2f), CVector3D(0.8f, 0.8f, 0.8f));
 
 	CLight::SetFogParam(CVector4D(1, 1, 1, 1), 700, 800);
 
@@ -206,9 +206,11 @@ void Init(void)
 
 			//タンスモデル読み込み
 			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
-			//電話オブジェクト
+			//プレゼントボックスモデル読み込み
+			ADD_RESOURCE("PresentBox", CModel::CreateModel("object/presentbox.obj", 1, 1, 1));
+			//電話オブジェクト読み込み
 			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj",1,1,1));
-			//電気スイッチ
+			//電気スイッチ読み込み
 			ADD_RESOURCE("Switch", CModel::CreateModel("object/switch.obj",1,1,1));
 			
 			//タイトル画像読み込み
@@ -218,7 +220,9 @@ void Init(void)
 
 			//フィルター画像読み込み
 			ADD_RESOURCE("Filta", CImage::CreateImage("Filta/Filta.png"));
-			
+			//ツールチップ用画像読み込み
+			ADD_RESOURCE("MouseL", CImage::CreateImage("UI/MouseL.png"));
+
 			//自作ステージ
 			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 7, 4, 7));
 			//ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/Map.obj", 7, 4,7));

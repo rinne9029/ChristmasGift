@@ -1,12 +1,11 @@
 #include"Field/FieldObject/GimmickObjectBase.h"
 
-GimmickObjectBase::GimmickObjectBase(const CVector3D& pos,const CVector3D& rot,const CVector3D& size,int no, ETaskTag tag,bool remove)
+GimmickObjectBase::GimmickObjectBase(const CVector3D& pos,const CVector3D& rot,const CVector3D& size, ETaskTag tag,bool remove)
 	:ObjectBase(ETaskTag::eFieldObject,true)
 {
 	m_pos = pos;	//ç¿ïW
 	m_rot = rot;	//âÒì]íl
 	m_size = size;	//ëÂÇ´Ç≥
-	m_no = no;
 }
 
 GimmickObjectBase::~GimmickObjectBase()

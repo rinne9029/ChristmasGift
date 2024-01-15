@@ -24,7 +24,7 @@ void EndPoint::Collision(Task* t)
 		CVector3D axis;
 		if (CCollision::CollisionOBBCapsule(m_obb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
-			if (PUSH(CInput::eButton9) && GameData::isGift == true)
+			if (PUSH(CInput::eMouseL) && GameData::isGift == true)
 			{
 				TaskManager::KillALL();
 			}

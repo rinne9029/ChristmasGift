@@ -65,9 +65,6 @@
     <ClInclude Include="Debug\DebugProfiler.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="UI\UI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="Light\Light.h">
       <Filter>Light</Filter>
     </ClInclude>
@@ -88,6 +85,18 @@
     </ClInclude>
     <ClInclude Include="CollisionHitBox\EndPoint.h">
       <Filter>CollisionHitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\PresentBox.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Field\FieldObject\Switch.h">
+      <Filter>Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SleepLife.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ToolTips.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -214,9 +223,6 @@
     <ClCompile Include="Debug\DebugProfiler.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="UI\UI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="Light\Light.cpp">
       <Filter>Light</Filter>
     </ClCompile>
@@ -237,6 +243,18 @@
     </ClCompile>
     <ClCompile Include="CollisionHitBox\EndPoint.cpp">
       <Filter>CollisionHitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\PresentBox.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Field\FieldObject\Switch.cpp">
+      <Filter>Field\FieldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SleepLife.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ToolTips.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

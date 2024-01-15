@@ -1,7 +1,7 @@
 # Blender 3.5.0 MTL File: 'デバッグステージ１床.blend'
 # www.blender.org
 
-newmtl Adler_Dark_Wood.001
+newmtl Adler_Dark_Wood
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -12,7 +12,7 @@ map_Kd AdlerWood_01_A.png
 map_d AdlerWood_01_A.png
 map_Bump -bm 1.000000 AdlerWood_01_N.png
 
-newmtl Adler_Light_Wood.001
+newmtl Adler_Light_Wood
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -23,7 +23,7 @@ map_Kd AdlerWood_01_A.png
 map_d AdlerWood_01_A.png
 map_Bump -bm 1.000000 AdlerWood_01_N.png
 
-newmtl Antique.001
+newmtl Antique
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.264151 0.161356 0.058562
@@ -33,7 +33,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl BA_Color_Black_01.001
+newmtl BA_Color_Black_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.000000 0.000000 0.000000
@@ -43,7 +43,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl BA_Glass_02.001
+newmtl BA_Glass_02
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -53,7 +53,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl BA_Glass_03.001
+newmtl BA_Glass_03
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -63,7 +63,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl BA_Glow_White_01.001
+newmtl BA_Glow_White_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -73,7 +73,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl BA_Wood_03.001
+newmtl BA_Wood_03
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -84,7 +84,7 @@ illum 2
 map_Kd BA_Wood_01_A.png
 map_Bump -bm 0.700000 BA_Wood_01_N.png
 
-newmtl BR_Tile_01_Mod.001
+newmtl BR_Tile_01_Mod
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -95,7 +95,7 @@ map_Kd BR_Tile_01_A.png
 map_d BR_Tile_01_A.png
 map_Bump -bm 1.250000 BR_Tile_01_N.png
 
-newmtl Brushed_Metal_Antique.001
+newmtl Brushed_Metal_Antique
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -106,7 +106,7 @@ illum 2
 map_Kd BrushedMetal_A.png
 map_Bump -bm 1.000000 BrushedMetal_N.png
 
-newmtl Brushed_Metal_Brass.001
+newmtl Brushed_Metal_Brass
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -117,7 +117,7 @@ illum 2
 map_Kd BrushedMetal_A.png
 map_Bump -bm 0.600000 BrushedMetal_N.png
 
-newmtl Brushed_Metal_Gold.001
+newmtl Brushed_Metal_Gold
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -126,9 +126,9 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd BrushedMetal_A.png
-map_Bump -bm 0.500000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BrushedMetal_N.png
+map_Bump -bm 0.500000 BrushedMetal_N.png
 
-newmtl Building_Floor_Tile.001
+newmtl Building_Floor_Tile
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -139,7 +139,7 @@ illum 2
 map_Kd Building Floor Tile - 01.png
 map_Bump -bm 0.500000 Building Floor Tile - 01 - normal.png
 
-newmtl Cabinets_02.001
+newmtl Cabinets_02
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.061321 0.091478 0.245283
@@ -149,7 +149,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Canvas_Painting_01.001
+newmtl Canvas_Painting_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -160,7 +160,7 @@ map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Comm
 map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Pattern_01.png
 map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/Painting_N.png
 
-newmtl Canvas_Painting_02.001
+newmtl Canvas_Painting_02
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -171,7 +171,7 @@ map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Comm
 map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Pattern_02.png
 map_Bump -bm 1.500000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/Painting_N.png
 
-newmtl CastIron_01.001
+newmtl CastIron_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -182,17 +182,17 @@ illum 2
 map_Kd CastIron_A.png
 map_Bump -bm 1.250000 CastIron_N.png
 
-newmtl Chessboard.001
+newmtl Chessboard
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 2
-map_Kd Chessboard_01_A.png
-map_d Chessboard_01_A.png
+map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Chessboard_01_A.png
+map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Chessboard_01_A.png
 
-newmtl Colors_apt_01.001
+newmtl Colors_apt_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -202,7 +202,7 @@ illum 2
 map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Colors_apt.png
 map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Colors_apt.png
 
-newmtl Colors_apt_02.001
+newmtl Colors_apt_02
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -213,7 +213,7 @@ illum 2
 map_Kd Colors_apt_02_A.png
 map_Bump -bm 1.000000 Colors_apt_02_N.png
 
-newmtl Glass_Wine_Bottle_05.001
+newmtl Glass_Wine_Bottle_05
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.022059 0.022059 0.022059
@@ -223,7 +223,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Glass_Wine_Bottle_Wrapper_02.001
+newmtl Glass_Wine_Bottle_Wrapper_02
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.634000 0.433000 0.091000
@@ -233,7 +233,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Label.001
+newmtl Label
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -243,7 +243,7 @@ illum 2
 map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Wine Bottle Label_04.png
 map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/Wine Bottle Label_04.png
 
-newmtl Leather_01.001
+newmtl Leather_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -254,7 +254,7 @@ illum 2
 map_Kd Leather_A.png
 map_Bump -bm 1.770000 Leather_N.png
 
-newmtl Marble_Dark.001
+newmtl Marble_Dark
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -265,7 +265,7 @@ illum 2
 map_Kd Marble_Dark_01_A.png
 map_Bump -bm 1.000000 Marble_Dark_01_N.png
 
-newmtl Plastic_01.001
+newmtl Plastic_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -276,7 +276,7 @@ illum 2
 map_Kd Plastic_01_A.png
 map_Bump -bm 0.750000 Plastic_01_N.png
 
-newmtl Porcelain_01.001
+newmtl Porcelain_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -286,7 +286,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl ProBuilderDefault.001
+newmtl ProBuilderDefault
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -296,7 +296,7 @@ illum 2
 map_Kd GridBox_Default.png
 map_d GridBox_Default.png
 
-newmtl Red_Wine.001
+newmtl Red_Wine
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.070588 0.000000 0.015686
@@ -306,7 +306,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Shiny_Metal_01.001
+newmtl Shiny_Metal_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.745283 0.745283 0.745283
@@ -316,7 +316,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Shiny_Metal_04.001
+newmtl Shiny_Metal_04
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.830189 0.830189 0.830189
@@ -326,7 +326,7 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Wooden_Floor.001
+newmtl Wooden_Floor
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -334,10 +334,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Wooden Floor_4K_Albedo.png
-map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor/Wooden Floor_4K_Normal.tga
+map_Kd Wooden Floor4_4K_Albedo.png
+map_Bump -bm 1.000000 Wooden Floor4_4K_Normal.png
 
-newmtl Wooden_Floor_2.001
+newmtl Wooden_Floor_2
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -346,4 +346,4 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd Wooden Floor2_4K_Albedo.png
-map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor2/Wooden Floor2_4K_Normal.tga
+map_Bump -bm 1.000000 Wooden Floor2_4K_Normal.png

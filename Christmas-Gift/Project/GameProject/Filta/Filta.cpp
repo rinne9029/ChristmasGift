@@ -12,7 +12,6 @@ Filta::Filta()
 	, m_FadeoutCheck(false)
 {
 	m_filta = COPY_RESOURCE("Filta", CImage);
-	//m_remove = false;
 }
 
 Filta::~Filta()

@@ -5,28 +5,26 @@ class Camera;
 class Filta;
 class SleepLife;
 class Light;
+class Switch;
 class GimmickObject;
+class ToolTips;
+
+//プレイヤー機能クラス
 
 class Player : public CharaBase {
-public:
-	bool m_hide;			//ステルス状態フラグ
-	bool m_islegsound;		//足音のフラグ
-	bool m_CheckKill;		//プレイヤー死亡フラグ
-
-	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
-	CVector3D m_Closet_pos;	//クローゼット内部の座標
 private:
 	Camera* mp_camera;		//カメラ
 	Filta* mp_filta;		//フィルター
 	SleepLife* mp_sleeplife;//睡眠ゲージ
-	Light* mp_light;		//ライト
+	Light* mp_light;		//電気
+	Switch* mp_switch;		//スイッチ
+	ToolTips* m_tooltips;
 
 	float key_ang;			//方向ベクトルの角度
-	CVector3D m_copy_pos;	//タンスに入るときのプレイヤーの座標
-	int m_HideCount;
-	bool m_HideAnim;
+	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
 
 	CModelA3M m_model;		//モデルデータ
+	
 
 	
 	//デバッグ用
@@ -61,6 +59,12 @@ private:
 	void StateHide();
 
 public:
+	bool m_hide;			//ステルス状態フラグ
+	bool m_islegsound;		//足音のフラグ
+	bool m_CheckKill;		//プレイヤー死亡フラグ
+
+	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
+	CVector3D m_Closet_pos;	//クローゼット内部の座標
 	//コンストラクタ
 	Player(const CVector3D& pos, const CVector3D& scale);
 

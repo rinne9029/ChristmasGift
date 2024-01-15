@@ -16,7 +16,7 @@
 //‰ñ“]‘¬“x
 #define ROTATE_SPEED 6.0f
 
-Enemy::Enemy(const CVector3D& pos, const CVector3D& scale)
+Enemy::Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	:CharaBase(ETaskTag::eEnemy,true)
 	, mp_player(nullptr)
 	, m_moveDir(0.0f, 0.0f, 0.0f)
@@ -33,6 +33,7 @@ Enemy::Enemy(const CVector3D& pos, const CVector3D& scale)
 	m_model = COPY_RESOURCE("Father", CModelA3M);
 
 	m_pos = pos;			//‰ŠúÀ•W
+	m_rot = rot;			//‰Šú•ûŒü
 	m_scale = scale;		//ƒ‚ƒfƒ‹‘å‚«‚³
 
 	m_rad = 0.3f;			//”¼Œa

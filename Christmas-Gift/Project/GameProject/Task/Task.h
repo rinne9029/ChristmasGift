@@ -10,6 +10,7 @@ enum class ETaskTag
 	eFieldWall,					//壁
 	eFieldLight,				//ステージに設置したライト
 	eFieldObject,				//ステージにあるギミックオブジェクト
+	eObject,					//ただのオブジェクト
 	eCamera,					//カメラ
 	ePlayer,					//プレイヤー
 	eEnemy,						//敵

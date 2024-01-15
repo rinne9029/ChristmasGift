@@ -5,13 +5,15 @@
 #include"Field/FieldObject/GimmickObjectBase.h"
 #include"Camera/Camera.h"
 #include"Light/Light.h"
-#include"UI/UI.h"
+#include"Field/FieldObject/Switch.h"
+#include"UI/SleepLife.h"
+#include"UI/ToolTips.h"
 #include"GameScene/GameScene.h"
 #include"Navigation/NavNode.h"
 #include"Navigation/NavManager.h"
 #include"GameScene/GameData.h"
 
-
+//マクロ
 #define JUMP 0.20f			//ジャンプ力
 #define WALK_SPEED 0.10f	//通常スピード
 #define DOWN_SPEED 0.05f	//しゃがみスピード
@@ -25,14 +27,13 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, mp_filta(nullptr)
 	, mp_sleeplife(nullptr)
 	, mp_light(nullptr)
-	, m_hide(false)
-	, m_islegsound(false)
-	, m_CheckKill(false)
-	, key_ang(0.0f)
-	, m_copy_pos(0, 0, 0)
-	, m_HideCount(0)
-	, m_HideAnim(false)
-	, m_state(eState_Idle)
+	, mp_switch(nullptr)
+	, m_tooltips(nullptr)
+	, key_ang(0.0f)				
+	, m_hide(false)				
+	, m_islegsound(false)		
+	, m_CheckKill(false)						
+	, m_state(eState_Idle)		
 {
 
 	FILE* fp = NULL;
@@ -57,6 +58,8 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 
 	fclose(fp);
 
+	m_tooltips = new ToolTips();
+
 	m_height = 1.9f;			//高さ
 	m_rad = 0.3f;				//半径
 
@@ -75,7 +78,6 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	);
 	//ノードのカラー選択(赤)
 	m_navNode->SetNodeColor(CVector3D(1.0f, 0.25f, 0.25f));
-
 }
 
 //デストラクタ
@@ -86,39 +88,6 @@ Player::~Player()
 //通常状態
 void Player::StateIdle()
 {
-	
-	{
-		//ライト設置テスト
-		//0番　環境光源 1番自身の光源 2～部屋の光源
-		//static int idx = 2;
-		//if (PUSH(CInput::eMouseL) || PUSH(CInput::eMouseR)) {
-		//	if (PUSH(CInput::eMouseL)) {
-		//		//スポットライト
-		//		CLight::SetType(idx, CLight::eLight_Spot);
-		//		//下向き
-		//		CLight::SetDir(idx, CVector3D(0, -1, 0));
-		//		//範囲は15°
-		//		CLight::SetRadiationAngle(idx, DtoR(80.0f));
-		//	}else {
-		//		//ポイントライト(全方位)
-		//		CLight::SetType(idx, CLight::eLight_Point);
-		//	}
-		//	//減衰率（低いと光の届く範囲が広い。壁を貫通しないように調整）
-		//	CLight::SetRange(idx, 4.0f);
-		//	//光源の色（アンビエント、ディフューズ）
-		//	CLight::SetColor(idx, CVector3D(0, 0, 0), CVector3D(1.0, 1.0, 0.9));
-		//	//光源の位置
-		//	CLight::SetPos(idx, m_pos + CVector3D(0, 3.0f, 0));
-		//	idx++;
-		//}
-
-		//自身の光源
-		CLight::SetType(1, CLight::eLight_Point);
-		CLight::SetRange(1, 1.0f);
-		CLight::SetColor(1, CVector3D(0, 0, 0), CVector3D(0.8, 0.8, 0.7));
-		CLight::SetPos(1, m_pos + CVector3D(0, 1.0f, 0));
-	}
-
 	//歩き速度
 	m_movespeed = WALK_SPEED;
 
@@ -148,9 +117,6 @@ void Player::StateIdle()
 		m_state = eState_Squat;
 	}
 
-	//隠れ状態の切り替え
-	if (m_hide) m_hide = false;
-
 }
 
 //しゃがみ状態
@@ -160,7 +126,7 @@ void Player::StateSquat()
 	m_movespeed = DOWN_SPEED;
 
 	//隠れ状態の切り替え
-	if (m_hide) m_hide = false;
+	//if (m_hide) m_hide = false;
 
 	//コントロールボタン
 	if (PUSH(CInput::eButton7))
@@ -175,18 +141,21 @@ void Player::StateSquat()
 //ハイド状態
 void Player::StateHide()
 {
+	//ボタン入力で即ハイドを解除しないように
+	static int count;
+	count++;
 	//クローゼットの中心に移動
 	m_pos = m_Closet_pos;
-
-	if (PUSH(CInput::eMouseL) && m_hide)
+	if (PUSH(CInput::eMouseL) && count >1)
 	{
-		m_state = eState_Idle;
+		//カウントの初期化
+		count = 0;
+		//元の位置へ戻る
 		m_pos = m_copy_pos;
+		//ハイド解除
+		m_hide = false;
+		m_state = eState_Idle;
 	}
-	//隠れている
-	m_hide = true;
-
-	
 }
 
 //更新処理
@@ -200,7 +169,17 @@ void Player::Update()
 	if (!mp_sleeplife) mp_sleeplife = dynamic_cast<SleepLife*>(TaskManager::FindObject(ETaskTag::eUI));
 	//ライト
 	if (!mp_light)mp_light = dynamic_cast<Light*>(TaskManager::FindObject(ETaskTag::eFieldLight));
-	
+	//スイッチ
+	if (!mp_switch)mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
+	//自身の光源
+	CLight::SetType(1, CLight::eLight_Point);
+	CLight::SetRange(1, 1.0f);
+	CLight::SetColor(1, CVector3D(0, 0, 0), CVector3D(0.8, 0.8, 0.7));
+	CLight::SetPos(1, m_pos + CVector3D(0, 1.0f, 0));
+
+	//レイを飛ばす
+	Shot();
+
 	//当たり判定
 	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);	//始点
 	m_lineE = m_pos + CVector3D(0, m_rad, 0);				//終点
@@ -225,11 +204,7 @@ void Player::Update()
 	if (mp_filta->m_FadeinCheck)return;
 	if (mp_filta->m_FadeoutCheck)return;
 
-	//左クリックでレイを飛ばす
-	if (PUSH(CInput::eMouseL))
-	{
-		Shot();
-	}
+	
 
 	//足音がでてない
 	m_islegsound = false;
@@ -342,6 +317,7 @@ void Player::Render()
 	Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), a);
 }
 
+//衝突処理
 void Player::Collision(Task* t)
 {
 	CharaBase::Collision(t);
@@ -399,7 +375,7 @@ void Player::Collision(Task* t)
 	}
 }
 
-
+//レイの処理
 void Player::Shot()
 {
 	//判定するレイの距離
@@ -456,8 +432,11 @@ void Player::Shot()
 	//最も近いオブジェクトに当たる
 	if (hit_object)
 	{
+		//ツールチップを表示
+		m_tooltips->isDraw = true;
+		
 		//当たっているオブジェクトのナンバーに応じて処理を変更
-		switch (hit_object->m_no)
+		switch (hit_object->m_objectno)
 		{
 		case 0:
 		{
@@ -466,73 +445,58 @@ void Player::Shot()
 		}
 		break;
 		case 1:
-		{
-			printf("スイッチに当たった\n");
-			//電気を消す
-			auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
-			for (auto t : lightlist)
+		{	
+			//左クリックで電気を消す
+			if (PUSH(CInput::eMouseL)) 
 			{
-				if (Light* l = dynamic_cast<Light*>(t))
+				auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
+				for (auto t : lightlist)
 				{
-					switch (l->m_roomNo)
+					if (Light* l = dynamic_cast<Light*>(t))
 					{
-					case ERoomNo::eKitchen_Dining_Room:
-					{
-						if (l->m_lightOn)
+						if (l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
 						{
-							l->m_lightOn = false;
+							l->m_islight = false;
 						}
-						else
+						else if (!l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
 						{
-							l->m_lightOn = true;
+							l->m_islight = true;
 						}
-					}
-					break;
-					case ERoomNo::eLiving_Room:
-					{
-						if (l->m_lightOn)
-						{
-							l->m_lightOn = false;
-						}
-						else
-						{
-							l->m_lightOn = true;
-						}
-					}
-					break;
 					}
 				}
 			}
+			
 		}
 		break;
 		case 2:
 		{
-			printf("タンスに触った\n");
-			//触れたクローゼットの座標を保存
-			m_Closet_pos = hit_object->m_pos;
-
-			//触れたクローゼットの正面ベクトルを保存
-			m_Closet_rot = hit_object->m_rot;
-
-			if (PUSH(CInput::eMouseL) && !m_hide)
+			//左クリックで隠れる
+			if (PUSH(CInput::eMouseL))
 			{
-				m_copy_pos = m_pos;
-				//ハイド状態
-				//m_HideAnim = !m_HideAnim;
-				m_state = eState_Hide;
+				//触れたクローゼットの座標を保存
+				m_Closet_pos = hit_object->m_pos;
+
+				//触れたクローゼットの正面ベクトルを保存
+				m_Closet_rot = hit_object->m_rot;
+
+				if (PUSH(CInput::eMouseL))
+				{
+					//現在地保存
+					m_copy_pos = m_pos;
+					//ハイド状態へ移行
+					m_hide = true;
+					m_state = eState_Hide;
+
+				}
 			}
+			
 		}
 		break;
 		}
 	}
-	else if (hit_field)
-	{
-		//何もしない
-		printf("壁に当たった\n");
-	}
 	else
 	{
-		printf("何も当たってない\n");
+		m_tooltips->isDraw = false;
 	}
 	m_lS = lineS;
 	m_lE = lineE;

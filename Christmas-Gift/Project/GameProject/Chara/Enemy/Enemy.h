@@ -75,7 +75,7 @@ private:
 	bool IsLookPlayer() const;
 public:
 	//コンストラクタ
-	Enemy(const CVector3D& pos, const CVector3D& scale);
+	Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale);
 	//デストラクタ
 	~Enemy();
 
@@ -91,21 +91,4 @@ public:
 	//接触判定
 	void Collision(Task* t);
 
-};
-
-class Child : public CharaBase
-{
-private:
-public:
-	//コンストラクタ
-	Child(const CVector3D& pos,const CVector3D& vec);
-
-	//デストラクタ
-	~Child();
-
-	//更新処理
-	void Update();
-
-	//描画処理
-	void Render();
 };

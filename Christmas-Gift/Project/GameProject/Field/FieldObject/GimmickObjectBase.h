@@ -8,8 +8,8 @@ private:
 	CVector3D m_size;		//オブジェクトの大きさ
 public:
 	CModel* m_model;
-	int m_no;
-	GimmickObjectBase(const CVector3D& pos,const CVector3D& rot,const CVector3D& size,int no,ETaskTag tag,bool remove);
+	int m_objectno;				//オブジェクト別番号
+	GimmickObjectBase(const CVector3D& pos,const CVector3D& rot,const CVector3D& size,ETaskTag tag,bool remove);
 	~GimmickObjectBase();
 	void Update();
 	void Render();
