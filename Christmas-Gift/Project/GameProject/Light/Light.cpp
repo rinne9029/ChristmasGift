@@ -1,9 +1,9 @@
 #include "Light.h"
 
 //コンストラクタ
-Light::Light(CVector3D& pos,int no,int roomno)
+Light::Light(CVector3D& pos,int no,int roomno,bool islight)
 	:ObjectBase(ETaskTag::eFieldLight,true)
-	,m_islight(true)
+	,m_islight(islight)
 	,m_roomNo(roomno)
 	,m_no(no)
 {

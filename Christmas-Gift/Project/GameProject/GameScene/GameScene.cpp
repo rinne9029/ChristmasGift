@@ -48,20 +48,48 @@ GameScene::GameScene()
 		//ステージ
 		new Field();
 
+		//リビング
 		new Switch
 		(
-			CVector3D(1.5, 1.5, 7),
+			CVector3D(1, 1.5,7),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 1, 1),
 			0
 		);
 
+		//1階廊下
 		new Switch
 		(
-			CVector3D(3, 1.5, 7),
+			CVector3D(0, 1.5, 8),
+			CVector3D(0, DtoR(90), 0),
+			CVector3D(1, 1, 1),
+			1
+		);
+
+		new Switch
+		(
+			CVector3D(0, 1.5, 14),
+			CVector3D(0, DtoR(90), 0),
+			CVector3D(1, 1, 1),
+			1
+		);
+
+		//1階階段
+		new Switch
+		(
+			CVector3D(-3, 2.4, 14),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 1, 1),
-			0
+			2
+		);
+
+		//2階階段
+		new Switch
+		(
+			CVector3D(-7, 10.5, 8.1),
+			CVector3D(0, DtoR(90), 0),
+			CVector3D(1, 1, 1),
+			2
 		);
 
 		//カメラ
@@ -79,12 +107,12 @@ GameScene::GameScene()
 		);
 
 		//エネミー
-		/*new Enemy
+		new Enemy
 		(
 			CVector3D(2.369029,0.1,-0.000122),
 			CVector3D(0,DtoR(180),0),
 			CVector3D(0.01,0.01,0.01)
-		);*/
+		);
 
 		new MidPoint
 		(
@@ -110,10 +138,10 @@ GameScene::GameScene()
 
 		new Closet
 		(
-			CVector3D(6.261635, 9.053699, 8.970999),			//座標
+			CVector3D(0.261635, 9.053699, 2.970999),			//座標
 			CVector3D(0, DtoR(180), 0),		//回転値
 			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
-			3
+			2
 		);
 
 		new Telephone

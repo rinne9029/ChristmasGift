@@ -10,7 +10,7 @@ GimmickObjectBase::GimmickObjectBase(const CVector3D& pos,const CVector3D& rot,c
 
 GimmickObjectBase::~GimmickObjectBase()
 {
-
+	if (m_model)	delete m_model;
 }
 
 void GimmickObjectBase::Update()

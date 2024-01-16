@@ -8,7 +8,7 @@ private:
 public:
 	int m_roomNo;		//電気のついている部屋番号
 	bool m_islight;		//電気のOn,Off
-	Light::Light(CVector3D& pos,int no,int roomno);
+	Light::Light(CVector3D& pos,int no,int roomno,bool islight);
 	Light::~Light();
 	void Update();
 };

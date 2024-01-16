@@ -424,7 +424,7 @@ void Player::Shot()
 			}
 		}
 		//接触したオブジェクトが見つかれば探索をやめる
-		//if (hit_object != nullptr)	break;
+		if (hit_object != nullptr)	break;
 			
 	}
 	//最も近いオブジェクトに当たる
@@ -447,18 +447,21 @@ void Player::Shot()
 			//左クリックで電気を消す
 			if (PUSH(CInput::eMouseL)) 
 			{
-				auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
-				for (auto t : lightlist)
+				if (mp_switch = dynamic_cast<Switch*>(hit_object))
 				{
-					if (Light* l = dynamic_cast<Light*>(t))
+					auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
+					for (auto t : lightlist)
 					{
-						if (l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
+						if (Light* l = dynamic_cast<Light*>(t))
 						{
-							l->m_islight = false;
-						}
-						else if (!l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
-						{
-							l->m_islight = true;
+							if (l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
+							{
+								l->m_islight = false;
+							}
+							else if (!l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
+							{
+								l->m_islight = true;
+							}
 						}
 					}
 				}

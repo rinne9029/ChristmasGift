@@ -26,6 +26,7 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	, m_elapsedTime(0.0f)
 	, m_cnt(180)
 	, m_isChasing(false)
+	, m_state(eState_Idle)
 {
 	//敵の管理クラスのリストに自身を追加
 	EnemyManager::Instance()->Add(this);
@@ -70,6 +71,7 @@ void Enemy::StateIdle()
 
 	m_vec *= 0;
 
+	//待機時間
 	if (m_elapsedTime < IDLE_TIME)
 	{
 		m_elapsedTime += CFPS::GetDeltaTime();
@@ -102,8 +104,8 @@ void Enemy::StateIdle()
 
 
 	//プレイヤーが探知範囲に入ったら追いかける
-	if (IsEarFoundPlayer() || IsEyeFoundPlayer() && !mp_player->m_hide) {
-		//m_vec *= 0;
+	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
+		m_vec *= 0;
 		m_state = eState_Chase;
 		m_isChasing = true;
 	}
@@ -155,8 +157,8 @@ void Enemy::StateMove()
 	}
 
 	//プレイヤーが探知範囲に入ったら
-	if (IsEarFoundPlayer() || IsEyeFoundPlayer() && !mp_player->m_hide) {
-		//m_vec *= 0;
+	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
+		m_vec *= 0;
 		m_state = eState_Chase;
 		m_isChasing = true;
 	}
@@ -350,10 +352,12 @@ bool Enemy::IsEyeFoundPlayer()
 	eye_ang = DtoR(60);
 	//視野の距離
 	eye_length = 10;
+	//プレイヤーの座標
+	CVector3D player_pos = mp_player->m_pos;
 
 	m_dir = CVector3D(sin(m_rot.y), 0, cos(m_rot.y));
 	//敵からプレイヤーまでのベクトルを求める
-	CVector3D vec = mp_player->m_pos - m_pos;
+	CVector3D vec = player_pos - m_pos;
 	//求めたベクトルと敵の正面方向のベクトルを内積とって
 	//角度(cosθ)を求める
 	float eye_dot = CVector3D::Dot(m_dir, vec.GetNormalize());
@@ -400,8 +404,9 @@ bool Enemy::IsEarFoundPlayer()
 
 bool Enemy::IsLookPlayer() const
 {
-	CVector3D playerPos = mp_player->m_pos;
-	CVector3D vec = playerPos - m_pos;
+	
+	CVector3D playerPos = mp_player->m_pos;	//プレイヤーの座標
+	CVector3D vec = playerPos - m_pos;		//プレイヤーへの方向ベクトル
 	// 現在位置からプレイヤーまでの距離を求める
 	float dist = vec.Length();
 
