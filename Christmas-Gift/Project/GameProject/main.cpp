@@ -20,6 +20,8 @@
 
 //ナビノード描画処理フラグ:デバッグ用
 bool g_isRenderDebug = false;
+
+//ロード処理用変数
 int count = 0;
 int i = 0;
 CImage g_Loading;
@@ -42,7 +44,6 @@ void MainLoop(void) {
 	TaskManager::Instance()->Update();
 	DebugProfiler::EndTimer("Update");		//タスク更新処理計測終了
 
-
 	//全タスクの3D描画
 	DebugProfiler::StartTimer("Render");	//タスク描画処理計測スタート
 	//ディファードレンダリング
@@ -51,6 +52,7 @@ void MainLoop(void) {
 		TaskManager::Instance()->Render();
 		});
 	DebugProfiler::EndTimer("Render");		//タスク描画処理計測終了
+
 	//全タスクの2D描画
 	TaskManager::Instance()->Draw();
 
@@ -82,20 +84,10 @@ void MainLoop(void) {
 		//ローディング文字表示
 		g_LoadingText.SetPos(850, 900);
 		g_LoadingText.Draw();
-
-		//ロード中
-		//NowLoadingの文字をアニメーション
-		/*static int t = 0;
-		t++;
-		char buf[128] = "Now Loading";
-		int tt = (t / 30) % 4;
-		for (int i = 0; i < tt; i++)
-			strcat_s(buf, 128, ".");
-
-		FONT_T()->Draw(960, 540, 1, 0, 0, buf);*/
 	}
 
 	float lineWidth = 1.0f;
+
 	//世界の軸を表示
 	/*Utility::DrawLine(CVector3D(0, 0, 0), CVector3D(100, 0, 0), CVector4D(1, 0, 0, 1), lineWidth);
 	Utility::DrawLine(CVector3D(0, 0, 0), CVector3D(0, 100, 0), CVector4D(0, 1, 0, 1), lineWidth);

@@ -38,7 +38,7 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 
 	FILE* fp = NULL;
 
-	//	セーブデータをバイナリの読み込みでオープン
+	//	データをテキストの読み込みでオープン
 	fopen_s(&fp, "PlayerData.txt", "r");
 	if (!fp) return;
 
@@ -100,7 +100,7 @@ void Player::StateIdle()
 	}
 
 	//スペースボタン入力
-	if (PUSH(CInput::eButton5) && m_isGround)
+	if (PUSH(CInput::eButton5) /*&& m_isGround*/)
 	{
 		//着地フラグOFF
 		m_isGround = false;
@@ -177,12 +177,7 @@ void Player::Update()
 	CLight::SetColor(1, CVector3D(0, 0, 0), CVector3D(0.8, 0.8, 0.7));
 	CLight::SetPos(1, m_pos + CVector3D(0, 1.0f, 0));
 
-	//レイを飛ばす
 	Shot();
-
-	//当たり判定
-	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);	//始点
-	m_lineE = m_pos + CVector3D(0, m_rad, 0);				//終点
 
 	//カメラ視点
 	//見下ろし視点
@@ -428,6 +423,9 @@ void Player::Shot()
 					}
 			}
 		}
+		//接触したオブジェクトが見つかれば探索をやめる
+		//if (hit_object != nullptr)	break;
+			
 	}
 	//最も近いオブジェクトに当たる
 	if (hit_object)

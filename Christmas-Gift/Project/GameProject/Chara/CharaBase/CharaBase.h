@@ -1,11 +1,13 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
-class NavNode;
+
+//キャラクターのベースクラス
 
 //重力加速度
 #define GRAVITY (0.02f)
 
-//キャラクターのベースクラス
+class NavNode;
+
 class CharaBase : public ObjectBase
 {
 protected:

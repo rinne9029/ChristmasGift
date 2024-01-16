@@ -4,6 +4,7 @@
 #include"Navigation/NavNode.h"
 #include"Navigation/NavManager.h"
 
+
 //コンストラクタ
 CharaBase::CharaBase(ETaskTag tag,bool remove)
 	:ObjectBase(tag,remove)
@@ -57,8 +58,12 @@ void CharaBase::Collision(Task* t)
 				CVector3D nv = t.m_normal * (m_rad - t.m_dist);
 				//最も大きな移動量を求める
 				v.y = fabs(v.y) > fabs(nv.y) ? v.y : nv.y;
-				v.x = fabs(v.x) > fabs(nv.x) ? v.x : nv.x;
-				v.z = fabs(v.z) > fabs(nv.z) ? v.z : nv.z;
+				if (max_y > m_pos.y + 1)
+				{
+					v.x = fabs(v.x) > fabs(nv.x) ? v.x : nv.x;
+					v.z = fabs(v.z) > fabs(nv.z) ? v.z : nv.z;
+				}
+				
 			}
 			//押し戻す
 			m_pos += v;
@@ -81,6 +86,10 @@ void CharaBase::Update()
 	{
 		m_navNode->SetPos(m_pos + CVector3D(0.0f, 1.0f, 0.0f));
 	}
+
+	//楕円形当たり判定
+	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);
+	m_lineE = m_pos + CVector3D(0, m_rad, 0);
 
 	m_vec.y -= GRAVITY;
 	m_pos.y += m_vec.y;

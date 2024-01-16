@@ -56,6 +56,14 @@ GameScene::GameScene()
 			0
 		);
 
+		new Switch
+		(
+			CVector3D(3, 1.5, 7),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1),
+			0
+		);
+
 		//カメラ
 		new Camera
 		(
@@ -73,7 +81,7 @@ GameScene::GameScene()
 		//エネミー
 		/*new Enemy
 		(
-			CVector3D(2.369029,0,-0.000122),
+			CVector3D(2.369029,0.1,-0.000122),
 			CVector3D(0,DtoR(180),0),
 			CVector3D(0.01,0.01,0.01)
 		);*/
@@ -100,9 +108,24 @@ GameScene::GameScene()
 			2
 		);
 
+		new Closet
+		(
+			CVector3D(6.261635, 9.053699, 8.970999),			//座標
+			CVector3D(0, DtoR(180), 0),		//回転値
+			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+			3
+		);
+
 		new Telephone
 		(
 			CVector3D(0, 0, 0),	//座標
+			CVector3D(0, DtoR(270), 0),					//回転値
+			CVector3D(3, 3, 3)							//オブジェクトの大きさ
+		);
+
+		new Telephone
+		(
+			CVector3D(3, 0, 0),	//座標
 			CVector3D(0, DtoR(270), 0),					//回転値
 			CVector3D(3, 3, 3)							//オブジェクトの大きさ
 		);
