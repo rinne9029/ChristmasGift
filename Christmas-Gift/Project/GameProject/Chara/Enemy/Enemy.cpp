@@ -24,8 +24,6 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	, m_movePos(0.0f, 0.0f, 0.0f)
 	, m_moveNode(nullptr)
 	, m_elapsedTime(0.0f)
-	, m_cnt(180)
-	, m_isChasing(false)
 	, m_state(eState_Idle)
 {
 	//敵の管理クラスのリストに自身を追加
@@ -46,7 +44,7 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	//敵の位置に経路探索用のノードを作成
 	m_navNode = new NavNode
 	(
-		m_pos + CVector3D(0.0f, 1.0f, 0.0f),
+		m_pos + CVector3D(0.0f, 1.5f, 0.0f),
 		NavNode::NodeType::Destination
 	);
 	m_navNode->SetNodeColor(CVector3D(0.125f, 0.25f, 1.0f));
@@ -107,7 +105,6 @@ void Enemy::StateIdle()
 	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
 		m_vec *= 0;
 		m_state = eState_Chase;
-		m_isChasing = true;
 	}
 }
 
@@ -160,7 +157,6 @@ void Enemy::StateMove()
 	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
 		m_vec *= 0;
 		m_state = eState_Chase;
-		m_isChasing = true;
 	}
 
 }
@@ -169,7 +165,7 @@ void Enemy::StateMove()
 void Enemy::StateChase()
 {
 	//アニメーション変更
-	m_model.ChangeAnimation((int)AnimId::Walk);
+	m_model.ChangeAnimation((int)AnimId::Run);
 
 	//デバッグ用:視野のカラー
 	View_Color();
@@ -187,8 +183,9 @@ void Enemy::StateChase()
 
 	//プレイヤーの位置まで視線が通っているか判定
 	CVector3D hitPos, hitNormal;
-	enemyNodePos.y = 1.0f;
-	playerNodePos.y = 1.0f;
+	//高さを考慮しない
+	/*enemyNodePos.y = 1.0f;
+	playerNodePos.y = 1.0f;*/
 	bool isHit = Field::CollisionRay(enemyNodePos, playerNodePos, &hitPos, &hitNormal);
 	//プレイヤーの位置までレイを飛ばして、何かに衝突したら、
 	if (isHit)
@@ -233,7 +230,6 @@ void Enemy::StateChase()
 
 		//見失い状態へ移行
 		m_state = eState_Lost;
-		m_isChasing = false;
 		return;
 	}
 
@@ -404,14 +400,16 @@ bool Enemy::IsEarFoundPlayer()
 
 bool Enemy::IsLookPlayer() const
 {
-	
-	CVector3D playerPos = mp_player->m_pos;	//プレイヤーの座標
-	CVector3D vec = playerPos - m_pos;		//プレイヤーへの方向ベクトル
+	NavNode* playernodepos = mp_player->GetNavNode();	//プレイヤーのノード
+	NavNode* enemynodepos = m_navNode;					//エネミーのノード
+	CVector3D playerPos = playernodepos->GetPos();		//プレイヤーのノードの座標
+	CVector3D enemyPos = enemynodepos->GetPos();		//エネミーのノードの座標
+	CVector3D vec = playerPos - enemyPos;		//プレイヤーへの方向ベクトル
 	// 現在位置からプレイヤーまでの距離を求める
 	float dist = vec.Length();
 
 	// プレイヤーの位置までのレイと壁との衝突判定を行う
-	CVector3D start = m_pos;
+	CVector3D start = enemyPos;
 	CVector3D end = playerPos;
 	//高さを考慮しない
 	/*start.y = 1.0f;
@@ -472,6 +470,7 @@ void Enemy::Update()
 	//アニメーション更新
 	m_model.UpdateAnimation();
 
+	//移動
 	m_pos += m_vec * CFPS::GetDeltaTime();
 
 	//プレイヤーの向きを徐々に移動方向へ向ける

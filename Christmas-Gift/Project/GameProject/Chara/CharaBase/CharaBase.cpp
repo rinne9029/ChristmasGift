@@ -79,12 +79,14 @@ NavNode* CharaBase::GetNavNode() const
 	return m_navNode;
 }
 
+
+
 void CharaBase::Update()
 {
 
 	if (m_navNode != nullptr)
 	{
-		m_navNode->SetPos(m_pos + CVector3D(0.0f, 1.0f, 0.0f));
+		m_navNode->SetPos(m_pos + CVector3D(0.0f, 1.5f, 0.0f));
 	}
 
 	//‘È‰~Œ`“–‚½‚è”»’è

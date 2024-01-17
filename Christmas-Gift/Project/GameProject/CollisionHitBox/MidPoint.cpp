@@ -5,15 +5,13 @@
 
 MidPoint::MidPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
 	:CollisionBoxBase(ETaskTag::eCollisionBox,true)
-	,mp_tooltips(nullptr)
 {
 	m_pos = pos;
 	m_rot = rot;
 	m_size = size;
 
 	//ツールチップ
-	if (!mp_tooltips)
-		mp_tooltips = dynamic_cast<ToolTips*>(TaskManager::FindObject(ETaskTag::eUI));
+	m_tooltips = new ToolTips();
 
 	m_obb = COBB(
 		m_pos,
@@ -34,8 +32,10 @@ void MidPoint::Collision(Task* t)
 		CVector3D axis;
 		if (CCollision::CollisionOBBCapsule(m_obb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
+			if (GameData::isGift) return;
+			m_tooltips->isDraw = true;
 			//Eボタン入力でプレゼント配置
-			if (PUSH(CInput::eMouseL) && !GameData::isGift)
+			if (PUSH(CInput::eMouseL))
 			{
 				GameData::isGift = true;
 				new PresentBox
@@ -44,6 +44,10 @@ void MidPoint::Collision(Task* t)
 					CVector3D(0, 0, 0)
 				);
 			}
+		}
+		else
+		{
+			m_tooltips->isDraw = false;
 		}
 	}
 }

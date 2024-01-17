@@ -1,6 +1,7 @@
 #pragma once
 #include"../CharaBase/CharaBase.h"
 
+class Enemy;
 class Camera;
 class Filta;
 class SleepLife;
@@ -13,6 +14,7 @@ class ToolTips;
 
 class Player : public CharaBase {
 private:
+	Enemy* mp_enemy;		//敵
 	Camera* mp_camera;		//カメラ
 	Filta* mp_filta;		//フィルター
 	SleepLife* mp_sleeplife;//睡眠ゲージ
@@ -22,8 +24,6 @@ private:
 
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
-
-	CModelA3M m_model;		//モデルデータ
 	
 
 	

@@ -10,7 +10,6 @@ class SearchNode;
 //家族
 class Enemy : public CharaBase {
 private:
-	CModelA3M m_model;
 	Player* mp_player;			//プレイヤー
 	CVector3D m_moveDir;		//移動方向
 	CVector3D m_rot_target;		//プレイヤー方向の回転値
@@ -26,20 +25,21 @@ private:
 	float ear_length;			//聴覚距離
 	float ear_ang;				//聴覚角度
 
-	bool m_isChasing;			//追跡中のフラグ
 	NavNode* m_nextNode;		//次に移動するノード格納用
 	NavNode* m_lostNode;		//プレイヤーを見失った場所に配置
 	SearchNode* m_searchNode;	//探索中のノード
 
 	CVector4D color;			//視野範囲の色
 
-	int m_cnt;					//タイマー
-
 	//アニメーション番号
 	enum class AnimId
 	{
-		Idle,	//待機
-		Walk,	//移動
+		Idle,		//待機
+		Walk,		//歩く
+		Run,		//走る
+		Down,		//しゃがむ
+		DownIdle,	//しゃがみ待機
+		Up,			//立つ
 	};
 	
 	//状態変化

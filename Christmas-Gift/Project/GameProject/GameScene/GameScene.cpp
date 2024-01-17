@@ -109,8 +109,8 @@ GameScene::GameScene()
 		//エネミー
 		new Enemy
 		(
-			CVector3D(2.369029,0.1,-0.000122),
-			CVector3D(0,DtoR(180),0),
+			CVector3D(2.829459, 0, 0.351914),
+			CVector3D(0,0,0),
 			CVector3D(0.01,0.01,0.01)
 		);
 
@@ -128,21 +128,21 @@ GameScene::GameScene()
 			CVector3D(1, 1, 1)
 		);
 
-		new Closet
-		(
-			CVector3D(3.261635, 9.053699, 4.970999),			//座標
-			CVector3D(0, DtoR(180), 0),		//回転値
-			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
-			2
-		);
+		//new Closet
+		//(
+		//	CVector3D(3.261635, 9.053699, 4.970999),			//座標
+		//	CVector3D(0, DtoR(180), 0),		//回転値
+		//	CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+		//	2
+		//);
 
-		new Closet
-		(
-			CVector3D(0.261635, 9.053699, 2.970999),			//座標
-			CVector3D(0, DtoR(180), 0),		//回転値
-			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
-			2
-		);
+		//new Closet
+		//(
+		//	CVector3D(0.261635, 9.053699, 2.970999),			//座標
+		//	CVector3D(0, DtoR(180), 0),		//回転値
+		//	CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+		//	2
+		//);
 
 		new Telephone
 		(

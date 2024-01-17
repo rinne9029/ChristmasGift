@@ -1,4 +1,5 @@
 #include"Player.h"
+#include"Chara/Enemy/Enemy.h"
 #include"Field/Field.h"
 #include"Field/FieldObject/Closet.h"
 #include"Filta/Filta.h"
@@ -15,14 +16,15 @@
 
 //マクロ
 #define JUMP 0.20f			//ジャンプ力
-#define WALK_SPEED 0.10f	//通常スピード
-#define DOWN_SPEED 0.05f	//しゃがみスピード
-#define RUN_SPEED 0.30f		//走りスピード
+#define WALK_SPEED 0.05f	//通常スピード
+#define DOWN_SPEED 0.02f	//しゃがみスピード
+#define RUN_SPEED 0.10f		//走りスピード
 
 
 //コンストラクタ
 Player::Player(const CVector3D& pos, const CVector3D& scale)
 	:CharaBase(ETaskTag::ePlayer, true)
+	, mp_enemy(nullptr)
 	, mp_camera(nullptr)
 	, mp_filta(nullptr)
 	, mp_sleeplife(nullptr)
@@ -73,7 +75,7 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	//プレイヤー位置に経路探索用のノードを作成
 	m_navNode = new NavNode
 	(
-		m_pos + CVector3D(0.0f, 1.0f, 0.0f),
+		m_pos + CVector3D(0.0f, 1.5f, 0.0f),
 		NavNode::NodeType::Destination
 	);
 	//ノードのカラー選択(赤)
@@ -161,6 +163,8 @@ void Player::StateHide()
 //更新処理
 void Player::Update()
 {
+	//敵
+	if (!mp_enemy) mp_enemy = dynamic_cast<Enemy*>(TaskManager::FindObject(ETaskTag::eEnemy));
 	//カメラ
 	if (!mp_camera) mp_camera = dynamic_cast<Camera*>(TaskManager::FindObject(ETaskTag::eCamera));
 	//フィルター
@@ -438,8 +442,11 @@ void Player::Shot()
 		{
 		case 0:
 		{
-			//処理を書く
-			printf("受話器に当たった\n");
+			//左クリックで敵を集める
+			if (PUSH(CInput::eMouseL))
+			{
+				
+			}
 		}
 		break;
 		case 1:
