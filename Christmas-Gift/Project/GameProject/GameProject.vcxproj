@@ -43,6 +43,7 @@
     <ClInclude Include="Task\TaskManager.h" />
     <ClInclude Include="Title\Title.h" />
     <ClInclude Include="UI\SleepLife.h" />
+    <ClInclude Include="UI\Timer.h" />
     <ClInclude Include="UI\ToolTips.h" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +79,7 @@
     <ClCompile Include="Task\TaskManager.cpp" />
     <ClCompile Include="Title\Title.cpp" />
     <ClCompile Include="UI\SleepLife.cpp" />
+    <ClCompile Include="UI\Timer.cpp" />
     <ClCompile Include="UI\ToolTips.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

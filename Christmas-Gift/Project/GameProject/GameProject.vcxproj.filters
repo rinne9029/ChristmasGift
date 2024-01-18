@@ -98,6 +98,9 @@
     <ClInclude Include="UI\ToolTips.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Timer.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -254,6 +257,9 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\ToolTips.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Timer.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>

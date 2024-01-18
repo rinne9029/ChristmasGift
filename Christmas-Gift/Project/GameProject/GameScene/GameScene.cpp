@@ -15,6 +15,7 @@
 #include"Navigation/NavManager.h"
 #include"UI/SleepLife.h"
 #include"UI/ToolTips.h"
+#include"UI/Timer.h"
 #include"GameData.h"
 #include"Item/PresentBox.h"
 #include"Field/FieldObject/Switch.h"
@@ -92,6 +93,33 @@ GameScene::GameScene()
 			2
 		);
 
+		//2階廊下
+		new Switch
+		(
+			CVector3D(-6.5, 10.5, 7.7),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1),
+			3
+		);
+
+		//両親部屋
+		new Switch
+		(
+			CVector3D(-0.5, 10.5, 5.3),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1),
+			4
+		);
+
+		//子供部屋
+		new Switch
+		(
+			CVector3D(5, 10.5, 5.3),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 1, 1),
+			5
+		);
+
 		//カメラ
 		new Camera
 		(
@@ -110,7 +138,7 @@ GameScene::GameScene()
 		new Enemy
 		(
 			CVector3D(2.829459, 0, 0.351914),
-			CVector3D(0,0,0),
+			CVector3D(-1,0, 0),
 			CVector3D(0.01,0.01,0.01)
 		);
 
@@ -118,7 +146,7 @@ GameScene::GameScene()
 		(
 			CVector3D(5.998150, 10.053699, 0.179571),
 			CVector3D(0, 0, 0),
-			CVector3D(1, 1, 1)
+			CVector3D(1, 0.5, 1)
 		);
 
 		new EndPoint
@@ -159,6 +187,7 @@ GameScene::GameScene()
 		);
 
 		new SleepLife();			//睡眠ゲージ
+		new Timer();
 
 		break;
 

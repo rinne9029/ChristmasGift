@@ -16,7 +16,7 @@
 //回転速度
 #define ROTATE_SPEED 6.0f
 
-Enemy::Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
+Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale)
 	:CharaBase(ETaskTag::eEnemy,true)
 	, mp_player(nullptr)
 	, m_moveDir(0.0f, 0.0f, 0.0f)
@@ -32,13 +32,12 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	m_model = COPY_RESOURCE("Father", CModelA3M);
 
 	m_pos = pos;			//初期座標
-	m_rot = rot;			//初期方向
 	m_scale = scale;		//モデル大きさ
 
 	m_rad = 0.3f;			//半径
 	m_height = 1.8f;		//高さ
 
-	m_dir = CVector3D(0.0f, 0.0f, 1.0f);
+	m_dir = dir;			//初期方向
 	m_moveDir = m_dir;
 
 	//敵の位置に経路探索用のノードを作成
@@ -351,7 +350,7 @@ bool Enemy::IsEyeFoundPlayer()
 	//プレイヤーの座標
 	CVector3D player_pos = mp_player->m_pos;
 
-	m_dir = CVector3D(sin(m_rot.y), 0, cos(m_rot.y));
+	//m_dir = CVector3D(sin(m_rot.y), 0, cos(m_rot.y));
 	//敵からプレイヤーまでのベクトルを求める
 	CVector3D vec = player_pos - m_pos;
 	//求めたベクトルと敵の正面方向のベクトルを内積とって
@@ -373,7 +372,7 @@ bool Enemy::IsEyeFoundPlayer()
 }
 
 //プレイヤー探知のフラグ->聴覚
-bool Enemy::IsEarFoundPlayer()
+/*bool Enemy::IsEarFoundPlayer()
 {
 	//プレイヤーの移動を音で聞き分ける処理
 	if (!mp_player->m_islegsound)
@@ -396,7 +395,7 @@ bool Enemy::IsEarFoundPlayer()
 
 	return true;
 	
-}
+}*/
 
 bool Enemy::IsLookPlayer() const
 {
@@ -484,14 +483,14 @@ void Enemy::Update()
 	CharaBase::Update();
 
 
-	float lineWidth = 2.0f;
+	float lineWidth = 10.0f;
 	//聴覚範囲の表示
-	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * ear_length, CVector4D(1, 0, 1, 1), lineWidth);
+	/*Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * ear_length, CVector4D(1, 0, 1, 1), lineWidth);
 	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + CMatrix::MRotationY(ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
 	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + CMatrix::MRotationY(-ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
 	CMatrix m1;
 	m1.LookAt(m_pos + CVector3D(0, 0.5, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * ear_length, CVector3D(0, 1, 0));
-	Utility::DrawSector(m1, -ear_ang, ear_ang, ear_length, color);
+	Utility::DrawSector(m1, -ear_ang, ear_ang, ear_length, color);*/
 
 	//視野範囲の表示
 	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * eye_length, CVector4D(1, 0, 1, 1), lineWidth);
