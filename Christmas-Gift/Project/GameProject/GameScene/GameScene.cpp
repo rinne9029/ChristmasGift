@@ -22,11 +22,11 @@
 
 GameScene::GameScene()
 	:Task(ETaskTag::eScene,true)
-	,GameCount(0)
 	,mp_filta(nullptr)
 	,mp_player(nullptr)
 {
 	GameData::isGift = false;
+	GameData::BlueSleepSize = 300;
 
 	FILE* fp = NULL;
 	S_STATUS  character[] = { CVector3D(0,0,0) };
@@ -336,6 +336,8 @@ GameScene::GameScene()
 	mp_filta->m_FadeinCheck = true;
 	
 	fclose(fp);
+	//スタート時タイマーを0にリセット
+	GameData::second = 0;
 }
 
 GameScene::~GameScene()
@@ -354,9 +356,9 @@ GameScene::~GameScene()
 
 void GameScene::Update()
 {
-	GameCount++;
-	//５分経過でタイトル画面へ
-	if (GameCount > 18000)
+	
+	//5分経過でタイトル画面へ
+	if (GameData::second > 300)
 	{
 		mp_player->m_CheckKill = true;
 		TaskManager::KillALL();

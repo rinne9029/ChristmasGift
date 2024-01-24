@@ -3,7 +3,9 @@
 class Timer : public Task
 {
 private:
-	CVector2D a[2];
+	CImage m_Image;
+	int count;
+	int a;
 public:
 	//コンストラクタ
 	Timer();

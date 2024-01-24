@@ -9,7 +9,11 @@ class SleepLife : public Task
 private:
 	Player* mp_player;
 	Filta* mp_filta;
+	CImage m_ImageREM;
+	CImage m_ImageNREM;
+	int m_ChengeSleep;
 public:
+	static bool m_REM;
 	//コンストラクタ
 	SleepLife();
 	//デストラクタ

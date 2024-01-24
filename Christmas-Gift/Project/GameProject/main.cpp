@@ -214,19 +214,20 @@ void Init(void)
 			ADD_RESOURCE("Filta", CImage::CreateImage("Filta/Filta.png"));
 			//ツールチップ用画像読み込み
 			ADD_RESOURCE("MouseL", CImage::CreateImage("UI/MouseL.png"));
+			ADD_RESOURCE("Clock", CImage::CreateImage("UI/Clock.png"));
+			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));
+			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));
+
+			
 
 			//自作ステージ
 			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 7, 4, 7));
-			//ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/Map.obj", 7, 4,7));
 			
 			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 4, 7));
-			//ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/MapCol.obj", 7, 4, 7));
 
 			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 7, 4, 7));
-			//ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/WallMap.obj", 7, 4, 7));
 			
 			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 4, 7));
-			//ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/WallMapCol.obj", 7, 4, 7));
 			
 			new Filta();
 			new Title();

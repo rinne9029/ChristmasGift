@@ -98,7 +98,10 @@ void Player::StateIdle()
 	{
 		//ダッシュ移動
 		m_movespeed = RUN_SPEED;
-		GameData::BlueSleepSize -= 1.0f;
+		//レム睡眠状態なら
+		if (SleepLife::m_REM) GameData::BlueSleepSize -= 2.0f;
+		//ノンレム睡眠状態なら
+		else GameData::BlueSleepSize -= 1.0f;
 	}
 
 	//スペースボタン入力

@@ -6,7 +6,6 @@ class Filta;
 
 class  GameScene :public Task {
 private:
-	int GameCount;
 	Player* mp_player;
 	Filta* mp_filta;
 

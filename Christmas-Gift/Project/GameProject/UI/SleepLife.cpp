@@ -3,6 +3,8 @@
 #include"Filta/Filta.h"
 #include"GameScene/GameData.h"
 
+bool SleepLife::m_REM = true;
+
 SleepLife::SleepLife()
 	:Task(ETaskTag::eUI, true)
 	, mp_player(nullptr)
@@ -10,6 +12,9 @@ SleepLife::SleepLife()
 {
 	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
 	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
+	m_ImageREM = COPY_RESOURCE("REMsleep", CImage);
+	m_ImageNREM = COPY_RESOURCE("NREMsleep", CImage);
+	m_ChengeSleep = rand() % 100;
 }
 
 SleepLife::~SleepLife()
@@ -25,13 +30,11 @@ void SleepLife::Update()
 
 	if (mp_player->m_CheckKill && !mp_filta->m_FadeoutCheck)
 	{
-		GameData::BlueSleepSize = 300;
 		TaskManager::KillALL();
 	}
 	//プレイヤー死亡状態
 	mp_player->m_CheckKill = true;
 	mp_filta->m_FadeoutCheck = true;
-
 
 }
 
@@ -43,4 +46,26 @@ void SleepLife::Draw()
 	//青の睡眠ゲージ描画
 	Utility::DrawQuad(CVector2D(20, 250), CVector2D(GameData::BlueSleepSize, 25), CVector4D(0, 0, 1, 1));
 
+	m_ImageREM.SetPos(106, 216);
+	m_ImageREM.SetSize(128, 32);
+
+	m_ImageNREM.SetPos(42, 216);
+	m_ImageNREM.SetSize(256, 32);
+
+	if (GameData::second >= m_ChengeSleep)
+	{
+		m_REM = !m_REM;
+		m_ChengeSleep = m_ChengeSleep + rand() % 100;
+	}
+
+	//レム睡眠状態なら
+	if (m_REM)	m_ImageREM.Draw();
+	//そうじゃないなら
+	else		m_ImageNREM.Draw();
+	
+	
+	
+
+	
+	
 }
