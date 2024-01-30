@@ -12,6 +12,7 @@ class CharaBase : public ObjectBase
 {
 protected:
 	CModelA3M m_model;
+	CModelObj m_modelobj;
 	NavNode* m_navNode;
 	bool m_isGround;		//着地フラグ
 	CVector3D m_scale;		//キャラクター描画サイズ

@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Chara\CharaBase\CharaBase.h" />
     <ClInclude Include="Chara\Enemy\Enemy.h" />
@@ -25,6 +24,7 @@
     <ClInclude Include="Field\Field.h" />
     <ClInclude Include="Field\FieldFloor.h" />
     <ClInclude Include="Field\FieldObject\Closet.h" />
+    <ClInclude Include="Field\FieldObject\Door.h" />
     <ClInclude Include="Field\FieldObject\GimmickObjectBase.h" />
     <ClInclude Include="Field\FieldObject\Switch.h" />
     <ClInclude Include="Field\FieldObject\Telephone.h" />
@@ -39,6 +39,8 @@
     <ClInclude Include="Navigation\NavManager.h" />
     <ClInclude Include="Navigation\NavNode.h" />
     <ClInclude Include="ObjectBase\ObjectBase.h" />
+    <ClInclude Include="Result\GameClear.h" />
+    <ClInclude Include="Result\GameOver.h" />
     <ClInclude Include="Task\Task.h" />
     <ClInclude Include="Task\TaskManager.h" />
     <ClInclude Include="Title\Title.h" />
@@ -47,7 +49,6 @@
     <ClInclude Include="UI\ToolTips.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Chara\CharaBase\CharaBase.cpp" />
     <ClCompile Include="Chara\Enemy\Enemy.cpp" />
@@ -61,6 +62,7 @@
     <ClCompile Include="Field\Field.cpp" />
     <ClCompile Include="Field\FieldFloor.cpp" />
     <ClCompile Include="Field\FieldObject\Closet.cpp" />
+    <ClCompile Include="Field\FieldObject\Door.cpp" />
     <ClCompile Include="Field\FieldObject\GimmickObjectBase.cpp" />
     <ClCompile Include="Field\FieldObject\Switch.cpp" />
     <ClCompile Include="Field\FieldObject\Telephone.cpp" />
@@ -75,6 +77,8 @@
     <ClCompile Include="Navigation\NavManager.cpp" />
     <ClCompile Include="Navigation\NavNode.cpp" />
     <ClCompile Include="ObjectBase\ObjectBase.cpp" />
+    <ClCompile Include="Result\GameClear.cpp" />
+    <ClCompile Include="Result\GameOver.cpp" />
     <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="Task\TaskManager.cpp" />
     <ClCompile Include="Title\Title.cpp" />

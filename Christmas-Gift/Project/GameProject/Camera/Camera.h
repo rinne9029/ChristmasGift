@@ -8,6 +8,7 @@ class Camera : public ObjectBase {
 private:
 	Player* mp_player;		//プレイヤー
 	Closet* mp_closet;		//アイテム
+	int m_idx;
 	int m_state;			//現在の状態
 	//状態変化
 	enum {

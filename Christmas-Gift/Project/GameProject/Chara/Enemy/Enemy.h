@@ -16,6 +16,7 @@ private:
 	CVector3D m_movePos;		//移動先の座標
 	NavNode* m_moveNode;		//移動目的地のノード
 	float m_elapsedTime;		//経過時間計測用
+	bool m_isvigilance;			//警戒フラグ
 	
 	//目
 	float eye_length;			//視野距離
@@ -37,14 +38,15 @@ private:
 		Idle,		//待機
 		Walk,		//歩く
 		Run,		//走る
-		Down,		//しゃがむ
-		DownIdle,	//しゃがみ待機
+		Sit,		//座る
+		SitIdle,	//座り待機
 		Up,			//立つ
 	};
 	
 	//状態変化
 	enum {
 		eState_Idle,			//待機状態
+		eState_SitIdle,			//座り待機状態
 		eState_Move,			//移動状態
 		eState_Chase,			//追跡状態
 		eState_Lost,			//プレイヤーを見失った状態
@@ -52,8 +54,10 @@ private:
 
 	int m_state;	//現在の状態
 
-	//通常状態
+	//待機状態
 	void StateIdle();	
+	//座り待機状態
+	//void StateSitIdle();
 	//移動状態
 	void StateMove();		
 	//追跡状態

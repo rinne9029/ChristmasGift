@@ -13,7 +13,7 @@ MidPoint::MidPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 	//ツールチップ
 	m_tooltips = new ToolTips();
 
-	m_obb = COBB(
+	m_obb2 = COBB(
 		m_pos,
 		m_rot,
 		m_size
@@ -30,7 +30,7 @@ void MidPoint::Collision(Task* t)
 	case ETaskTag::ePlayer:
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(m_obb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
+		if (CCollision::CollisionOBBCapsule(m_obb2, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
 			if (GameData::isGift) return;
 			m_tooltips->isDraw = true;

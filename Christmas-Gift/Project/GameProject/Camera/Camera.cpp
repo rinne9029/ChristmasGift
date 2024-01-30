@@ -8,10 +8,10 @@ Camera::Camera(const CVector3D& pos, const CVector3D& rot)
 	:ObjectBase(ETaskTag::eCamera,true)
 	, mp_player(nullptr)
 	, mp_closet(nullptr)
+	, m_idx(0)
 	, m_state(eState_Idle)
 	, m_camera_mode(0)
 {
-	//m_remove = true;
 	m_pos = pos;
 	m_rot = rot;
 }
@@ -84,13 +84,12 @@ void Camera::Render()
 		CVector3D(0,0.7,0),
 	};
 
-	static int idx;
 	//ctrlボタンをおしたらしゃがみ視点
 	if (PUSH(CInput::eButton7)) {
-		idx = (idx + 1) % 2;
+		m_idx = (m_idx + 1) % 2;
 	}
 	//割合補間
-	CVector3D cam_pos_target = camera_pos[idx] + CVector3D(0, 0, 0);
+	CVector3D cam_pos_target = camera_pos[m_idx] + CVector3D(0, 0, 0);
 	m_pos = m_pos * 0.90f + cam_pos_target * 0.10f;
 
 	//カメラのモードに応じて視点変更

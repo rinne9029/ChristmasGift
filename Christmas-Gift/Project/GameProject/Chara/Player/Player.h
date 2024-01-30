@@ -22,6 +22,8 @@ private:
 	Switch* mp_switch;		//スイッチ
 	ToolTips* m_tooltips;
 
+	NavNode* node;
+
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
 	
@@ -61,7 +63,6 @@ private:
 public:
 	bool m_hide;			//ステルス状態フラグ
 	bool m_islegsound;		//足音のフラグ
-	bool m_CheckKill;		//プレイヤー死亡フラグ
 
 	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
 	CVector3D m_Closet_pos;	//クローゼット内部の座標

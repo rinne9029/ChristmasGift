@@ -24,6 +24,7 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale)
 	, m_movePos(0.0f, 0.0f, 0.0f)
 	, m_moveNode(nullptr)
 	, m_elapsedTime(0.0f)
+	, m_isvigilance(false)
 	, m_state(eState_Idle)
 {
 	//敵の管理クラスのリストに自身を追加
@@ -107,6 +108,18 @@ void Enemy::StateIdle()
 	}
 }
 
+////座り待機状態の処理
+//void Enemy::StateSitIdle()
+//{
+//	//アニメーション変更
+//	m_model.ChangeAnimation((int)AnimId::SitIdle);
+//
+//	/*if (IsEyeFoundPlayer() && !mp_player->m_hide) {
+//		m_vec *= 0;
+//		m_state = eState_Chase;
+//	}*/
+//}
+
 void Enemy::StateMove()
 {
 	//アニメーション変更
@@ -156,6 +169,15 @@ void Enemy::StateMove()
 	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
 		m_vec *= 0;
 		m_state = eState_Chase;
+		//移動を強制終了するため、移動関連の各ノードを初期化
+		m_moveNode = nullptr;
+		m_nextNode = nullptr;
+		//探索中のノードが存在すれば、探索状態を解除
+		if (m_searchNode != nullptr)
+		{
+			m_searchNode->enemy = nullptr;
+			m_searchNode = nullptr;
+		}
 	}
 
 }
@@ -182,9 +204,6 @@ void Enemy::StateChase()
 
 	//プレイヤーの位置まで視線が通っているか判定
 	CVector3D hitPos, hitNormal;
-	//高さを考慮しない
-	/*enemyNodePos.y = 1.0f;
-	playerNodePos.y = 1.0f;*/
 	bool isHit = Field::CollisionRay(enemyNodePos, playerNodePos, &hitPos, &hitNormal);
 	//プレイヤーの位置までレイを飛ばして、何かに衝突したら、
 	if (isHit)
@@ -442,27 +461,28 @@ SearchNode* Enemy::GetSearchNode() const
 //更新処理
 void Enemy::Update()
 {
-	if (!mp_player)
+	//プレイヤー
+	if (!mp_player)	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
+	
+
+	switch (m_state)
 	{
-		mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
+	case eState_Idle:
+		StateIdle();
+		break;
+	/*case eState_SitIdle:
+		StateSitIdle();
+		break;*/
+	case eState_Move:
+		StateMove();
+		break;
+	case eState_Chase:
+		StateChase();
+		break;
+	case eState_Lost:
+		StateLost();
+		break;
 	}
-
-		switch (m_state)
-		{
-		case eState_Idle:
-			StateIdle();
-			break;
-		case eState_Move:
-			StateMove();
-			break;
-		case eState_Chase:
-			StateChase();
-			break;
-		case eState_Lost:
-			StateLost();
-			break;
-		}
-
 	
 	
 
@@ -500,17 +520,17 @@ void Enemy::Update()
 	m.LookAt(m_pos + CVector3D(0, 1.5, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * eye_length, CVector3D(0, 1, 0));
 	Utility::DrawSector(m, -eye_ang, eye_ang, eye_length, color);
 
-	//プレイヤーカプセルの表示
+	//デバッグ用:カプセル判定の表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
 }
 
 //描画処理
 void Enemy::Render()
 {
-	m_model.SetScale(m_scale);
-	m_model.SetPos(m_pos);
-	m_model.SetRot(m_rot);
-	m_model.Render();
+	m_model.SetScale(m_scale);	//モデルサイズ
+	m_model.SetPos(m_pos);		//モデル座標
+	m_model.SetRot(m_rot);		//モデル回転値
+	m_model.Render();			//モデル描画
 }
 
 
@@ -541,7 +561,7 @@ void Enemy::Collision(Task* t)
 		//クローゼットの当たり判定
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(t->m_obb, m_lineS, m_lineE, m_rad, &axis, &dist)) {
+		if (CCollision::CollisionOBBCapsule(t->m_obb1, m_lineS, m_lineE, m_rad, &axis, &dist)) {
 			if (axis.y > 0.5f) 
 			{
 				//面が上向き->地面に当たった

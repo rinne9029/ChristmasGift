@@ -12,5 +12,6 @@ void PresentBox::Render()
 {
 	m_model.SetPos(m_pos);
 	m_model.SetRot(m_rot);
+	m_model.SetScale(0.5, 0.5, 0.5);
 	m_model.Render();
 }

@@ -8,6 +8,7 @@ enum class ETaskTag
 	eField,						//ステージ
 	eFieldFloor,				//床
 	eFieldWall,					//壁
+	eDoor,						//ドア
 	eFieldLight,				//ステージに設置したライト
 	eFieldObject,				//ステージにあるギミックオブジェクト
 	eObject,					//ただのオブジェクト
@@ -20,7 +21,8 @@ enum class ETaskTag
 	eWarpRoomBox,				//マップ移動用透明な当たり判定
 	eEnemyManager,				//エネミーマネージャー
 	eNavManager,				//ノードマネージャー
-	eUI,
+	eUI,						//ユーザーインターフェース
+	eResult,					//リザルト
 	eFilta,						//フィルター
 	eDebug,						//デバッグ用
 };
@@ -46,7 +48,8 @@ public:
 	CVector3D m_lineE;		//オブジェクト線分終点
 
 	//箱形用
-	COBB m_obb;				//箱形
+	COBB m_obb1;				//接触判定用箱
+	COBB m_obb2;				//フラグ判定用箱
 
 	//int m_kill;				//削除フラグ
 

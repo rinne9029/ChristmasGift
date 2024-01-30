@@ -6,3 +6,6 @@ bool GameData::ChengeStage = false;			//マップ移動フラグ
 float GameData::BlueSleepSize = 300;
 bool GameData::isGift = false;				//プレゼント設置フラグ
 int GameData::second = 0;					//タイマー
+
+bool GameData::GameClearCheck = false;
+bool GameData::GameOverCheck = false;

@@ -1,18 +1,8 @@
 #include"Title/Title.h"			//タイトル
-#include"Camera/Camera.h"		//カメラ
-#include"Chara/Player/Player.h"	//プレイヤー
-#include"Chara/Enemy/Enemy.h"	//敵
-#include"Field/Field.h"			//ステージ
-#include"Field/FieldObject/Closet.h"		//クローゼット
-#include"Item/Item.h"			//アイテム
 #include"Filta/Filta.h"			//フィルター
-#include"Chara/Enemy/EnemyManager.h"
 #include"Task/TaskManager.h"	
-#include"CollisionHitBox/MidPoint.h"
-
 #include"Debug/DebugPrint.h"
 #include"Debug/DebugProfiler.h"
-#include"Navigation/NavManager.h"
 
 //--------------------------------------------
 //グローバル変数領域
@@ -144,8 +134,8 @@ void Init(void)
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
 
 	//マウス非表示
-	//CInput::ShowCursor(false);
-	//CInput::SetMouseInside(true);
+	CInput::ShowCursor(false);
+	CInput::SetMouseInside(true);
 	CInput::Update();
 	CInput::Update();
 
@@ -195,6 +185,7 @@ void Init(void)
 
 			//敵モデル（家族）の読み込み
 			ADD_RESOURCE("Father", CModel::CreateModel("Charactor/Enemy/father.a3m"));
+			
 
 			//タンスモデル読み込み
 			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
@@ -204,30 +195,43 @@ void Init(void)
 			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj",1,1,1));
 			//電気スイッチ読み込み
 			ADD_RESOURCE("Switch", CModel::CreateModel("object/switch.obj",1,1,1));
+			//ドア読み込み
+			ADD_RESOURCE("Door", CModel::CreateModel("object/door.obj", 1, 1, 1));
 			
 			//タイトル画像読み込み
 			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));
 			ADD_RESOURCE("ManualText", CImage::CreateImage("Title/ManualText.png"));
 			ADD_RESOURCE("RankingText", CImage::CreateImage("Title/RankingText.png"));
 
+			//リザルト画像読み込み
+			ADD_RESOURCE("ClearBackGround", CImage::CreateImage("Result/ClearBackGround.png"));
+			ADD_RESOURCE("OverBackGround", CImage::CreateImage("Result/OverBackGround.png"));
+			ADD_RESOURCE("TitleText", CImage::CreateImage("Result/TitleText.png"));
+			ADD_RESOURCE("RankingText", CImage::CreateImage("Result/RankingText.png"));
+			ADD_RESOURCE("ReStartText", CImage::CreateImage("Result/ReStartText.png"));
+
+
 			//フィルター画像読み込み
 			ADD_RESOURCE("Filta", CImage::CreateImage("Filta/Filta.png"));
+
 			//ツールチップ用画像読み込み
 			ADD_RESOURCE("MouseL", CImage::CreateImage("UI/MouseL.png"));
 			ADD_RESOURCE("Clock", CImage::CreateImage("UI/Clock.png"));
+			//UI画像読み込み
 			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));
 			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));
+
 
 			
 
 			//自作ステージ
-			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 7, 4, 7));
+			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 7, 7, 7));
 			
-			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 4, 7));
+			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
 
-			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 7, 4, 7));
+			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 7, 7, 7));
 			
-			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 4, 7));
+			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
 			
 			new Filta();
 			new Title();

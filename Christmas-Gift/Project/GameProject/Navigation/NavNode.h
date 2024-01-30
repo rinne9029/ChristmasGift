@@ -32,7 +32,6 @@ public:
 private: 
 	int m_no;			//ノード番号
 	NodeType m_type;	//ノードの種類
-	CVector3D m_pos;	//ノードの座標
 	//接続しているノード情報リスト
 	std::list<ConnectData>m_connects;
 
@@ -45,6 +44,7 @@ private:
 	CVector4D m_nodeColor;
 
 public:
+	CVector3D m_pos;	//ノードの座標
 	///<summary>
 	///コンストラクタ
 	///<summary>

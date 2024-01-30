@@ -38,9 +38,6 @@
     <ClInclude Include="Chara\CharaBase\CharaBase.h">
       <Filter>Chara\CharaBase</Filter>
     </ClInclude>
-    <ClInclude Include="Base\Base.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="Navigation\NavManager.h">
       <Filter>Navigation</Filter>
     </ClInclude>
@@ -101,11 +98,17 @@
     <ClInclude Include="UI\Timer.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Field\FieldObject\Door.h">
+      <Filter>Field\FieldObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Result\GameClear.h">
+      <Filter>Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Result\GameOver.h">
+      <Filter>Result</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Base">
-      <UniqueIdentifier>{64b995b3-a0ad-4032-99ed-d67412505ffd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{ea666bca-2eea-49d5-93ca-24f0f69d3bc3}</UniqueIdentifier>
     </Filter>
@@ -160,6 +163,9 @@
     <Filter Include="Field\FieldObject">
       <UniqueIdentifier>{1cd9d87e-6214-4d3a-90d4-c08adaf218db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Result">
+      <UniqueIdentifier>{1d24bd0a-1f33-4fd4-bfee-a9eb698b7a03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -198,9 +204,6 @@
     </ClCompile>
     <ClCompile Include="Chara\CharaBase\CharaBase.cpp">
       <Filter>Chara\CharaBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\Base.cpp">
-      <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="Navigation\NavManager.cpp">
       <Filter>Navigation</Filter>
@@ -261,6 +264,15 @@
     </ClCompile>
     <ClCompile Include="UI\Timer.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Field\FieldObject\Door.cpp">
+      <Filter>Field\FieldObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Result\GameClear.cpp">
+      <Filter>Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Result\GameOver.cpp">
+      <Filter>Result</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

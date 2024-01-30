@@ -16,8 +16,12 @@ public:
 	static bool ChengeStage;
 	static float BlueSleepSize;		//睡眠ゲージのメーター
 	static bool isGift;				//プレゼント設置フラグ
-	static int second;
+	
+	//フラグ
+	static bool GameClearCheck;			//ゲームクリアフラグ
+	static bool GameOverCheck;			//ゲームオーバフラグ
 
-
+	//整数
+	static int second;					//秒数
 
 };

@@ -13,7 +13,7 @@ Title::Title()
 	m_StartText = COPY_RESOURCE("StartText", CImage);
 	m_ManualText = COPY_RESOURCE("ManualText", CImage);
 	m_RankingText = COPY_RESOURCE("RankingText", CImage);
-	//m_remove = true;
+
 	GameData::Start = false;
 	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
 	mp_filta->m_FadeinCheck = true;
@@ -80,7 +80,7 @@ void Title::Erabu()
 //更新処理
 void Title::Update()
 {
-	if (PUSH(CInput::eButton1))		//zボタン
+	if (PUSH(CInput::eButton5))		//zボタン
 	{
 		switch (m_select)
 		{

@@ -16,9 +16,9 @@
 
 //マクロ
 #define JUMP 0.20f			//ジャンプ力
-#define WALK_SPEED 0.05f	//通常スピード
+#define WALK_SPEED 0.04f	//通常スピード
 #define DOWN_SPEED 0.02f	//しゃがみスピード
-#define RUN_SPEED 0.10f		//走りスピード
+#define RUN_SPEED 0.07f		//走りスピード
 
 
 //コンストラクタ
@@ -33,8 +33,7 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, m_tooltips(nullptr)
 	, key_ang(0.0f)				
 	, m_hide(false)				
-	, m_islegsound(false)		
-	, m_CheckKill(false)						
+	, m_islegsound(false)							
 	, m_state(eState_Idle)		
 {
 
@@ -286,6 +285,15 @@ void Player::Update()
 		break;
 	}
 
+	if (m_state != eState_Squat)
+	{
+		m_navNode->m_pos = m_pos + CVector3D(0, 1.5, 0);
+	}
+	else
+	{
+		m_navNode->m_pos = m_pos + CVector3D(0, 0.5, 0);
+	}
+
 	NavNode* node = NavManager::Instance()->GetNearNavNode(m_navNode);
 
 	//アニメーション更新
@@ -335,19 +343,9 @@ void Player::Collision(Task* t)
 			t->m_lineS, t->m_lineE, t->m_rad,
 			&dist, &c1, &dir1, &c2, &dir2))
 		{
-
-			//フェードアウトが終了した時にゲーム終了
-			if (!mp_filta->m_FadeoutCheck && m_CheckKill)
-			{
-				GameData::BlueSleepSize = 300;
+				//ゲームオーバ
+				GameData::GameOverCheck = true;
 				TaskManager::KillALL();
-			}
-
-			//接触したらプレイヤー死亡
-			m_CheckKill = true;
-
-			//フェードアウトを実行
-			mp_filta->m_FadeoutCheck = true;
 		}
 	}
 	break;
@@ -355,7 +353,7 @@ void Player::Collision(Task* t)
 	{
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(t->m_obb, m_lineS, m_lineE, m_rad, &axis, &dist))
+		if (CCollision::CollisionOBBCapsule(t->m_obb1, m_lineS, m_lineE, m_rad, &axis, &dist))
 		{
 			if (axis.y > 0.5f)
 			{
@@ -371,6 +369,25 @@ void Player::Collision(Task* t)
 				float s = m_rad - dist;
 				m_pos += axis * s;
 			}
+		}
+	}
+	break;
+	case ETaskTag::eDoor:
+	{
+		float dist;
+		CVector3D axis;
+		if (CCollision::CollisionOBBCapsule(t->m_obb1, m_lineS, m_lineE, m_rad, &axis, &dist))
+		{
+			if (axis.y > 0.5f)
+			{
+				//面が上向き->地面に当たった
+				//重力落下速度を0に戻す
+				if (m_vec.y < 0)
+					m_vec.y = 0;
+			}
+			//押し戻し
+			float s = m_rad - dist;
+			m_pos += axis * s;
 		}
 	}
 	break;

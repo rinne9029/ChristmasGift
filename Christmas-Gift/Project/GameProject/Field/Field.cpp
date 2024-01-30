@@ -16,6 +16,8 @@ std::list<CVector3D> Field::ms_nodes =
 {
 	CVector3D(-1.119953,1,5.792867),		//1階廊下
 	CVector3D(-7.946468,1,6.155985),
+	CVector3D(-7.979040,1,3.100000),
+	CVector3D(-10.848549,1,3.523031),		//洗面所
 	CVector3D(2.369029,1,-0.000122),		//ソファー前
 	CVector3D(5.275981,1,1.853063),
 	CVector3D(6.315304,1,5.931384),
@@ -35,33 +37,23 @@ std::list<CVector3D> Field::ms_nodes =
 //ライト用のテーブル
 std::list<CVector3D> ms_lights =
 {
-	CVector3D(2.208868,1.420053,2.165025),		//リビング
-	CVector3D(4.208868,1.420053,2.165025),
-	CVector3D(4.208868,1.420053,4.165025),
-	CVector3D(4.208868,1.420053,0.165025),
-	CVector3D(0.208868,1.420053,2.165025),
-	CVector3D(0.208868,1.420053,4.165025),
-	CVector3D(0.208868,1.420053,0.165025),
-	CVector3D(2.208868,1.420053,4.165025),
-	CVector3D(2.208868,1.420053,0.165025),
-
-	CVector3D(-0.973303,1.420053,11.385047),	//1階廊下
-	CVector3D(0.157168,1.420053,17.083790),
-
-	CVector3D(-3.899999,3.360492,13.075190),	//階段
-	CVector3D(-7.773126,5.860001,13.265531),
-	CVector3D(-7.613574,8.594998,9.993688),
-	CVector3D(-7.764234,10.053699,6.778700),
-
-	CVector3D(-3.781457,10.053699,6.785629),	//2階廊下
-	CVector3D(1.281443,10.053699,6.656032),
-	CVector3D(6.097445,10.053699,6.744309),
-
-	CVector3D(-1.385899,10.053699,2.570128),	//両親部屋
-	CVector3D(-2.586417,10.053699,2.570128),
-
-	CVector3D(5.379671,10.053699,2.570128),		//子供部屋
-	CVector3D(4.880295,10.053699,2.570128),
+	CVector3D(2.8,1.5,2.1),		//リビング
+	CVector3D(1,1.5,12.1),		//1階廊下①
+	CVector3D(-5,1.5,5.3),		//1階廊下②
+	CVector3D(-10.5,1.5,2.5),	//洗面所
+	CVector3D(-4.6,3.7,12.9),	//階段
+	CVector3D(-7.0,6.8,13.0),
+	CVector3D(-7.0,11.8,13.0),
+	CVector3D(-7.9,8.1,10.0),	
+	CVector3D(-7.7,9.8,6.6),//2階廊下
+	CVector3D(-4.2,9.8,6.6),
+	CVector3D(0.4,9.8,6.7),
+	CVector3D(5.0,9.8,6.8),
+	CVector3D(-10.6,9.8,12.5),
+	CVector3D(-10.6,9.8,8.5),
+	CVector3D(-2.0,10.5,0.4),//両親部屋
+	CVector3D(5.8,9.8,0.6),//子供部屋
+	
 };
 
 //コンストラクタ
@@ -123,40 +115,53 @@ void Field::CreateLights()
 	//テーブル内の座標にライトを作成
 	for (CVector3D lightsPos : ms_lights)
 	{
-		if (m_lightNo <= 10)	
+		//リビング
+		if (m_lightNo <= 2)	
 		{
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo,0,true);
+			new Light(lightsPos, m_lightNo, 0, 8.0f, CLight::eLight_Point, true);
 			m_lightNo++;
 		}
-		else if(m_lightNo <= 12)
+		else if (m_lightNo <= 3)
 		{
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo,1,false);
+			new Light(lightsPos, m_lightNo, 1, 7.0f, CLight::eLight_Point, false);
 			m_lightNo++;
 		}
-		else if(m_lightNo <= 16)
+		else if (m_lightNo <= 4)
 		{
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 2,false);
+			new Light(lightsPos, m_lightNo, 2, 5.0f, CLight::eLight_Point, false);
 			m_lightNo++;
 		}
-		else if(m_lightNo <= 19)
+		else if (m_lightNo <= 5)
 		{
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 3, false);
+			new Light(lightsPos, m_lightNo, 3, 3.5f, CLight::eLight_Point, false);
 			m_lightNo++;
 		}
-		else if (m_lightNo <= 21)
+		else if (m_lightNo <= 9)
 		{
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 4, true);
+			new Light(lightsPos, m_lightNo, 4, 5.0f, CLight::eLight_Point, false);
 			m_lightNo++;
 		}
-		else if (m_lightNo <= 23)
+		else if (m_lightNo <= 15)
 		{
 			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 5, false);
+			new Light(lightsPos, m_lightNo, 5, 4.0f, CLight::eLight_Point, false);
+			m_lightNo++;
+		}
+		else if (m_lightNo <= 16)
+		{
+			//2～番は部屋用ライト番号
+			new Light(lightsPos, m_lightNo, 6, 6.0f, CLight::eLight_Point, false);
+			m_lightNo++;
+		}
+		else if (m_lightNo <= 17)
+		{
+			//2～番は部屋用ライト番号
+			new Light(lightsPos, m_lightNo, 7, 5.0f, CLight::eLight_Point, false);
 			m_lightNo++;
 		}
 		

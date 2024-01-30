@@ -1,55 +1,113 @@
 # Blender 3.5.0 MTL File: 'デバッグステージ１コリジョン.blend'
 # www.blender.org
 
-newmtl Default_Material
+newmtl Antique_1
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.264151 0.161356 0.058562
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl BA_Glass_02
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
+illum 3
 
-newmtl ProBuilderDefault
+newmtl BA_Glow_White_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 2.160271 2.160271 2.160271
 Ni 1.450000
-illum 2
-map_Kd C:/unity/ChristmasGift_Map/Library/PackageCache/com.unity.probuilder@5.0.7/Content/Resources/Textures/GridBox_Default.png
-map_d C:/unity/ChristmasGift_Map/Library/PackageCache/com.unity.probuilder@5.0.7/Content/Resources/Textures/GridBox_Default.png
+d 1.000000
+illum 3
 
-newmtl Wooden_Floor
+newmtl BathroomMat_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
-map_Kd C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor/Wooden Floor_4K_Albedo.tga
-map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor/Wooden Floor_4K_Normal.tga
+illum 3
+map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BathroomMat_01_N.png
 
-newmtl Wooden_Floor_2
+newmtl GameConsole_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
-d 1.000000
-illum 2
-map_Kd C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor2/Wooden Floor2_4K_Albedo.tga
-map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor2/Wooden Floor2_4K_Normal.tga
+illum 3
+map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/GameConsole_01_A.png
+map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/GameConsole_01_A.png
 
-newmtl Wooden_Floor_4
+newmtl Int_Apt_01
 Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
+Kd 0.867925 0.829543 0.806515
+Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
-Ni 1.450000
+Ni 1.000000
 d 1.000000
-illum 2
-map_Kd C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor4/Wooden Floor4_4K_Albedo.tga
-map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Free/Wooden Floor Pack/Textures/Wooden Floor4/Wooden Floor4_4K_Normal.tga
+illum 3
+
+newmtl ProBuilderDefault.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl Wooden_Floor.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl Wooden_Floor_2.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl Wooden_Floor_4.001
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl cardboardBoxes_Material
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3

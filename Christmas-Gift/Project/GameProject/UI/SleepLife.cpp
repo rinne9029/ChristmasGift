@@ -28,14 +28,9 @@ void SleepLife::Update()
 	//子供の睡眠が覚醒（ゲームオーバー）
 	if (GameData::BlueSleepSize >= 0) return;
 
-	if (mp_player->m_CheckKill && !mp_filta->m_FadeoutCheck)
-	{
-		TaskManager::KillALL();
-	}
-	//プレイヤー死亡状態
-	mp_player->m_CheckKill = true;
-	mp_filta->m_FadeoutCheck = true;
-
+	//ゲームオーバー
+	GameData::GameOverCheck = true;
+	TaskManager::KillALL();
 }
 
 //2D描画処理
