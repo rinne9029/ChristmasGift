@@ -17,6 +17,7 @@ private:
 	NavNode* m_moveNode;		//移動目的地のノード
 	float m_elapsedTime;		//経過時間計測用
 	bool m_isvigilance;			//警戒フラグ
+	int m_modelno;
 	
 	//目
 	float eye_length;			//視野距離
@@ -79,7 +80,7 @@ private:
 	bool IsLookPlayer() const;
 public:
 	//コンストラクタ
-	Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale);
+	Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale, int model);
 	//デストラクタ
 	~Enemy();
 

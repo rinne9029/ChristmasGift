@@ -16,7 +16,7 @@
 //回転速度
 #define ROTATE_SPEED 6.0f
 
-Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale)
+Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale,int model)
 	:CharaBase(ETaskTag::eEnemy,true)
 	, mp_player(nullptr)
 	, m_moveDir(0.0f, 0.0f, 0.0f)
@@ -26,11 +26,21 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale)
 	, m_elapsedTime(0.0f)
 	, m_isvigilance(false)
 	, m_state(eState_Idle)
+	, m_modelno(model)
 {
 	//敵の管理クラスのリストに自身を追加
 	EnemyManager::Instance()->Add(this);
 
-	m_model = COPY_RESOURCE("Father", CModelA3M);
+	switch (m_modelno)
+	{
+	case 0:
+		m_model = COPY_RESOURCE("Father", CModelA3M);
+		break;
+	case 1:
+		m_model = COPY_RESOURCE("Mother", CModelA3M);
+	}
+		
+	
 
 	m_pos = pos;			//初期座標
 	m_scale = scale;		//モデル大きさ
@@ -56,6 +66,8 @@ Enemy::~Enemy()
 	//敵の管理クラスのリストから自身を取り除く
 	EnemyManager::Instance()->Remove(this);
 	NavManager::Instance()->RemoveNode(m_lostNode);
+	//BGMの停止
+	SOUND("BGM_Chase")->Stop();
 }
 
 //待機状態の処理
@@ -65,17 +77,21 @@ void Enemy::StateIdle()
 	m_model.ChangeAnimation((int)AnimId::Idle);
 
 	//デバッグ用:視野のカラー
-	View_Color();
+	//View_Color();
 
 	m_vec *= 0;
 
 	//待機時間
 	if (m_elapsedTime < IDLE_TIME)
 	{
+		//BGMをどんどん下げる
+		//SOUND("BGM_Chase")->Volume();
 		m_elapsedTime += CFPS::GetDeltaTime();
 	}
 	else
 	{
+		//逃げられた時に音を消す
+		SOUND("BGM_Chase")->Stop();
 		m_elapsedTime = 0.0f;
 
 		//次に探索するノードを取得
@@ -126,7 +142,7 @@ void Enemy::StateMove()
 	m_model.ChangeAnimation((int)AnimId::Walk);
 
 	//デバッグ用:視野のカラー
-	View_Color();
+	//View_Color();
 
 	if (m_moveNode != nullptr)
 	{
@@ -188,8 +204,17 @@ void Enemy::StateChase()
 	//アニメーション変更
 	m_model.ChangeAnimation((int)AnimId::Run);
 
+	//追跡中のBGMの音量をリセット
+	SOUND("BGM_Chase")->Volume(1);
+	if (SOUND("BGM_Chase")->CheckEnd())
+	{
+		//追跡中のBGM再生（ループあり）
+		SOUND("BGM_Chase")->Play(true);
+	}
+	
+
 	//デバッグ用:視野のカラー
-	View_Color();
+	//View_Color();
 
 	//各ノードの座標を取得
 	NavNode* playerNode = mp_player->GetNavNode();

@@ -23,7 +23,7 @@ public:
 	@param	font			[in]	フォント
 	@param	size			[in]	サイズ
 	**/
-	CFont(const char *font_path = "C:\\Windows\\Fonts\\msgothic.ttc", int size=24);
+	CFont(const char *font_path = "C:\\Windows\\Fonts\\msgothic.ttc", int size=48);
 	/*!
 	@brief	文字の表示
 	@param	x				[in]	横位置

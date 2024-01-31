@@ -1,5 +1,6 @@
 #include"Title/Title.h"			//タイトル
 #include"Filta/Filta.h"			//フィルター
+#include"GameScene/GameData.h"
 #include"Task/TaskManager.h"	
 #include"Debug/DebugPrint.h"
 #include"Debug/DebugProfiler.h"
@@ -39,9 +40,17 @@ void MainLoop(void) {
 	DebugProfiler::StartTimer("Render");	//タスク3D描画処理計測スタート
 	//ディファードレンダリング
 	//ライトの数の変更はCLight.h CLight::LIGHT_MAXとCShader.cpp　413行目LIGHT_MAXの値を設定する
-	CRendaring::GetInstance()->Render([]() {
+	if (GameData::GameStart)
+	{
+		CRendaring::GetInstance()->Render([]() {
+			TaskManager::Instance()->Render();
+			});
+	}
+	else
+	{
 		TaskManager::Instance()->Render();
-		});
+	}
+	
 	DebugProfiler::EndTimer("Render");		//タスクの3D描画処理計測終了
 
 	//全タスクの2D描画
@@ -141,8 +150,8 @@ void Init(void)
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
 
 	//マウス非表示
-	CInput::ShowCursor(false);
-	CInput::SetMouseInside(true);
+	//CInput::ShowCursor(false);
+	//CInput::SetMouseInside(true);
 	CInput::Update();
 	CInput::Update();
 
@@ -179,6 +188,8 @@ void Init(void)
 	//CShadow::CreateInscance(40.0f, 20.0f, 8192, 8192);
 	//ポストエフェクトを生成		画面解像度,被写界深度オフセット
 	CRendaring::CreatInstance(SCREEN_WIDTH, SCREEN_HEIGHT, -0.05);
+	
+	
 
 	//ローディング中背景読み込み
 	ADD_RESOURCE("BackGround", CImage::CreateImage("Loading/BackGround.png"));
@@ -192,6 +203,9 @@ void Init(void)
 	g_LoadingText = COPY_RESOURCE("NowLoading_Text", CImage);
 	g_LoadingBackGround = COPY_RESOURCE("BackGround", CImage);
 	
+	
+	srand(time(NULL));
+
 	//ロード中に実行する処理
 	CLoadThread::GetInstance()->LoadStart([]()
 		{
@@ -200,6 +214,7 @@ void Init(void)
 
 			//敵モデル（家族）読み込み
 			ADD_RESOURCE("Father", CModel::CreateModel("Charactor/Enemy/father.a3m"));
+			ADD_RESOURCE("Mother", CModel::CreateModel("Charactor/Mother/Mother.a3m"));
 			
 			//タンス読み込み
 			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
@@ -237,11 +252,11 @@ void Init(void)
 
 			//ステージ読み込み
 			//描画ステージ
-			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 7, 7, 7));
-			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 7, 7, 7));
+			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 10, 10, 10));
+			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 10, 10, 10));
 			//当たり判定ステージ
-			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
-			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
+			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 10, 10, 10));
+			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 10, 10, 10));
 			
 			//SE
 			SOUND("SE_DoorOpen")->Load("Sound/SE/DoorOpen.wav", 1);
@@ -255,6 +270,7 @@ void Init(void)
 
 			//BGM
 			SOUND("BGM_TitleOP")->Load("Sound/BGM/TitleOP.wav", 1);
+			SOUND("BGM_Chase")->Load("Sound/BGM/Chase.wav", 2);
 
 			new Filta();
 			new Title();

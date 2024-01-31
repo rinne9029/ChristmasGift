@@ -20,12 +20,14 @@
 GameScene::GameScene()
 	:Task(ETaskTag::eScene,true)
 {
+
 	//ゲーム状況のリセット
 	GameData::isGift = false;
 	GameData::BlueSleepSize = 300;
 	GameData::GameClearCheck = false;
 	GameData::GameOverCheck = false;
 	GameData::second = 300;
+	GameData::GameStart = true;
 
 	//フェードイン実行
 	GameData::StartFadeIn = true;
@@ -217,20 +219,22 @@ GameScene::GameScene()
 			character[0].size//モデルサイズ
 		);
 
-		//エネミー
-		/*new Enemy
+		//父親
+		new Enemy
 		(
 			CVector3D(2.9, 0, 0.351914),
 			CVector3D(-1,0, 0),
-			CVector3D(0.01,0.01,0.01)
-		);*/
+			CVector3D(0.01,0.01,0.01),
+			0
+		);
 
-		//エネミー
+		//母親
 		/*new Enemy
 		(
 			CVector3D(-2.073762, 9.891998, 1.103694),
 			CVector3D(-1, 0, 0),
-			CVector3D(0.01, 0.01, 0.01)
+			CVector3D(0.01, 0.01, 0.01),
+			1
 		);*/
 
 
@@ -241,12 +245,13 @@ GameScene::GameScene()
 			CVector3D(1, 0.5, 1)
 		);
 
-		new MidPoint
+		//仮
+		/*new MidPoint
 		(
 			CVector3D(0, 0, 0),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 0.5, 1)
-		);
+		);*/
 
 		new EndPoint
 		(
@@ -258,8 +263,8 @@ GameScene::GameScene()
 		new Closet
 		(
 			CVector3D(3.261635, 9.053699, 4.970999),			//座標
-			CVector3D(0, DtoR(180), 0),		//回転値
-			CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
+			CVector3D(0, DtoR(270), 0),		//回転値
+			CVector3D(1, 0.7, 1),				//オブジェクトの大きさ
 			2
 		);
 

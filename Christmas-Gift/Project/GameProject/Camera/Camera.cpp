@@ -44,7 +44,7 @@ void Camera::StateIdle()
 void Camera::StateHide()
 {
 	//カメラの向きをクローゼットの正面方向に変更
-	m_rot = mp_player->m_Closet_rot;
+	m_rot = mp_player->m_Closet_rot - CVector3D(0,DtoR(90),0);
 
 	//通常状態のカメラに戻す
 	if(!mp_player->m_hide)
@@ -105,10 +105,10 @@ void Camera::Render()
 			//カメラ位置を行列で設定
 		CCamera::GetCurrent()->SetTranseRot(cam_matrix);
 		
-		if (PUSH(CInput::eButton8))			//Fキー入力
-		{
-			m_camera_mode = LookDownCamera;	//見下ろしに変更
-		}
+		//if (PUSH(CInput::eButton8))			//Fキー入力
+		//{
+		//	m_camera_mode = LookDownCamera;	//見下ろしに変更
+		//}
 	}
 	break;
 	//見下ろし

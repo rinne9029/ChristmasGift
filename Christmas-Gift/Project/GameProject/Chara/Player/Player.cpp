@@ -88,17 +88,9 @@ Player::~Player()
 //通常状態
 void Player::StateIdle()
 {
-	//歩き速度
-	
-
-	//シフトキー入力&&移動している
-	if (HOLD(CInput::eButton6))
-	{
-		
-	}
 
 	//スペースボタン入力
-	if (PUSH(CInput::eButton5) /*&& m_isGround*/)
+	if (PUSH(CInput::eButton5) && m_isGround)
 	{
 		//着地フラグOFF
 		m_isGround = false;
@@ -142,6 +134,8 @@ void Player::StateHide()
 	//ボタン入力で即ハイドを解除しないように
 	static int count;
 	count++;
+	//重力無視
+	m_vec.y = 0;
 	//クローゼットの中心に移動
 	m_pos = m_Closet_pos;
 	if (PUSH(CInput::eMouseL) && count >1)
@@ -334,10 +328,10 @@ void Player::Update()
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
 
 	//デバッグ用:kボタンでプレイヤーの座標を表示（ノード配置調整用）
-	if (PUSH(CInput::eButton12))
+	/*if (PUSH(CInput::eButton12))
 	{
 		printf("CVector3D(%f,%f,%f),\n", m_pos.x,m_pos.y+1,m_pos.z);
-	}
+	}*/
 }
 
 //描画処理
@@ -380,27 +374,27 @@ void Player::Collision(Task* t)
 		}
 	}
 	break;
-	case ETaskTag::eFieldObject:
+	case ETaskTag::eTansu:
 	{
-		float dist;
-		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(t->m_obb1, m_lineS, m_lineE, m_rad, &axis, &dist))
-		{
-			if (axis.y > 0.5f)
-			{
-				//面が上向き->地面に当たった
-				//重力落下速度を0に戻す
-				if (m_vec.y < 0)
-					m_vec.y = 0;
-			}
-			//ハイド以外
-			if (m_state != eState_Hide)
-			{
-				//押し戻し
-				float s = m_rad - dist;
-				m_pos += axis * s;
-			}
-		}
+		//float dist;
+		//CVector3D axis;
+		//if (CCollision::CollisionOBBCapsule(t->m_obb2, m_lineS, m_lineE, m_rad, &axis, &dist))
+		//{
+		//	if (axis.y > 0.5f)
+		//	{
+		//		//面が上向き->地面に当たった
+		//		//重力落下速度を0に戻す
+		//		if (m_vec.y < 0)
+		//			m_vec.y = 0;
+		//	}
+		//	//ハイド以外
+		//	if (m_state != eState_Hide)
+		//	{
+		//		//押し戻し
+		//		float s = m_rad - dist;
+		//		m_pos += axis * s;
+		//	}
+		//}
 	}
 	break;
 	case ETaskTag::eDoor:

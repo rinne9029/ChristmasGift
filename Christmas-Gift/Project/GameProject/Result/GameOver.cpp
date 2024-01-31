@@ -7,6 +7,7 @@ GameOver::GameOver()
 	:Task(ETaskTag::eResult,true)
 {
 	GameData::StartFadeIn = true;
+	GameData::GameStart = false;
 
 	//ゲームオーバーサウンド再生
 	SOUND("SE_GameOver")->Play();

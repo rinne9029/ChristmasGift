@@ -1,4 +1,5 @@
 #include"Title.h"
+#include"Ranking/Ranking.h"
 #include"GameScene/GameScene.h"
 #include"GameScene/GameData.h"
 
@@ -31,12 +32,12 @@ Title::~Title()
 	case 1:
 		//説明書
 		//仮
-		new GameScene();
+		new Ranking("Ranking.txt");
 		break;
 	case 2:
 		//ランキング
 		//仮
-		new GameScene();
+		new Ranking("Ranking.txt");
 		break;
 	}
 }
@@ -53,18 +54,27 @@ void Title::FuwaFuwa()
 	case 0:
 		m_StartText.SetPos(200, 750 - abs(sin(m_fuwafuwa)) * 64);
 		m_StartText.Draw();
-		m_ManualText.SetPos(855, 750);
-		m_ManualText.Draw();
+		/*m_ManualText.SetPos(855, 750);
+		m_ManualText.Draw();*/
 		m_RankingText.SetPos(1270, 750);
 		m_RankingText.Draw();
 		break;
 		//説明書文字
-	case 1:
+	/*case 1:
 		m_StartText.SetPos(200, 750);
 		m_StartText.Draw();
 		m_ManualText.SetPos(855, 750 - abs(sin(m_fuwafuwa)) * 64);
 		m_ManualText.Draw();
 		m_RankingText.SetPos(1270, 750);
+		m_RankingText.Draw();
+		break;*/
+		//仮でケース１をランキングに
+	case 1:
+		m_StartText.SetPos(200, 750);
+		m_StartText.Draw();
+		/*m_ManualText.SetPos(855, 750);
+		m_ManualText.Draw();*/
+		m_RankingText.SetPos(1270, 750 - abs(sin(m_fuwafuwa)) * 64);
 		m_RankingText.Draw();
 		break;
 		//ランキング文字
@@ -105,7 +115,7 @@ void Title::Update()
 		m_fuwafuwa = 0;
 	}
 	//Dキー入力
-	if (PUSH(CInput::eRight) && m_select < 2)
+	if (PUSH(CInput::eRight) && m_select < 1)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -120,6 +130,10 @@ void Title::Draw()
 {
 	m_TitleText.SetPos(500, 300);
 	m_TitleText.Draw();
+
+	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
 	//ふわふわ表示描画
 	FuwaFuwa();	
+
+	
 }

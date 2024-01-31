@@ -39,6 +39,7 @@
     <ClInclude Include="Navigation\NavManager.h" />
     <ClInclude Include="Navigation\NavNode.h" />
     <ClInclude Include="ObjectBase\ObjectBase.h" />
+    <ClInclude Include="Ranking\Ranking.h" />
     <ClInclude Include="Result\GameClear.h" />
     <ClInclude Include="Result\GameOver.h" />
     <ClInclude Include="Task\Task.h" />
@@ -77,6 +78,7 @@
     <ClCompile Include="Navigation\NavManager.cpp" />
     <ClCompile Include="Navigation\NavNode.cpp" />
     <ClCompile Include="ObjectBase\ObjectBase.cpp" />
+    <ClCompile Include="Ranking\Ranking.cpp" />
     <ClCompile Include="Result\GameClear.cpp" />
     <ClCompile Include="Result\GameOver.cpp" />
     <ClCompile Include="Task\Task.cpp" />

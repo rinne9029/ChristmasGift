@@ -12,7 +12,7 @@ SleepLife::SleepLife()
 	m_NREMText = COPY_RESOURCE("NREMsleep", CImage);
 
 	//0`100•bƒ‰ƒ“ƒ_ƒ€
-	m_ChengeSleep = rand() % 100;
+	m_ChengeSleep = 300 - rand() % 20;
 }
 
 //XVˆ—
@@ -43,10 +43,10 @@ void SleepLife::Draw()
 	m_NREMText.SetPos(42, 216);
 	m_NREMText.SetSize(256, 32);
 
-	if (GameData::second >= m_ChengeSleep)
+	if (GameData::second <= m_ChengeSleep)
 	{
 		m_REM = !m_REM;
-		m_ChengeSleep = m_ChengeSleep + rand() % 100;
+		m_ChengeSleep = m_ChengeSleep - rand() % 100;
 	}
 
 	//ƒŒƒ€‡–°ó‘Ô‚È‚ç

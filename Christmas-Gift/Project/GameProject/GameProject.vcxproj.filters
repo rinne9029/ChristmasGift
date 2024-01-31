@@ -107,6 +107,9 @@
     <ClInclude Include="Result\GameOver.h">
       <Filter>Result</Filter>
     </ClInclude>
+    <ClInclude Include="Ranking\Ranking.h">
+      <Filter>Ranking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Camera">
@@ -165,6 +168,9 @@
     </Filter>
     <Filter Include="Result">
       <UniqueIdentifier>{1d24bd0a-1f33-4fd4-bfee-a9eb698b7a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ranking">
+      <UniqueIdentifier>{293d2d58-a49c-4e5c-a840-524a5d8adb29}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +279,9 @@
     </ClCompile>
     <ClCompile Include="Result\GameOver.cpp">
       <Filter>Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Ranking\Ranking.cpp">
+      <Filter>Ranking</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

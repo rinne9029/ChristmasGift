@@ -9,6 +9,7 @@ enum class ETaskTag
 	eFieldFloor,				//床
 	eFieldWall,					//壁
 	eDoor,						//ドア
+	eTansu,
 	eFieldLight,				//ステージに設置したライト
 	eFieldObject,				//ステージにあるギミックオブジェクト
 	eObject,					//ただのオブジェクト
