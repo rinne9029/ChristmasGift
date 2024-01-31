@@ -1,6 +1,7 @@
 #include "GameClear.h"
 #include"Title/Title.h"
 
+//コンストラクタ
 GameClear::GameClear()
 	:Task(ETaskTag::eResult, true)
 	, m_select(0)
@@ -11,6 +12,7 @@ GameClear::GameClear()
 	m_RankingText = COPY_RESOURCE("RankingText", CImage);
 }
 
+//デストラクタ
 GameClear::~GameClear()
 {
 	switch (m_select)
@@ -27,6 +29,7 @@ GameClear::~GameClear()
 	}
 }
 
+//ハイライト表示処理
 void GameClear::HighLight()
 {
 	m_High = m_High + 0.05;
@@ -50,6 +53,7 @@ void GameClear::HighLight()
 	}
 }
 
+//更新処理
 void GameClear::Update()
 {
 	//スペースキーで決定
@@ -73,6 +77,7 @@ void GameClear::Update()
 
 }
 
+//2D描画処理
 void GameClear::Draw()
 {
 	//背景描画

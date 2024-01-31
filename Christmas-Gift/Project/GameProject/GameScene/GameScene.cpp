@@ -436,8 +436,9 @@ GameScene::GameScene()
 	}
 	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
 	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
+	
 	//フェードイン実行
-	mp_filta->m_FadeinCheck = true;
+	GameData::StartFadeIn = true;
 	
 	fclose(fp);
 	//スタート時タイマーを0にリセット

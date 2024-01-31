@@ -1,22 +1,20 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
 
-class Player;
-
-class Filta : public ObjectBase
+class Filta : public Task
 {
 private:
-	Player* mp_plyaer;
-	CImage m_filta;
+	CImage m_filta;		//フィルター
+	float m_alpha;		//不透明度
 	float m_time;
-	float m_transparent;
+	
 	void Fadein();
 	void Fadeout();
 public:
-	bool m_FadeinCheck;
-	bool m_FadeoutCheck;
+	//コンストラクタ
 	Filta();
-	~Filta();
+	//更新処理
 	void Update();
+	//2D描画処理
 	void Draw();
 };

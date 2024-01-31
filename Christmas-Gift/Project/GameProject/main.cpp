@@ -23,33 +23,35 @@ void MainLoop(void) {
 	//ゲーム中はこの関数_を1秒間に60回呼び出している
 	//--------------------------------------------------------------
 
-	//ナビノード描画切り替え:デバッグ用
-	if (PUSH(CInput::eButton11))		//Qボタン
+	//Qボタンでナビノード描画切り替え:デバッグ用
+	/*if (PUSH(CInput::eButton11))		
 	{
 		g_isRenderDebug = !g_isRenderDebug;
-	}
+	}*/
 
 	//全タスクの更新
-	DebugProfiler::StartTimer("Update");	//タスク更新処理計測スタート
+	DebugProfiler::StartTimer("Update");	//タスクの更新処理計測スタート
 	TaskManager::Instance()->Update();
-	DebugProfiler::EndTimer("Update");		//タスク更新処理計測終了
+	DebugProfiler::EndTimer("Update");		//タスクの更新処理計測終了
 
 	//全タスクの3D描画
-	DebugProfiler::StartTimer("Render");	//タスク描画処理計測スタート
+	DebugProfiler::StartTimer("Render");	//タスク3D描画処理計測スタート
 	//ディファードレンダリング
 	//ライトの数の変更はCLight.h CLight::LIGHT_MAXとCShader.cpp　413行目LIGHT_MAXの値を設定する
 	CRendaring::GetInstance()->Render([]() {
 		TaskManager::Instance()->Render();
 		});
-	DebugProfiler::EndTimer("Render");		//タスク描画処理計測終了
+	DebugProfiler::EndTimer("Render");		//タスクの3D描画処理計測終了
 
 	//全タスクの2D描画
+	DebugProfiler::StartTimer("Update");	//タスクの2D描画処理計測スタート
 	TaskManager::Instance()->Draw();
+	DebugProfiler::EndTimer("Update");		//タスクの2D描画処理計測終了
 
 	//全タスクの判定処理
-	DebugProfiler::StartTimer("Collision");	//タスク判定処理計測スタート
+	DebugProfiler::StartTimer("Collision");	//タスクの判定処理計測スタート
 	TaskManager::Instance()->Collision();
-	DebugProfiler::EndTimer("Collision");	//タスク判定処理計測終了
+	DebugProfiler::EndTimer("Collision");	//タスクの判定処理計測終了
 
 	//ロード終了チェック
 	if (CLoadThread::GetInstance()->CheckEnd())
@@ -76,7 +78,7 @@ void MainLoop(void) {
 		g_LoadingText.Draw();
 	}
 
-	float lineWidth = 1.0f;
+	//float lineWidth = 1.0f;
 
 	//世界の軸を表示
 	/*Utility::DrawLine(CVector3D(0, 0, 0), CVector3D(100, 0, 0), CVector4D(1, 0, 0, 1), lineWidth);
@@ -173,25 +175,27 @@ void Init(void)
 	//ポストエフェクトを生成		画面解像度,被写界深度オフセット
 	CRendaring::CreatInstance(SCREEN_WIDTH, SCREEN_HEIGHT, -0.05);
 
+	//ローディングマーク読み込み
 	ADD_RESOURCE("NowLoading", CImage::CreateImage("UI/NowLoading.png"));
+	//ローディングテキスト読み込み
 	ADD_RESOURCE("NowLoading_Text", CImage::CreateImage("UI/NowLoading_Text.png"));
 	g_Loading = COPY_RESOURCE("NowLoading", CImage);
 	g_LoadingText = COPY_RESOURCE("NowLoading_Text", CImage);
 
+	//ロード中に実行する処理
 	CLoadThread::GetInstance()->LoadStart([]()
 		{
-			//プレイヤーモデルの読み込み
+			//プレイヤーモデル読み込み
 			ADD_RESOURCE("Player", CModel::CreateModel("Charactor/Santa/Santa.a3m"));
 
-			//敵モデル（家族）の読み込み
+			//敵モデル（家族）読み込み
 			ADD_RESOURCE("Father", CModel::CreateModel("Charactor/Enemy/father.a3m"));
 			
-
-			//タンスモデル読み込み
+			//タンス読み込み
 			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
-			//プレゼントボックスモデル読み込み
+			//プレゼントボックス読み込み
 			ADD_RESOURCE("PresentBox", CModel::CreateModel("object/presentbox.obj", 1, 1, 1));
-			//電話オブジェクト読み込み
+			//電話機読み込み
 			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj",1,1,1));
 			//電気スイッチ読み込み
 			ADD_RESOURCE("Switch", CModel::CreateModel("object/switch.obj",1,1,1));
@@ -210,7 +214,6 @@ void Init(void)
 			ADD_RESOURCE("RankingText", CImage::CreateImage("Result/RankingText.png"));
 			ADD_RESOURCE("ReStartText", CImage::CreateImage("Result/ReStartText.png"));
 
-
 			//フィルター画像読み込み
 			ADD_RESOURCE("Filta", CImage::CreateImage("Filta/Filta.png"));
 
@@ -221,16 +224,12 @@ void Init(void)
 			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));
 			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));
 
-
-			
-
-			//自作ステージ
+			//ステージ読み込み
+			//描画ステージ
 			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 7, 7, 7));
-			
-			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
-
 			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 7, 7, 7));
-			
+			//当たり判定ステージ
+			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
 			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
 			
 			new Filta();

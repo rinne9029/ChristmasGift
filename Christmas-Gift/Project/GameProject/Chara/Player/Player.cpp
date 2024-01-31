@@ -202,8 +202,8 @@ void Player::Update()
 
 
 	//フェードイン・フェードアウト中はアップデート処理をしない
-	if (mp_filta->m_FadeinCheck)return;
-	if (mp_filta->m_FadeoutCheck)return;
+	if (GameData::StartFadeIn)return;
+	if (GameData::StartFadeOut)return;
 
 	
 
