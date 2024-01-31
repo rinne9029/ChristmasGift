@@ -1,5 +1,6 @@
 #include "GameClear.h"
 #include"Title/Title.h"
+#include"GameScene/GameData.h"
 
 //コンストラクタ
 GameClear::GameClear()
@@ -7,6 +8,9 @@ GameClear::GameClear()
 	, m_select(0)
 	, m_High(0)
 {
+	//フェードイン実行
+	GameData::StartFadeIn = true;
+
 	m_BuckGraund = COPY_RESOURCE("ClearBackGround", CImage);
 	m_TitleText = COPY_RESOURCE("TitleText", CImage);
 	m_RankingText = COPY_RESOURCE("RankingText", CImage);
@@ -59,7 +63,8 @@ void GameClear::Update()
 	//スペースキーで決定
 	if (PUSH(CInput::eButton5))
 	{
-		TaskManager::KillALL();
+		//フェードアウト実行
+		GameData::StartFadeOut = true;
 	}
 
 	//Wキー入力

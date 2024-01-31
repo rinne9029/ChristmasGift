@@ -2,7 +2,7 @@
 #include"Chara/Player/Player.h"
 #include"GameScene/GameData.h"
 
-#define FADETIME 90.0
+#define FADETIME 1	//フェードイン、フェードアウト完了時間
 
 //コンストラクタ
 Filta::Filta()
@@ -16,7 +16,7 @@ Filta::Filta()
 //フェードイン処理
 void Filta::Fadein()
 {
-	m_time -= 3.0f;
+	m_time -= CFPS::GetDeltaTime();
 	//フェードイン中
 	if (m_alpha > 0)
 	{
@@ -33,7 +33,7 @@ void Filta::Fadein()
 //フェードアウト処理
 void Filta::Fadeout()
 {
-	m_time += 3.0f;
+	m_time += CFPS::GetDeltaTime();
 	//フェードアウト中
 	if (m_alpha < 1)
 	{
@@ -53,17 +53,9 @@ void Filta::Fadeout()
 void Filta::Update()
 {
 	//フェードインスタートOn
-	if (GameData::StartFadeIn) 
-	{
-		Fadein();
-	}
-		
+	if (GameData::StartFadeIn) Fadein();
 	//フェードアウトスタートOn
-	if (GameData::StartFadeOut) 
-	{
-		Fadeout();
-	}
-		
+	if (GameData::StartFadeOut) Fadeout();
 }
 
 //2D描画処理

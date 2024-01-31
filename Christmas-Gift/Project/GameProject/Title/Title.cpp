@@ -1,5 +1,4 @@
 #include"Title.h"
-#include"Filta/Filta.h"
 #include"GameScene/GameScene.h"
 #include"GameScene/GameData.h"
 
@@ -9,6 +8,9 @@ Title::Title()
 	,m_select(0)
 	,m_fuwafuwa(0.0f)
 {
+	//フェードイン実行
+	GameData::StartFadeIn = true;
+
 	m_StartText = COPY_RESOURCE("StartText", CImage);
 	m_ManualText = COPY_RESOURCE("ManualText", CImage);
 	m_RankingText = COPY_RESOURCE("RankingText", CImage);
@@ -44,7 +46,7 @@ void Title::FuwaFuwa()
 	//選ばれた文字がsinカーブでふわふわ動く
 	switch (m_select)
 	{
-		//スタート
+		//スタート文字
 	case 0:
 		m_StartText.SetPos(200, 750 - abs(sin(m_fuwafuwa)) * 64);
 		m_StartText.Draw();
@@ -53,7 +55,7 @@ void Title::FuwaFuwa()
 		m_RankingText.SetPos(1270, 750);
 		m_RankingText.Draw();
 		break;
-		//説明書
+		//説明書文字
 	case 1:
 		m_StartText.SetPos(200, 750);
 		m_StartText.Draw();
@@ -62,7 +64,7 @@ void Title::FuwaFuwa()
 		m_RankingText.SetPos(1270, 750);
 		m_RankingText.Draw();
 		break;
-		//ランキング
+		//ランキング文字
 	case 2:
 		m_StartText.SetPos(200, 750);
 		m_StartText.Draw();
@@ -88,12 +90,14 @@ void Title::Update()
 	if (PUSH(CInput::eLeft) && m_select > 0)
 	{
 		m_select--;
+		//ふわふわ表示リセット
 		m_fuwafuwa = 0;
 	}
 	//Dキー入力
 	if (PUSH(CInput::eRight) && m_select < 2)
 	{
 		m_select++;
+		//ふわふわ表示リセット
 		m_fuwafuwa = 0;
 	}
 }
@@ -101,5 +105,6 @@ void Title::Update()
 //2D描画処理
 void Title::Draw()
 {
+	//ふわふわ表示描画
 	FuwaFuwa();	
 }

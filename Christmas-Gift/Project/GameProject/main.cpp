@@ -219,7 +219,7 @@ void Init(void)
 
 			//ツールチップ用画像読み込み
 			ADD_RESOURCE("MouseL", CImage::CreateImage("UI/MouseL.png"));
-			ADD_RESOURCE("Clock", CImage::CreateImage("UI/Clock.png"));
+			ADD_RESOURCE("Text", CImage::CreateImage("UI/Text.png"));
 			//UI画像読み込み
 			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));
 			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));

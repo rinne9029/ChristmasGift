@@ -36,7 +36,7 @@ void EndPoint::Collision(Task* t)
 			if (PUSH(CInput::eMouseL))
 			{
 				GameData::GameClearCheck = true;
-				TaskManager::KillALL();
+				GameData::StartFadeOut = true;
 			}
 		}
 		else

@@ -1,37 +1,35 @@
 #include"GameScene.h"
+#include"Title/Title.h"
 #include"Chara/Player/Player.h"
 #include"Chara/Enemy/Enemy.h"
 #include"Camera/Camera.h"
 #include"Field/Field.h"
 #include"Field/FieldObject/Closet.h"
 #include"Field/FieldObject/Telephone.h"
+#include"Field/FieldObject/Switch.h"
 #include"Field/FieldObject/Door.h"
-#include"Light/Light.h"
-#include"CollisionHitBox/CollisionHitBox.h"
-#include"Title/Title.h"
-#include"Filta/Filta.h"
 #include"CollisionHitBox/MidPoint.h"
 #include"CollisionHitBox/EndPoint.h"
-#include"Navigation/NavManager.h"
 #include"UI/SleepLife.h"
-#include"UI/ToolTips.h"
 #include"UI/Timer.h"
-#include"GameData.h"
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"
-#include"Item/PresentBox.h"
-#include"Field/FieldObject/Switch.h"
+#include"GameData.h"
 
+//コンストラクタ
 GameScene::GameScene()
 	:Task(ETaskTag::eScene,true)
-	,mp_filta(nullptr)
-	,mp_player(nullptr)
 {
 	//ゲーム状況のリセット
 	GameData::isGift = false;
 	GameData::BlueSleepSize = 300;
 	GameData::GameClearCheck = false;
 	GameData::GameOverCheck = false;
+	GameData::second = 300;
+
+	//フェードイン実行
+	GameData::StartFadeIn = true;
+	
 
 	FILE* fp = NULL;
 	S_STATUS  character[] = { CVector3D(0,0,0) };
@@ -43,13 +41,10 @@ GameScene::GameScene()
 	//	キャラクターのステータスをファイルから復元(キャラクター:3人)
 	fread(character, sizeof(S_STATUS), sizeof(character) / sizeof(character[0]), fp);
 
-	
-
-
 	//ゲームスタート時はA_1ステージ
 	switch (GameData::Stage)
 	{
-	//マップA_1のシーン
+		//マップA_1のシーン
 	case GameData::A_1:
 		//ステージ
 		new Field();
@@ -57,7 +52,7 @@ GameScene::GameScene()
 		//リビング
 		new Switch
 		(
-			CVector3D(1, 1.5,7),
+			CVector3D(1, 1.5, 7),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 1, 1),
 			0
@@ -162,7 +157,7 @@ GameScene::GameScene()
 			CVector3D(1, 1, 1),
 			CVector3D(1, 2, 0.3)
 		);
-		
+
 		//１階トイレ
 		new Door
 		(
@@ -237,7 +232,7 @@ GameScene::GameScene()
 			CVector3D(-1, 0, 0),
 			CVector3D(0.01, 0.01, 0.01)
 		);*/
-	
+
 
 		new MidPoint
 		(
@@ -276,195 +271,41 @@ GameScene::GameScene()
 		//	2
 		//);
 
-		//new Telephone
-		//(
-		//	CVector3D(0, 0, 0),	//座標
-		//	CVector3D(0, DtoR(270), 0),					//回転値
-		//	CVector3D(3, 3, 3)							//オブジェクトの大きさ
-		//);
-
-		//new Telephone
-		//(
-		//	CVector3D(3, 0, 0),	//座標
-		//	CVector3D(0, DtoR(270), 0),					//回転値
-		//	CVector3D(3, 3, 3)							//オブジェクトの大きさ
-		//);
-
 		new SleepLife();			//睡眠ゲージ
 		new Timer();				//制限時間
 
 		break;
-
-	//マップA_子供部屋のシーン
-	//case GameData::A_Child:
-	//			//ステージ
-	//			//new ChildRoom();
-
-	//			//カメラ
-	//			new Camera
-	//			(
-	//				CVector3D(0, 1.5, 0),
-	//				CVector3D(0,DtoR(180),0)
-	//			);
-
-	//			//サンタ
-	//			new Player
-	//			(
-	//				CVector3D(-30, 0, -30),			//座標
-	//				CVector3D(0, DtoR(0), 0),		//回転値
-	//				CVector3D(0.01, 0.01, 0.01)		//モデルサイズ
-	//			);
-
-	//	break;
-
-	//マップB_1のシーン
-	case GameData::B_1:
-				//ステージ
-				new Field();
-
-				//カメラ
-				new Camera
-				(
-					CVector3D(0, 1.5, 0),
-					CVector3D(0,DtoR(-125),0)
-				);
-
-				//サンタ
-				new Player
-				(
-					CVector3D(34.5, 0, 30),			//座標
-					CVector3D(0.01, 0.01, 0.01)		//モデルサイズ
-				);
-
-				//エネミー
-				/*new Enemy
-				(
-					CVector3D(-30, 0, 30),
-					CVector3D(0.01, 0.01, 0.01)
-				);*/
-
-				/*for (int i = 0; i < 4; i++)
-				{
-					new Closet
-					(
-						CVector3D(31 - 2 * i, -0.1, 31),
-						CVector3D(0, DtoR(180), 0),
-						CVector3D(0.9, 3, 0.9)
-					);
-				}
-				
-
-				for (int i = 0; i < 4; i++)
-				{
-					new Closet
-					(
-						CVector3D(31 - 2 * i, -0.1, 7),
-						CVector3D(0, DtoR(0), 0),
-						CVector3D(0.9, 3, 0.9)
-					);
-				}*/
-
-				//ワープ用ボックス
-				/*new WarpRoomBox
-				(
-					CVector3D(34.5, 0, 30),
-					CVector3D(0, 0, 0),
-					CVector3D(1, 0.5, 0.5)
-				);*/
-
-				new SleepLife();			//睡眠ゲージ
-		break;
-	
-	//マップB_２のシーン
-	case GameData::B_2:
-		//ステージ
-		new Field();
-
-		//カメラ
-		new Camera
-		(
-			CVector3D(0, 1.5, 0),
-			CVector3D(0, DtoR(0), 0)
-		);
-
-		//サンタ
-		new Player
-		(
-			CVector3D(34.5, 0, -42),			//座標
-			CVector3D(0.01, 0.01, 0.01)		//モデルサイズ
-		);
-
-		//エネミー
-		/*new Enemy
-		(
-			CVector3D(-30, 0, 30),
-			CVector3D(0.01, 0.01, 0.01)
-		);*/
-
-		//クローゼット
-		//new Closet
-		//(
-		//	CVector3D(19, -0.1, 5.6),			//座標
-		//	CVector3D(0, DtoR(180), 0),		//回転値
-		//	CVector3D(0.9, 3, 0.9)			//当たり判定サイズ
-		//);
-
-		//new Closet
-		//(
-		//	CVector3D(-18, -0.1, -19),
-		//	CVector3D(0, DtoR(90), 0),
-		//	CVector3D(0.9, 3, 0.9)
-		//);
-
-		//new Closet
-		//(
-		//	CVector3D(-18, -0.1, -19),
-		//	CVector3D(0, DtoR(90), 0),
-		//	CVector3D(0.9, 3, 0.9)
-		//);
-
-		//ワープ用ボックス
-		/*new WarpRoomBox
-		(
-			CVector3D(34.5, 0, -42),
-			CVector3D(0, 0, 0),
-			CVector3D(1, 0.5, 0.5)
-		);*/
-
-		new SleepLife();			//睡眠ゲージ
-		break;
 	}
-	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
-	mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
-	
-	//フェードイン実行
-	GameData::StartFadeIn = true;
 	
 	fclose(fp);
-	//スタート時タイマーを0にリセット
-	GameData::second = 0;
 }
 
+//デストラクタ
 GameScene::~GameScene()
 {
 	//ゲームクリアフラグOn
 	if (GameData::GameClearCheck)
 	{
+		//クリアシーン移行
 		new GameClear();
 	}
 	//ゲームオーバーフラグOn
 	else if (GameData::GameOverCheck)
 	{
+		//ゲームオーバーシーン移行
 		new GameOver();
 	}
 }
 
+//更新処理
 void GameScene::Update()
 {
 	//5分経過でゲームオーバー
-	if (GameData::second > 300)
+	if (GameData::second < 0)
 	{
+		//ゲームオーバーフラグOn
 		GameData::GameOverCheck = true;
-		TaskManager::KillALL();
+		//フェードアウト実行
+		GameData::StartFadeOut = true;
 	}
 }

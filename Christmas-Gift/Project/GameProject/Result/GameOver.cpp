@@ -1,10 +1,13 @@
 #include "GameOver.h"
 #include"Title/Title.h"
+#include"GameScene/GameData.h"
 #include"GameScene/GameScene.h"
 
 GameOver::GameOver()
 	:Task(ETaskTag::eResult,true)
 {
+	GameData::StartFadeIn = true;
+
 	m_BuckGraund = COPY_RESOURCE("OverBackGround", CImage);
 	m_TitleText = COPY_RESOURCE("TitleText", CImage);
 	m_ReStartText = COPY_RESOURCE("ReStartText", CImage);
@@ -53,7 +56,7 @@ void GameOver::Update()
 	//スペースキーで決定
 	if (PUSH(CInput::eButton5))
 	{
-		TaskManager::KillALL();
+		GameData::StartFadeOut = true;
 	}
 
 	//Wキー入力

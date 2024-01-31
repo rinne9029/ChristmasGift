@@ -1,15 +1,15 @@
 #pragma once
-#include"ObjectBase/ObjectBase.h"
+
+//フェードイン・フェードアウト管理クラス
 
 class Filta : public Task
 {
 private:
 	CImage m_filta;		//フィルター
 	float m_alpha;		//不透明度
-	float m_time;
-	
-	void Fadein();
-	void Fadeout();
+	float m_time;		//時間
+	void Fadein();		//フェードイン処理
+	void Fadeout();		//フェードアウト処理
 public:
 	//コンストラクタ
 	Filta();

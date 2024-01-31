@@ -1,5 +1,7 @@
 #pragma once
 
+//タイトル画面管理クラス
+
 class Title : public Task {
 private:
 	CImage m_StartText;		//スタートテキスト
