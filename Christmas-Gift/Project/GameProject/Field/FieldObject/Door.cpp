@@ -84,6 +84,8 @@ void Door::Collision(Task* t)
 				//ドアを開ける
 				if (m_isopen)
 				{
+					SOUND("SE_DoorOpen")->Volume(0.3);
+					SOUND("SE_DoorOpen")->Play();
 					m_rot = m_rot + CVector3D(0, DtoR(90), 0);
 					//接触判定用の箱を削除
 					m_obb1 = COBB(
@@ -95,6 +97,8 @@ void Door::Collision(Task* t)
 				//ドアを閉じる
 				else
 				{
+					SOUND("SE_DoorClose")->Volume(0.3);
+					SOUND("SE_DoorClose")->Play();
 					m_rot = m_rot - CVector3D(0, DtoR(90), 0);
 					//接触判定用の箱を出す
 					m_obb1 = COBB(

@@ -16,6 +16,7 @@ int count = 0;
 int i = 0;
 CImage g_Loading;
 CImage g_LoadingText;
+CImage g_LoadingBackGround;
 
 void MainLoop(void) {
 	//--------------------------------------------------------------
@@ -68,13 +69,17 @@ void MainLoop(void) {
 			count = 0;
 			if (i >= 8) i = 0;
 		}
+		//背景描画
+		g_LoadingBackGround.Draw();
+
+		//ローディングマーク描画
 		g_Loading.SetSize(128, 128);
-		g_Loading.SetPos(1700, 900);
+		g_Loading.SetPos(1360, 476);
 		g_Loading.SetRect(128 * i, 0, 128 * i + 128, 128);
 		g_Loading.Draw();
 		
-		//ローディング文字表示
-		g_LoadingText.SetPos(850, 900);
+		//ローディング文字描画
+		g_LoadingText.SetPos(510, 476);
 		g_LoadingText.Draw();
 	}
 
@@ -175,13 +180,18 @@ void Init(void)
 	//ポストエフェクトを生成		画面解像度,被写界深度オフセット
 	CRendaring::CreatInstance(SCREEN_WIDTH, SCREEN_HEIGHT, -0.05);
 
+	//ローディング中背景読み込み
+	ADD_RESOURCE("BackGround", CImage::CreateImage("Loading/BackGround.png"));
 	//ローディングマーク読み込み
-	ADD_RESOURCE("NowLoading", CImage::CreateImage("UI/NowLoading.png"));
+	ADD_RESOURCE("NowLoading", CImage::CreateImage("Loading/NowLoading.png"));
 	//ローディングテキスト読み込み
-	ADD_RESOURCE("NowLoading_Text", CImage::CreateImage("UI/NowLoading_Text.png"));
+	ADD_RESOURCE("NowLoading_Text", CImage::CreateImage("Loading/NowLoading_Text.png"));
+	
+	
 	g_Loading = COPY_RESOURCE("NowLoading", CImage);
 	g_LoadingText = COPY_RESOURCE("NowLoading_Text", CImage);
-
+	g_LoadingBackGround = COPY_RESOURCE("BackGround", CImage);
+	
 	//ロード中に実行する処理
 	CLoadThread::GetInstance()->LoadStart([]()
 		{
@@ -203,9 +213,10 @@ void Init(void)
 			ADD_RESOURCE("Door", CModel::CreateModel("object/door.obj", 1, 1, 1));
 			
 			//タイトル画像読み込み
+			ADD_RESOURCE("GameTitleText", CImage::CreateImage("Title/TitleText.png"));
 			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));
 			ADD_RESOURCE("ManualText", CImage::CreateImage("Title/ManualText.png"));
-			ADD_RESOURCE("RankingText", CImage::CreateImage("Title/RankingText.png"));
+			ADD_RESOURCE("GameRankingText", CImage::CreateImage("Title/RankingText.png"));
 
 			//リザルト画像読み込み
 			ADD_RESOURCE("ClearBackGround", CImage::CreateImage("Result/ClearBackGround.png"));
@@ -232,8 +243,22 @@ void Init(void)
 			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
 			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 7, 7, 7));
 			
+			//SE
+			SOUND("SE_DoorOpen")->Load("Sound/SE/DoorOpen.wav", 1);
+			SOUND("SE_DoorClose")->Load("Sound/SE/DoorClose.wav", 1);
+			SOUND("SE_Walk")->Load("Sound/SE/Walk.wav", 1);
+			SOUND("SE_Run")->Load("Sound/SE/Run.wav", 1);
+			SOUND("SE_Click")->Load("Sound/SE/Click.wav", 1);
+			SOUND("SE_Select")->Load("Sound/SE/Select.wav", 1);
+			SOUND("SE_Clearfanfare")->Load("Sound/SE/Clearfanfare.wav", 1);
+			SOUND("SE_GameOver")->Load("Sound/SE/GameOverSE.wav", 1);
+
+			//BGM
+			SOUND("BGM_TitleOP")->Load("Sound/BGM/TitleOP.wav", 1);
+
 			new Filta();
 			new Title();
+			
 		});
 
 }

@@ -4,6 +4,7 @@
 
 class Title : public Task {
 private:
+	CImage m_TitleText;		//タイトル名テキスト
 	CImage m_StartText;		//スタートテキスト
 	CImage m_ManualText;	//説明テキスト
 	CImage m_RankingText;	//ランキングテキスト

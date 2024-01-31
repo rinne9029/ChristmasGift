@@ -62,7 +62,6 @@ private:
 
 public:
 	bool m_hide;			//ステルス状態フラグ
-	bool m_islegsound;		//足音のフラグ
 
 	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
 	CVector3D m_Closet_pos;	//クローゼット内部の座標

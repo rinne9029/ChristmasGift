@@ -286,12 +286,16 @@ GameScene::~GameScene()
 	//ゲームクリアフラグOn
 	if (GameData::GameClearCheck)
 	{
+		SOUND("SE_Walk")->Stop();
+		SOUND("SE_Run")->Stop();
 		//クリアシーン移行
 		new GameClear();
 	}
 	//ゲームオーバーフラグOn
 	else if (GameData::GameOverCheck)
 	{
+		SOUND("SE_Walk")->Stop();
+		SOUND("SE_Run")->Stop();
 		//ゲームオーバーシーン移行
 		new GameOver();
 	}

@@ -8,6 +8,9 @@ GameOver::GameOver()
 {
 	GameData::StartFadeIn = true;
 
+	//ゲームオーバーサウンド再生
+	SOUND("SE_GameOver")->Play();
+
 	m_BuckGraund = COPY_RESOURCE("OverBackGround", CImage);
 	m_TitleText = COPY_RESOURCE("TitleText", CImage);
 	m_ReStartText = COPY_RESOURCE("ReStartText", CImage);
@@ -53,21 +56,30 @@ void GameOver::HighLight()
 
 void GameOver::Update()
 {
+	if (GameData::StartFadeIn) return;
+	if (GameData::StartFadeOut) return;
+
 	//スペースキーで決定
 	if (PUSH(CInput::eButton5))
 	{
+		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Play();
 		GameData::StartFadeOut = true;
 	}
 
 	//Wキー入力
 	if (PUSH(CInput::eUp) && m_select > 0)
 	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
 		m_select--;
 		m_High = 0;	//強調リセット
 	}
 	//Sキー入力
 	if (PUSH(CInput::eDown) && m_select < 1)
 	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
 		m_select++;
 		m_High = 0;	//強調リセット
 	}

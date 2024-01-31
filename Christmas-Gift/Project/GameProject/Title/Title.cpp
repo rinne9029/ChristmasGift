@@ -11,9 +11,12 @@ Title::Title()
 	//フェードイン実行
 	GameData::StartFadeIn = true;
 
+	SOUND("BGM_TitleOP")->Play(true);
+
+	m_TitleText = COPY_RESOURCE("GameTitleText", CImage);
 	m_StartText = COPY_RESOURCE("StartText", CImage);
 	m_ManualText = COPY_RESOURCE("ManualText", CImage);
-	m_RankingText = COPY_RESOURCE("RankingText", CImage);
+	m_RankingText = COPY_RESOURCE("GameRankingText", CImage);
 }
 
 //デストラクタ
@@ -79,9 +82,15 @@ void Title::FuwaFuwa()
 //更新処理
 void Title::Update()
 {
+	if (GameData::StartFadeIn) return;
+	if (GameData::StartFadeOut) return;
+
 	//スペースボタン
 	if (PUSH(CInput::eButton5))		
 	{
+		SOUND("BGM_TitleOP")->Stop();
+		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Play();
 		//フェードアウト実行
 		GameData::StartFadeOut = true;
 	}
@@ -89,6 +98,8 @@ void Title::Update()
 	//Aキー入力
 	if (PUSH(CInput::eLeft) && m_select > 0)
 	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
 		m_select--;
 		//ふわふわ表示リセット
 		m_fuwafuwa = 0;
@@ -96,6 +107,8 @@ void Title::Update()
 	//Dキー入力
 	if (PUSH(CInput::eRight) && m_select < 2)
 	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
 		m_select++;
 		//ふわふわ表示リセット
 		m_fuwafuwa = 0;
@@ -105,6 +118,8 @@ void Title::Update()
 //2D描画処理
 void Title::Draw()
 {
+	m_TitleText.SetPos(500, 300);
+	m_TitleText.Draw();
 	//ふわふわ表示描画
 	FuwaFuwa();	
 }

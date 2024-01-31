@@ -32,8 +32,7 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, mp_switch(nullptr)
 	, m_tooltips(nullptr)
 	, key_ang(0.0f)				
-	, m_hide(false)				
-	, m_islegsound(false)							
+	, m_hide(false)											
 	, m_state(eState_Idle)		
 {
 
@@ -90,17 +89,12 @@ Player::~Player()
 void Player::StateIdle()
 {
 	//歩き速度
-	m_movespeed = WALK_SPEED;
+	
 
 	//シフトキー入力&&移動している
-	if (HOLD(CInput::eButton6) && m_islegsound)
+	if (HOLD(CInput::eButton6))
 	{
-		//ダッシュ移動
-		m_movespeed = RUN_SPEED;
-		//レム睡眠状態なら
-		if (SleepLife::m_REM) GameData::BlueSleepSize -= 2.0f;
-		//ノンレム睡眠状態なら
-		else GameData::BlueSleepSize -= 1.0f;
+		
 	}
 
 	//スペースボタン入力
@@ -205,11 +199,6 @@ void Player::Update()
 	if (GameData::StartFadeIn)return;
 	if (GameData::StartFadeOut)return;
 
-	
-
-	//足音がでてない
-	m_islegsound = false;
-
 	//キー方向ベクトルをリセット
 	CVector3D key_dir = CVector3D(0, 0, 0);
 
@@ -226,8 +215,6 @@ void Player::Update()
 		//キー入力されたら
 		if (key_dir.LengthSq() > 0.1)
 		{
-			//足音が出ている
-			m_islegsound = true;
 
 			//キーの方向ベクトルを角度に逆算する
 			key_ang = atan2(key_dir.x, key_dir.z);
@@ -238,11 +225,49 @@ void Player::Update()
 			//移動
 			m_pos += dir * m_movespeed;
 
-			//移動アニメーション
+			//通常状態なら
 			if (m_state == eState_Idle)
 			{
-				//通常歩き
+				//通常歩きモーション
 				m_model.ChangeAnimation((int)AnimId::Walk);
+
+				//シフトキー入力
+				if (HOLD(CInput::eButton6))
+				{
+					//ダッシュ移動
+					m_movespeed = RUN_SPEED;
+					//レム睡眠状態なら
+					if (SleepLife::m_REM) GameData::BlueSleepSize -= 2.0f;
+					//ノンレム睡眠状態なら
+					else GameData::BlueSleepSize -= 1.0f;
+
+					//走り音が終了するまで
+					if (SOUND("SE_Run")->CheckEnd())
+					{
+						//歩き音停止
+						SOUND("SE_Walk")->Stop();
+						//走り音2倍速
+						SOUND("SE_Run")->Pitch(2);
+						//走り音再生
+						SOUND("SE_Run")->Play();
+					}
+				}
+				else
+				{
+					m_movespeed = WALK_SPEED;
+
+					//歩き音終了するまで
+					if (SOUND("SE_Walk")->CheckEnd())
+					{
+						//走り音停止
+						SOUND("SE_Run")->Stop();
+						//歩き音2倍速
+						SOUND("SE_Walk")->Pitch(2);
+						//歩き音再生
+						SOUND("SE_Walk")->Play();
+					}
+				}
+				
 			}
 			else
 			{
@@ -257,11 +282,16 @@ void Player::Update()
 			{
 				//通常待機
 				m_model.ChangeAnimation((int)AnimId::Idle);
+				//歩き音停止
+				SOUND("SE_Walk")->Stop();
+				SOUND("SE_Run")->Stop();
 			}	
 			else
 			{
 				//しゃがみ待機
 				m_model.ChangeAnimation((int)AnimId::Crouchidle);
+				SOUND("SE_Walk")->Stop();
+				SOUND("SE_Run")->Stop();
 			}
 
 		}
@@ -345,7 +375,8 @@ void Player::Collision(Task* t)
 		{
 				//ゲームオーバ
 				GameData::GameOverCheck = true;
-				TaskManager::KillALL();
+				//フェードアウト実行
+				GameData::StartFadeOut = true;
 		}
 	}
 	break;

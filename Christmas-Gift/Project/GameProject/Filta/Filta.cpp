@@ -7,8 +7,8 @@
 //コンストラクタ
 Filta::Filta()
 	:Task(ETaskTag::eFilta,false)
-	, m_alpha(0)
-	, m_time(0)
+	, m_alpha(1.0)
+	, m_time(1)
 {
 	m_filta = COPY_RESOURCE("Filta", CImage);
 }
