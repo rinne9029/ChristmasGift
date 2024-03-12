@@ -1,13 +1,10 @@
 #include"GameScene.h"
-#include"Title/Title.h"
 #include"Chara/Player/Player.h"
 #include"Chara/Enemy/Enemy.h"
 #include"Camera/Camera.h"
 #include"Field/Field.h"
 #include"Field/FieldObject/Closet.h"
 #include"Field/FieldObject/Telephone.h"
-#include"Field/FieldObject/Switch.h"
-#include"Field/FieldObject/Door.h"
 #include"CollisionHitBox/MidPoint.h"
 #include"CollisionHitBox/EndPoint.h"
 #include"UI/SleepLife.h"
@@ -32,96 +29,10 @@ GameScene::GameScene()
 	GameData::StartFadeIn = true;
 
 	//ÉXÉeÅ[ÉW
-	new Field("TextData/DoorData.txt");
-
-	//ÉäÉrÉìÉO
-	new Switch
+	new Field
 	(
-		CVector3D(1, 1.5, 7),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		0
-	);
-
-	//1äKòLâ∫á@
-	new Switch
-	(
-		CVector3D(0, 1.5, 8),
-		CVector3D(0, DtoR(90), 0),
-		CVector3D(1, 1, 1),
-		1
-	);
-
-	new Switch
-	(
-		CVector3D(0, 1.5, 14),
-		CVector3D(0, DtoR(90), 0),
-		CVector3D(1, 1, 1),
-		1
-	);
-
-	//1äKòLâ∫áA
-	new Switch
-	(
-		CVector3D(-3.0, 1.5, 7),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		2
-	);
-
-	//êÙñ èä
-	new Switch
-	(
-		CVector3D(-10, 1.5, 4.8),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		3
-	);
-
-
-	//1äKäKíi
-	new Switch
-	(
-		CVector3D(-3, 2.4, 14),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		4
-	);
-
-	//2äKäKíi
-	new Switch
-	(
-		CVector3D(-7, 10.5, 8.1),
-		CVector3D(0, DtoR(90), 0),
-		CVector3D(1, 1, 1),
-		4
-	);
-
-	//2äKòLâ∫
-	new Switch
-	(
-		CVector3D(-6.5, 10.5, 7.7),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		5
-	);
-
-	//óºêeïîâÆ
-	new Switch
-	(
-		CVector3D(-0.5, 10.5, 5.3),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		6
-	);
-
-	//éqãüïîâÆ
-	new Switch
-	(
-		CVector3D(5, 10.5, 5.3),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1),
-		7
+		"TextData/DoorData1.txt",
+		"TextData/SwitchData1.txt"
 	);
 
 	//ÉTÉìÉ^

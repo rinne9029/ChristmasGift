@@ -255,13 +255,16 @@ void Title::Draw()
 	m_TitleText.SetPos(500, 300);
 	m_TitleText.Draw();
 
-	static int aaa = 0;
-	aaa++;
-	if (aaa > 60)
+	//雪を描画する時間
+	static int RespawnTime = 0;
+	RespawnTime++;
+	//１秒度に新しい雪を描画する
+	if (RespawnTime > 60)
 	{
 		new Snow();
 		new Snow();
-		aaa = 0;
+		//描画クールタイムをリセット
+		RespawnTime = 0;
 	}
 
 	//ふわふわ表示描画

@@ -2,6 +2,7 @@
 #include"FieldFloor.h"
 #include"FieldWall.h"
 #include"FieldObject/Door.h"
+#include"Field/FieldObject/Switch.h"
 #include"Light/Light.h"
 #include"../Navigation/NavManager.h"
 #include"../Navigation/NavNode.h"
@@ -56,29 +57,15 @@ std::list<CVector3D> ms_lights =
 };
 
 //コンストラクタ
-Field::Field(const char* Doorfile)
+Field::Field(const char* Doorfile,const char* Switchfile)
 	:ObjectBase(ETaskTag::eField,true)
 {
 	ms_instance = this;
 
 	//コリジョンモデルの取得
-	switch (GameData::Stage)
-	{
-	case GameData::A_1:
-		m_colModel = GET_RESOURCE("MapCol", CModel);
-		m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
-		break;
-	case GameData::B_1:
-		m_colModel = GET_RESOURCE("MapCol", CModel);
-		m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
-		break;
-	case GameData::B_2:
-		m_colModel = GET_RESOURCE("MapCol", CModel);
-		m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
-		break;
-	}
+	m_colModel = GET_RESOURCE("MapCol", CModel);
+	m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
 	
-
 	//床と壁のクラスを作成
 	m_floor = new FieldFloor();
 	m_wall = new FieldWall();
@@ -90,6 +77,8 @@ Field::Field(const char* Doorfile)
 	CreateLights();
 	//ドア作成
 	CreateDoors(Doorfile);
+	//スイッチ作成
+	CreateSwitchs(Switchfile);
 }
 
 Field::~Field()
@@ -195,6 +184,36 @@ void Field::CreateDoors(const char* file)
 		sscanf_s(buf,"%f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot);
 
 		new Door(Pos,CVector3D(0,DtoR(Rot),0), CVector3D(1, 1, 1), CVector3D(1, 2, 0.3));
+	}
+	fclose(fp);
+}
+
+void Field::CreateSwitchs(const char* file)
+{
+	FILE* fp = NULL;
+
+	//データをテキスト読み込みでオープン
+	fopen_s(&fp, file, "r");
+	//開くのに失敗
+	if (!fp)return;
+
+	char buf[256] = "";
+
+	//ファイルの末尾まで繰り返す
+	while (!feof(fp))
+	{
+		//一行づつbufに格納
+		fgets(buf, 256, fp);
+
+		//ドアの座標
+		CVector3D Pos(0, 0, 0);
+		//ドアの向き
+		float Rot;
+		float No;
+
+		sscanf_s(buf, "%f %f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot, &No);
+
+		new Switch(Pos, CVector3D(0, DtoR(Rot), 0), CVector3D(1, 1, 1),No);
 	}
 	fclose(fp);
 }
