@@ -1,10 +1,8 @@
 #pragma once
 #include"../CharaBase/CharaBase.h"
 
-class Enemy;
 class Camera;
 class Filta;
-class SleepLife;
 class Light;
 class Switch;
 class GimmickObject;
@@ -14,24 +12,20 @@ class ToolTips;
 
 class Player : public CharaBase {
 private:
-	Enemy* mp_enemy;		//敵
-	Camera* mp_camera;		//カメラ
 	Filta* mp_filta;		//フィルター
-	SleepLife* mp_sleeplife;//睡眠ゲージ
 	Light* mp_light;		//電気
 	Switch* mp_switch;		//スイッチ
-	ToolTips* m_tooltips;
 
+	Camera* m_camera;		//カメラ
+	ToolTips* m_tooltips;	//ツールチップ
 	NavNode* node;
 
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
 	
-
-	
 	//デバッグ用
-	CVector3D m_lS;
-	CVector3D m_lE;
+	CVector3D m_lS;			//レイの始点
+	CVector3D m_lE;			//レイの終点
 
 	//アニメーションID
 	enum class AnimId
@@ -48,9 +42,8 @@ private:
 	enum {
 		eState_Idle,		//通常状態
 		eState_Squat,		//しゃがみ状態
-		eState_Hide,		//隠れた状態
+		eState_ClosetIn,	//クローゼットに入った状態
 	};
-	int m_state;			//ステータス状態
 
 	//ステータス関数
 	//通常状態
@@ -58,15 +51,16 @@ private:
 	//しゃがみ状態
 	void StateSquat();
 	//隠れた状態
-	void StateHide();
+	void StateClosetIn();
 
 public:
+	int m_state;			//ステータス状態
 	bool m_hide;			//ステルス状態フラグ
 
 	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
 	CVector3D m_Closet_pos;	//クローゼット内部の座標
 	//コンストラクタ
-	Player(const CVector3D& pos, const CVector3D& scale);
+	Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale);
 
 	//デストラクタ
 	~Player();

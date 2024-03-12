@@ -9,6 +9,8 @@ EndPoint::EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 	m_rot = rot;
 	m_size = size;
 
+	m_IsRender = true;
+
 	m_obb2 = COBB(
 		m_pos,
 		m_rot,

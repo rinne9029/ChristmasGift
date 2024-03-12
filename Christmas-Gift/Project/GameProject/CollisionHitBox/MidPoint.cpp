@@ -10,6 +10,7 @@ MidPoint::MidPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 	m_rot = rot;
 	m_size = size;
 
+	m_IsRender = true;
 	//ツールチップ
 	m_tooltips = new ToolTips();
 
@@ -43,6 +44,8 @@ void MidPoint::Collision(Task* t)
 					CVector3D(m_pos),
 					CVector3D(0, 0, 0)
 				);
+				//判定描画終了
+				m_IsRender = false;
 			}
 		}
 		else

@@ -7,7 +7,12 @@ bool SleepLife::m_REM = true;
 
 SleepLife::SleepLife()
 	:Task(ETaskTag::eUI, true)
+	,m_ChengeFace(0)
 {
+	m_SleepMeter = COPY_RESOURCE("SleepMeter", CImage);
+	m_FaceRelief = COPY_RESOURCE("Relief", CImage);
+	m_FaceUsually = COPY_RESOURCE("Usually", CImage);
+	m_FaceWorry = COPY_RESOURCE("Worry", CImage);
 	m_REMText = COPY_RESOURCE("REMsleep", CImage);
 	m_NREMText = COPY_RESOURCE("NREMsleep", CImage);
 
@@ -17,9 +22,11 @@ SleepLife::SleepLife()
 
 //更新処理
 void SleepLife::Update()
-{
+{	
+	if(GameData::FacePosition <340)
+	GameData::FacePosition += 0.05f;
 	//子供の睡眠が覚醒（ゲームオーバー）
-	if (GameData::BlueSleepSize >= 0) return;
+	if (GameData::FacePosition > 40) return;
 
 	//ゲームオーバー
 	GameData::GameOverCheck = true;
@@ -30,17 +37,46 @@ void SleepLife::Update()
 //2D描画処理
 void SleepLife::Draw()
 {
-	//赤の睡眠ゲージ描画
-	Utility::DrawQuad(CVector2D(20, 250), CVector2D(300, 25), CVector4D(1, 0, 0, 1));
-	//青の睡眠ゲージ描画
-	Utility::DrawQuad(CVector2D(20, 250), CVector2D(GameData::BlueSleepSize, 25), CVector4D(0, 0, 1, 1));
+	//見やすくするための背景
+	Utility::DrawQuad(CVector2D(30, 60), CVector2D(380, 140), CVector4D(0.7, 0.7, 0.7, 0.5));
 
+	//睡眠値メーター
+	m_SleepMeter.SetPos(CVector2D(80, 100));
+	m_SleepMeter.Draw();
+
+	//睡眠値表情
+	switch (m_ChengeFace)
+	{
+	case 0:
+		//大丈夫
+		m_FaceRelief.SetPos(GameData::FacePosition, 90);
+		m_FaceRelief.SetSize(70, 70);
+		m_FaceRelief.Draw();
+		if (GameData::FacePosition < 270)	m_ChengeFace++;
+		break;
+	case 1:
+		//普通
+		m_FaceUsually.SetPos(GameData::FacePosition, 90);
+		m_FaceUsually.SetSize(70, 70);
+		m_FaceUsually.Draw();
+		if (GameData::FacePosition < 120)	m_ChengeFace++;
+		if (GameData::FacePosition > 270)	m_ChengeFace--;
+		break;
+	case 2:
+		//やばい
+		m_FaceWorry.SetPos(GameData::FacePosition, 90);
+		m_FaceWorry.SetSize(70, 70);
+		m_FaceWorry.Draw();
+		if (GameData::FacePosition > 120)	m_ChengeFace--;
+		break;
+	}
+	
 	//レム睡眠文字
-	m_REMText.SetPos(106, 216);
+	m_REMText.SetPos(156, 166);
 	m_REMText.SetSize(128, 32);
 
 	//ノンレム睡眠文字
-	m_NREMText.SetPos(42, 216);
+	m_NREMText.SetPos(92, 166);
 	m_NREMText.SetSize(256, 32);
 
 	if (GameData::second <= m_ChengeSleep)

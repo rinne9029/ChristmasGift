@@ -1,13 +1,12 @@
 #include"Field.h"
 #include"FieldFloor.h"
 #include"FieldWall.h"
+#include"FieldObject/Door.h"
 #include"Light/Light.h"
 #include"../Navigation/NavManager.h"
 #include"../Navigation/NavNode.h"
 #include"../ObjectBase/ObjectBase.h"
 #include"GameScene/GameData.h"
-#include"Debug/DebugPrint.h"
-#include"Debug/DebugProfiler.h"
 
 Field* Field::ms_instance = nullptr;
 
@@ -57,7 +56,7 @@ std::list<CVector3D> ms_lights =
 };
 
 //コンストラクタ
-Field::Field()
+Field::Field(const char* Doorfile)
 	:ObjectBase(ETaskTag::eField,true)
 {
 	ms_instance = this;
@@ -85,10 +84,12 @@ Field::Field()
 	m_wall = new FieldWall();
 
 	m_lightNo = 2;
-
 	//経路探索用のノードを作成
 	CreateNavNodes();
+	//ライト作成
 	CreateLights();
+	//ドア作成
+	CreateDoors(Doorfile);
 }
 
 Field::~Field()
@@ -166,6 +167,36 @@ void Field::CreateLights()
 		}
 		
 	}
+}
+
+//ドア生成処理
+void Field::CreateDoors(const char* file)
+{
+	FILE* fp = NULL;
+
+	//データをテキスト読み込みでオープン
+	fopen_s(&fp, file, "r");
+	//開くのに失敗
+	if (!fp)return;
+	
+	char buf[256] = "";
+
+	//ファイルの末尾まで繰り返す
+	while (!feof(fp))
+	{
+		//一行づつbufに格納
+		fgets(buf, 256, fp);
+
+		//ドアの座標
+		CVector3D Pos(0, 0, 0);
+		//ドアの向き
+		float Rot;
+
+		sscanf_s(buf,"%f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot);
+
+		new Door(Pos,CVector3D(0,DtoR(Rot),0), CVector3D(1, 1, 1), CVector3D(1, 2, 0.3));
+	}
+	fclose(fp);
 }
 
 //フィールドのコリジョンを取得

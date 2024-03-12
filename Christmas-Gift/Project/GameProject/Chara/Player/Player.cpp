@@ -1,4 +1,5 @@
 #include"Player.h"
+#include"Camera/Camera.h"
 #include"Chara/Enemy/Enemy.h"
 #include"Field/Field.h"
 #include"Field/FieldObject/Closet.h"
@@ -22,12 +23,9 @@
 
 
 //コンストラクタ
-Player::Player(const CVector3D& pos, const CVector3D& scale)
+Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	:CharaBase(ETaskTag::ePlayer, true)
-	, mp_enemy(nullptr)
-	, mp_camera(nullptr)
 	, mp_filta(nullptr)
-	, mp_sleeplife(nullptr)
 	, mp_light(nullptr)
 	, mp_switch(nullptr)
 	, m_tooltips(nullptr)
@@ -35,7 +33,6 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 	, m_hide(false)											
 	, m_state(eState_Idle)		
 {
-
 	FILE* fp = NULL;
 
 	//	データをテキストの読み込みでオープン
@@ -58,17 +55,17 @@ Player::Player(const CVector3D& pos, const CVector3D& scale)
 
 	fclose(fp);
 
-	m_tooltips = new ToolTips();
-
 	m_height = 1.9f;			//高さ
 	m_rad = 0.3f;				//半径
 
-	//デバッグ用
-	m_lS = CVector3D(0, 0, 0);	//レイの始点
-	m_lE = CVector3D(0, 0, 0);	//レイの終点
-
 	//プレイヤーモデル読み込み
 	m_model = COPY_RESOURCE("Player", CModelA3M);
+
+	//プレイヤーの向き方向にカメラ作成
+	m_camera = new Camera(rot);
+
+	//ツールチップ作成
+	m_tooltips = new ToolTips();
 
 	//プレイヤー位置に経路探索用のノードを作成
 	m_navNode = new NavNode
@@ -129,7 +126,7 @@ void Player::StateSquat()
 }
 
 //ハイド状態
-void Player::StateHide()
+void Player::StateClosetIn()
 {
 	//ボタン入力で即ハイドを解除しないように
 	static int count;
@@ -153,40 +150,23 @@ void Player::StateHide()
 //更新処理
 void Player::Update()
 {
-	//敵
-	if (!mp_enemy) mp_enemy = dynamic_cast<Enemy*>(TaskManager::FindObject(ETaskTag::eEnemy));
-	//カメラ
-	if (!mp_camera) mp_camera = dynamic_cast<Camera*>(TaskManager::FindObject(ETaskTag::eCamera));
 	//フィルター
 	if (!mp_filta) mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
-	//睡眠ゲージ
-	if (!mp_sleeplife) mp_sleeplife = dynamic_cast<SleepLife*>(TaskManager::FindObject(ETaskTag::eUI));
 	//ライト
 	if (!mp_light)mp_light = dynamic_cast<Light*>(TaskManager::FindObject(ETaskTag::eFieldLight));
 	//スイッチ
 	if (!mp_switch)mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
+	
 	//自身の光源
 	CLight::SetType(1, CLight::eLight_Point);
 	CLight::SetRange(1, 1.0f);
 	CLight::SetColor(1, CVector3D(0, 0, 0), CVector3D(0.8, 0.8, 0.7));
 	CLight::SetPos(1, m_pos + CVector3D(0, 1.0f, 0));
 
-	Shot();
-
 	//カメラ視点
-	//見下ろし視点
-	if (mp_camera->m_camera_mode == Camera::LookDownCamera)
-	{
-		//キー方向ベクトルの角度でキャラクターの角度が決まる
-		m_rot.y = Utility::NormalizeAngle(key_ang);
-	}
-	//一人称視点or三人称視点
-	else
-	{
-		//キー入力されてない時
-		//カメラの角度でキャラクターの正面角度が決まる
-		m_rot.y = Utility::NormalizeAngle(mp_camera->m_rot.y + key_ang);
-	}
+	//キー入力されてない時
+	//カメラの角度でキャラクターの正面角度が決まる
+	m_rot.y = Utility::NormalizeAngle(m_camera->m_rot.y + key_ang);
 
 
 	//フェードイン・フェードアウト中はアップデート処理をしない
@@ -197,7 +177,7 @@ void Player::Update()
 	CVector3D key_dir = CVector3D(0, 0, 0);
 
 	//ハイド中はキー入力を受け付けない
-	if (m_state != eState_Hide)
+	if (m_state != eState_ClosetIn)
 	{
 		//入力したキー方向のベクトルを設定する
 		if (HOLD(CInput::eUp)) key_dir.z = 1;
@@ -209,7 +189,6 @@ void Player::Update()
 		//キー入力されたら
 		if (key_dir.LengthSq() > 0.1)
 		{
-
 			//キーの方向ベクトルを角度に逆算する
 			key_ang = atan2(key_dir.x, key_dir.z);
 
@@ -231,9 +210,9 @@ void Player::Update()
 					//ダッシュ移動
 					m_movespeed = RUN_SPEED;
 					//レム睡眠状態なら
-					if (SleepLife::m_REM) GameData::BlueSleepSize -= 2.0f;
+					if (SleepLife::m_REM) GameData::FacePosition -= 1.0f;
 					//ノンレム睡眠状態なら
-					else GameData::BlueSleepSize -= 1.0f;
+					else GameData::FacePosition -= 0.5f;
 
 					//走り音が終了するまで
 					if (SOUND("SE_Run")->CheckEnd())
@@ -242,6 +221,8 @@ void Player::Update()
 						SOUND("SE_Walk")->Stop();
 						//走り音2倍速
 						SOUND("SE_Run")->Pitch(2);
+
+						SOUND("SE_Run")->GetOffset();
 						//走り音再生
 						SOUND("SE_Run")->Play();
 					}
@@ -287,8 +268,8 @@ void Player::Update()
 				SOUND("SE_Walk")->Stop();
 				SOUND("SE_Run")->Stop();
 			}
-
 		}
+		Shot();
 	}
 	//ベースクラスの更新
 	CharaBase::Update();
@@ -304,8 +285,8 @@ void Player::Update()
 		StateSquat();
 		break;
 		//ハイドモード
-	case eState_Hide:
-		StateHide();
+	case eState_ClosetIn:
+		StateClosetIn();
 		break;
 	}
 
@@ -342,9 +323,7 @@ void Player::Render()
 	m_model.SetScale(m_scale);	//大きさ
 	//簡易的処理
 	//一人称時モデルを描画しない
-	if (mp_camera->m_camera_mode != Camera::FirstPersonCamera) {
-		m_model.Render();
-	}
+	//m_model.Render();
 
 	//デバッグ用:レイの線を表示
 	float a = 10000;
@@ -424,12 +403,12 @@ void Player::Shot()
 {
 	//判定するレイの距離
 	const float range = 1.5f;
-	CVector3D dir = CMatrix::MRotation(mp_camera->m_rot).GetFront();
+	CVector3D dir = CMatrix::MRotation(m_camera->m_rot).GetFront();
 	//レイの始点
-	CVector3D lineS = m_pos + mp_camera->m_pos;
+	CVector3D lineS = m_pos + m_camera->m_pos;
 
 	//レイの終点
-	CVector3D lineE = m_pos + mp_camera->m_pos + dir * range;
+	CVector3D lineE = m_pos + m_camera->m_pos + dir * range;
 
 	//最も近いオブジェクトへの距離
 	float dist = FLT_MAX;
@@ -521,10 +500,11 @@ void Player::Shot()
 			
 		}
 		break;
+		//クローゼット
 		case 2:
 		{
 			//左クリックで隠れる
-			if (PUSH(CInput::eMouseL))
+			if (PUSH(CInput::eMouseL) && m_state == eState_Idle)
 			{
 				//触れたクローゼットの座標を保存
 				m_Closet_pos = hit_object->m_pos;
@@ -538,7 +518,7 @@ void Player::Shot()
 					m_copy_pos = m_pos;
 					//ハイド状態へ移行
 					m_hide = true;
-					m_state = eState_Hide;
+					m_state = eState_ClosetIn;
 
 				}
 			}

@@ -6,7 +6,8 @@
 //コンストラクタ
 Title::Title()
 	:Task(ETaskTag::eScene,true)
-	,m_select(0)
+	,m_select(1)
+	,m_step(0)
 	,m_fuwafuwa(0.0f)
 {
 	//フェードイン実行
@@ -18,26 +19,40 @@ Title::Title()
 	m_StartText = COPY_RESOURCE("StartText", CImage);
 	m_ManualText = COPY_RESOURCE("ManualText", CImage);
 	m_RankingText = COPY_RESOURCE("GameRankingText", CImage);
+	m_Manual1 = COPY_RESOURCE("Manual1", CImage);
+	m_Manual2 = COPY_RESOURCE("Manual2", CImage);
 }
 
 //デストラクタ
 Title::~Title()
 {
-	switch (m_select)
+	switch (m_step)
 	{
 	case 0:
-		//ゲームシーン起動
-		new GameScene();
+		switch (m_select)
+		{
+		case 3:
+			//ランキング起動
+			new Ranking("TextData/RankingData.txt");
+			break;
+		}
 		break;
-	case 1:
-		//説明書
-		//仮
-		new Ranking("Ranking.txt");
-		break;
-	case 2:
-		//ランキング
-		//仮
-		new Ranking("Ranking.txt");
+	case 10:
+		switch (m_select)
+		{
+		case 1:
+			//ステージ1
+			new GameScene();
+			break;
+		case 2:
+			//ステージ2
+			new GameScene();
+			break;
+		case 3:
+			//ステージ3
+			new GameScene();
+			break;
+		}
 		break;
 	}
 }
@@ -51,34 +66,25 @@ void Title::FuwaFuwa()
 	switch (m_select)
 	{
 		//スタート文字
-	case 0:
+	case 1:
 		m_StartText.SetPos(200, 750 - abs(sin(m_fuwafuwa)) * 64);
 		m_StartText.Draw();
-		/*m_ManualText.SetPos(855, 750);
-		m_ManualText.Draw();*/
+		m_ManualText.SetPos(855, 750);
+		m_ManualText.Draw();
 		m_RankingText.SetPos(1270, 750);
 		m_RankingText.Draw();
 		break;
 		//説明書文字
-	/*case 1:
+	case 2:
 		m_StartText.SetPos(200, 750);
 		m_StartText.Draw();
 		m_ManualText.SetPos(855, 750 - abs(sin(m_fuwafuwa)) * 64);
 		m_ManualText.Draw();
 		m_RankingText.SetPos(1270, 750);
 		m_RankingText.Draw();
-		break;*/
-		//仮でケース１をランキングに
-	case 1:
-		m_StartText.SetPos(200, 750);
-		m_StartText.Draw();
-		/*m_ManualText.SetPos(855, 750);
-		m_ManualText.Draw();*/
-		m_RankingText.SetPos(1270, 750 - abs(sin(m_fuwafuwa)) * 64);
-		m_RankingText.Draw();
 		break;
 		//ランキング文字
-	case 2:
+	case 3:
 		m_StartText.SetPos(200, 750);
 		m_StartText.Draw();
 		m_ManualText.SetPos(855, 750);
@@ -87,26 +93,38 @@ void Title::FuwaFuwa()
 		m_RankingText.Draw();
 		break;
 	}
+
+	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
 }
 
-//更新処理
-void Title::Update()
+//モードセレクト処理
+void Title::ModeChenge()
 {
-	if (GameData::StartFadeIn) return;
-	if (GameData::StartFadeOut) return;
-
 	//スペースボタン
-	if (PUSH(CInput::eButton5))		
+	if (PUSH(CInput::eButton5))
 	{
-		SOUND("BGM_TitleOP")->Stop();
 		SOUND("SE_Click")->Volume(0.5);
 		SOUND("SE_Click")->Play();
-		//フェードアウト実行
-		GameData::StartFadeOut = true;
+		switch (m_select)
+		{
+		case 1:
+			m_step = m_select * 10;
+			m_select = 1;
+			//GameData::StartFadeOut = true;
+			break;
+		case 2:
+			m_step = m_select * 10;
+			m_select = 1;
+			break;
+		case 3:
+			SOUND("BGM_TitleOP")->Stop();
+			GameData::StartFadeOut = true;
+			break;
+		}
 	}
 
 	//Aキー入力
-	if (PUSH(CInput::eLeft) && m_select > 0)
+	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -115,7 +133,7 @@ void Title::Update()
 		m_fuwafuwa = 0;
 	}
 	//Dキー入力
-	if (PUSH(CInput::eRight) && m_select < 1)
+	if (PUSH(CInput::eRight) && m_select < 3)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -125,15 +143,133 @@ void Title::Update()
 	}
 }
 
+//説明モード処理
+void Title::ManualMode()
+{
+	//Sキー入力
+	if (PUSH(CInput::eDown))
+	{
+		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Play();
+		//モードセレクトに戻る
+		m_step = 0;
+		m_select = 1;
+	}
+
+	//Aキー入力
+	//次の説明
+	if (PUSH(CInput::eLeft) && m_select > 1)
+	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
+		m_select--;
+	}
+	//Dキー入力
+	//前の説明に戻る
+	if (PUSH(CInput::eRight) && m_select < 3)
+	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
+		m_select++;
+	}
+}
+
+void Title::ManualDraw()
+{
+	m_Manual1.SetPos(320 - 1920 * (m_select - 1), 180);
+	m_Manual1.Draw();
+	m_Manual2.SetPos(2240 - 1920 * (m_select - 1), 180);
+	m_Manual2.Draw();
+	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(1000, 880, 0, 0, 0, "%d/2", m_select);
+}
+
+void Title::StageSelecte()
+{
+	//スペースボタン
+	if (PUSH(CInput::eButton5))
+	{
+		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Play();
+		SOUND("BGM_TitleOP")->Stop();
+		GameData::StartFadeOut = true;
+	}
+
+	//Sキー入力
+	if (PUSH(CInput::eDown))
+	{
+		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Play();
+		//モードセレクトに戻る
+		m_step = 0;
+		m_select = 1;
+	}
+
+	//Aキー入力
+	//次の説明
+	if (PUSH(CInput::eLeft) && m_select > 1)
+	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
+		m_select--;
+	}
+	//Dキー入力
+	//前の説明に戻る
+	if (PUSH(CInput::eRight) && m_select < 2)
+	{
+		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Play();
+		m_select++;
+	}
+}
+
+void Title::StageDraw()
+{
+	FONT_T()->Draw(100, 980, 0, 0, 0, "SPACEキーでスタート");
+}
+
+//更新処理
+void Title::Update()
+{
+	if (GameData::StartFadeIn) return;
+	if (GameData::StartFadeOut) return;
+
+	switch (m_step)
+	{
+	case 0:
+		ModeChenge();
+		break;
+	case 10:
+		StageSelecte();
+		break;
+	case 20:
+		ManualMode();
+		break;
+	}
+	
+	
+}
+
 //2D描画処理
 void Title::Draw()
 {
 	m_TitleText.SetPos(500, 300);
 	m_TitleText.Draw();
 
-	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
 	//ふわふわ表示描画
-	FuwaFuwa();	
+	switch (m_step)
+	{
+	case 0:
+		FuwaFuwa();
+		break;
+	case 10:
+		StageDraw();
+		break;
+	case 20:
+		ManualDraw();
+		break;
+	}
+	
 
 	
 }

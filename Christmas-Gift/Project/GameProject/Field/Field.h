@@ -24,7 +24,7 @@ private:
 
 public:
 	//コンストラクタ
-	Field();
+	Field(const char* Doorfile);
 	//デストラクタ
 	~Field();
 
@@ -33,6 +33,9 @@ public:
 
 	//ライトを作成
 	void CreateLights();
+
+	//ドアを作成
+	void CreateDoors(const char* file);
 
 	//フィールドのコリジョンを取得
 	CModel* GetColModel() const;

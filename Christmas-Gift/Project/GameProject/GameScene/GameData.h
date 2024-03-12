@@ -13,7 +13,6 @@ public:
 
 	static int Stage;
 	static bool ChengeStage;
-	static float BlueSleepSize;		//睡眠ゲージのメーター
 	static bool isGift;				//プレゼント設置フラグ
 	
 	//フラグ
@@ -25,5 +24,8 @@ public:
 
 	//整数
 	static int second;					//秒数
+
+	//実数
+	static float FacePosition;			//UI顔の位置
 
 };

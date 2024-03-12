@@ -538,12 +538,12 @@ void Enemy::Update()
 	Utility::DrawSector(m1, -ear_ang, ear_ang, ear_length, color);*/
 
 	//視野範囲の表示
-	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * eye_length, CVector4D(1, 0, 1, 1), lineWidth);
+	/*Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * eye_length, CVector4D(1, 0, 1, 1), lineWidth);
 	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + CMatrix::MRotationY(eye_ang) * m_dir * eye_length, CVector4D(0, 1, 1, 1), lineWidth);
 	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + CMatrix::MRotationY(-eye_ang) * m_dir * eye_length, CVector4D(0, 1, 1, 1), lineWidth);
 	CMatrix m;
 	m.LookAt(m_pos + CVector3D(0, 1.5, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * eye_length, CVector3D(0, 1, 0));
-	Utility::DrawSector(m, -eye_ang, eye_ang, eye_length, color);
+	Utility::DrawSector(m, -eye_ang, eye_ang, eye_length, color);*/
 
 	//デバッグ用:カプセル判定の表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));

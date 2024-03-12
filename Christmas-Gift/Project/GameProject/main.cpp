@@ -232,6 +232,8 @@ void Init(void)
 			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));
 			ADD_RESOURCE("ManualText", CImage::CreateImage("Title/ManualText.png"));
 			ADD_RESOURCE("GameRankingText", CImage::CreateImage("Title/RankingText.png"));
+			ADD_RESOURCE("Manual1", CImage::CreateImage("Title/Manual1.png"));
+			ADD_RESOURCE("Manual2", CImage::CreateImage("Title/Manual2.png"));
 
 			//リザルト画像読み込み
 			ADD_RESOURCE("ClearBackGround", CImage::CreateImage("Result/ClearBackGround.png"));
@@ -247,8 +249,14 @@ void Init(void)
 			ADD_RESOURCE("MouseL", CImage::CreateImage("UI/MouseL.png"));
 			ADD_RESOURCE("Text", CImage::CreateImage("UI/Text.png"));
 			//UI画像読み込み
-			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));
-			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));
+			ADD_RESOURCE("SleepMeter", CImage::CreateImage("UI/SleepMeter.png"));
+			//睡眠値の表情
+			ADD_RESOURCE("Relief", CImage::CreateImage("UI/Relief.png"));	//大丈夫
+			ADD_RESOURCE("Usually", CImage::CreateImage("UI/Usually.png"));	//普通
+			ADD_RESOURCE("Worry", CImage::CreateImage("UI/Worry.png"));		//やばい
+			//睡眠状態文字
+			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));	//レム睡眠文字
+			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));	//ノンレム睡眠文字
 
 			//ステージ読み込み
 			//描画ステージ

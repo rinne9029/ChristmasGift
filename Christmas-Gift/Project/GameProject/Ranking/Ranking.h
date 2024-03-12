@@ -7,7 +7,7 @@ private:
 	static const int m_max_size = 256;
 	static const int m_max_line = 32;
 	char m_text[m_max_line][m_max_size];
-	int m_line_size;
+	int m_line_size;		//行
 	int m_select;
 	CImage m_TitleText;		//タイトルテキスト
 	float m_fuwafuwa;

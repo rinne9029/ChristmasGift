@@ -4,27 +4,22 @@
 #include"Field/FieldObject/Closet.h"
 
 //コンストラクタ
-Camera::Camera(const CVector3D& pos, const CVector3D& rot)
+Camera::Camera(const CVector3D& rot)
 	:ObjectBase(ETaskTag::eCamera,true)
 	, mp_player(nullptr)
-	, mp_closet(nullptr)
 	, m_idx(0)
 	, m_state(eState_Idle)
-	, m_camera_mode(0)
 {
-	m_pos = pos;
+	m_pos = CVector3D(0,1.5,0);
 	m_rot = rot;
 }
 
 //通常状態
 void Camera::StateIdle()
 {
-	if (mp_player->m_hide)
-		m_state = eState_Hide;
-
-	//見下ろし視点中はカメラ固定
-	if (m_camera_mode == LookDownCamera) return;
-
+	//プレイヤーがクローゼットに隠れたなら
+	if (mp_player->m_state == 2)	m_state = eState_ClosetIn;
+		
 	//カメラ回転速度
 	float cam_speed = 0.002f;
 
@@ -41,35 +36,27 @@ void Camera::StateIdle()
 }
 
 //隠れた状態
-void Camera::StateHide()
+void Camera::StateClosetIn()
 {
 	//カメラの向きをクローゼットの正面方向に変更
 	m_rot = mp_player->m_Closet_rot - CVector3D(0,DtoR(90),0);
 
 	//通常状態のカメラに戻す
-	if(!mp_player->m_hide)
-		m_state = eState_Idle;
-	
+	if(mp_player->m_state != 2)		m_state = eState_Idle;
 }
 
 //更新処理
 void Camera::Update()
 {
-	if (!mp_player)
-	{
-		mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
-	}
-	if (!mp_closet)
-	{
-		//mp_closet = dynamic_cast<Closet*>(TaskManager::FindObject(ETaskTag::eHideBox));
-	}
-
+	//プレイヤー
+	if (!mp_player)		mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
+	
 	switch (m_state) {
 	case eState_Idle:
 		StateIdle();
 		break;
-	case eState_Hide:
-		StateHide();
+	case eState_ClosetIn:
+		StateClosetIn();
 		break;
 	}
 
@@ -80,72 +67,21 @@ void Camera::Render()
 {
 	//カメラの座標
 	CVector3D camera_pos[2] = {
-		CVector3D(0,1.5,0),
-		CVector3D(0,0.7,0),
+		CVector3D(0,1.5,0),	//立ちの高さ
+		CVector3D(0,0.7,0),	//しゃがみの高さ
 	};
 
-	//ctrlボタンをおしたらしゃがみ視点
-	if (PUSH(CInput::eButton7)) {
-		m_idx = (m_idx + 1) % 2;
+	//ctrlボタン
+	if (PUSH(CInput::eButton7) && m_state == eState_Idle) {
+		m_idx = (m_idx + 1) % 2;	//視点切り替え
 	}
+
 	//割合補間
-	CVector3D cam_pos_target = camera_pos[m_idx] + CVector3D(0, 0, 0);
-	m_pos = m_pos * 0.90f + cam_pos_target * 0.10f;
-
-	//カメラのモードに応じて視点変更
-
-	switch (m_camera_mode)
-	{
-		//一人称
-	case FirstPersonCamera:
-	{
-		CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)					//character_matrix
-			* CMatrix::MTranselate(m_pos) * CMatrix::MRotation(m_rot)				//branch_matrix
-			* CMatrix::MTranselate(CVector3D(0, 0, -0.8));								//camera_matrix
-			//カメラ位置を行列で設定
-		CCamera::GetCurrent()->SetTranseRot(cam_matrix);
-		
-		//if (PUSH(CInput::eButton8))			//Fキー入力
-		//{
-		//	m_camera_mode = LookDownCamera;	//見下ろしに変更
-		//}
-	}
-	break;
-	//見下ろし
-	case LookDownCamera:
-	{
-		CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)					//character_matrix
-			* CMatrix::MTranselate(0, 20, 0) * CMatrix::MRotation(DtoR(90), 0, 0)	//branch_matrix
-			* CMatrix::MTranselate(CVector3D(0, 0, 0));								//camera_matrix
-			//カメラ位置を行列で設定
-		CCamera::GetCurrent()->SetTranseRot(cam_matrix);
-
-		if (PUSH(CInput::eButton8))				//Fキー入力
-		{
-			m_camera_mode = ThirdPersonCamera;	//三人称に変更
-		}
-	}
-	break;
-	//三人称視点
-	//デバッグ用
-	case ThirdPersonCamera:
-	{
-		CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)
-			* CMatrix::MTranselate(CVector3D(0, 1.5, 0)) * CMatrix::MRotation(m_rot)
-			* CMatrix::MTranselate(CVector3D(-0.5, 0.2, -2));
-		//カメラ位置を行列で設定
-		CCamera::GetCurrent()->SetTranseRot(cam_matrix);
-
-		if (PUSH(CInput::eButton8))				//Fキー入力
-		{
-			m_camera_mode = FirstPersonCamera;	//一人称に変更
-		}
-	}
-	break;
-	}
-
-
+	m_pos = m_pos * 0.90f + camera_pos[m_idx] * 0.10f;
 	
-		
-
+	CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)					//character_matrix
+		* CMatrix::MTranselate(m_pos) * CMatrix::MRotation(m_rot)				//branch_matrix
+		* CMatrix::MTranselate(CVector3D(0, 0, -0.8));							//camera_matrix
+		//カメラ位置を行列で設定
+	CCamera::GetCurrent()->SetTranseRot(cam_matrix);
 }
