@@ -1,5 +1,6 @@
 #include"Title.h"
 #include"Ranking/Ranking.h"
+#include"Title/Snow.h"
 #include"GameScene/GameScene.h"
 #include"GameScene/GameData.h"
 
@@ -166,7 +167,7 @@ void Title::ManualMode()
 	}
 	//Dキー入力
 	//前の説明に戻る
-	if (PUSH(CInput::eRight) && m_select < 3)
+	if (PUSH(CInput::eRight) && m_select < 2)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -206,7 +207,7 @@ void Title::StageSelecte()
 	}
 
 	//Aキー入力
-	//次の説明
+	//次のステージ
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
 		SOUND("SE_Select")->Volume(0.5);
@@ -214,8 +215,8 @@ void Title::StageSelecte()
 		m_select--;
 	}
 	//Dキー入力
-	//前の説明に戻る
-	if (PUSH(CInput::eRight) && m_select < 2)
+	//前のステージ
+	if (PUSH(CInput::eRight) && m_select < 3)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -246,8 +247,6 @@ void Title::Update()
 		ManualMode();
 		break;
 	}
-	
-	
 }
 
 //2D描画処理
@@ -255,6 +254,15 @@ void Title::Draw()
 {
 	m_TitleText.SetPos(500, 300);
 	m_TitleText.Draw();
+
+	static int aaa = 0;
+	aaa++;
+	if (aaa > 60)
+	{
+		new Snow();
+		new Snow();
+		aaa = 0;
+	}
 
 	//ふわふわ表示描画
 	switch (m_step)
@@ -269,7 +277,5 @@ void Title::Draw()
 		ManualDraw();
 		break;
 	}
-	
-
 	
 }

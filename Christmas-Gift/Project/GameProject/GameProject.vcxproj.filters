@@ -110,6 +110,9 @@
     <ClInclude Include="Ranking\Ranking.h">
       <Filter>Ranking</Filter>
     </ClInclude>
+    <ClInclude Include="Title\Snow.h">
+      <Filter>Title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Camera">
@@ -282,6 +285,9 @@
     </ClCompile>
     <ClCompile Include="Ranking\Ranking.cpp">
       <Filter>Ranking</Filter>
+    </ClCompile>
+    <ClCompile Include="Title\Snow.cpp">
+      <Filter>Title</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

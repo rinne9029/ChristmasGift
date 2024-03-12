@@ -44,6 +44,7 @@
     <ClInclude Include="Result\GameOver.h" />
     <ClInclude Include="Task\Task.h" />
     <ClInclude Include="Task\TaskManager.h" />
+    <ClInclude Include="Title\Snow.h" />
     <ClInclude Include="Title\Title.h" />
     <ClInclude Include="UI\SleepLife.h" />
     <ClInclude Include="UI\Timer.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="Result\GameOver.cpp" />
     <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="Task\TaskManager.cpp" />
+    <ClCompile Include="Title\Snow.cpp" />
     <ClCompile Include="Title\Title.cpp" />
     <ClCompile Include="UI\SleepLife.cpp" />
     <ClCompile Include="UI\Timer.cpp" />

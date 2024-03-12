@@ -227,13 +227,16 @@ void Init(void)
 			//ドア読み込み
 			ADD_RESOURCE("Door", CModel::CreateModel("object/door.obj", 1, 1, 1));
 			
-			//タイトル画像読み込み
+			//タイトル関連画像読み込み
 			ADD_RESOURCE("GameTitleText", CImage::CreateImage("Title/TitleText.png"));
 			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));
 			ADD_RESOURCE("ManualText", CImage::CreateImage("Title/ManualText.png"));
 			ADD_RESOURCE("GameRankingText", CImage::CreateImage("Title/RankingText.png"));
 			ADD_RESOURCE("Manual1", CImage::CreateImage("Title/Manual1.png"));
 			ADD_RESOURCE("Manual2", CImage::CreateImage("Title/Manual2.png"));
+			ADD_RESOURCE("Snow", CImage::CreateImage("Title/snow.png"));
+			ADD_RESOURCE("Stage1", CImage::CreateImage("Title/stage1.png"));
+			
 
 			//リザルト画像読み込み
 			ADD_RESOURCE("ClearBackGround", CImage::CreateImage("Result/ClearBackGround.png"));
