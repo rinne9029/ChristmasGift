@@ -11,29 +11,6 @@
 
 Field* Field::ms_instance = nullptr;
 
-// 経路探索用ノードのテーブル
-std::list<CVector3D> Field::ms_nodes =
-{
-	CVector3D(-1.119953,1,5.792867),		//1階廊下
-	CVector3D(-7.946468,1,6.155985),
-	CVector3D(-7.979040,1,3.100000),
-	CVector3D(-10.848549,1,3.523031),		//洗面所
-	CVector3D(2.369029,1,-0.000122),		//ソファー前
-	CVector3D(5.275981,1,1.853063),
-	CVector3D(6.315304,1,5.931384),
-	CVector3D(-0.969914,1,16.858345),		//玄関前
-	CVector3D(-0.936397,1,12.954982),		//1階階段前
-	CVector3D(-7.932617,5.860001,12.954982),//階段
-	CVector3D(-5.252072,4.460001,12.954982),
-	CVector3D(-7.932617,8.660000,9.414995),
-	CVector3D(-7.932617,10.053699,6.816346),//2階階段前
-	CVector3D(1.205202,10.053699,7.116930),	//2階廊下
-	CVector3D(6.316210,10.053699,7.119658),	
-	CVector3D(-10.846934,10.053699,6.613060),
-	CVector3D(-10.756325,10.053700,13.386012),
-	CVector3D(0.943921,10.053699,1.877687),	//両親部屋
-};
-
 //ライト用のテーブル
 std::list<CVector3D> ms_lights =
 {
@@ -57,7 +34,7 @@ std::list<CVector3D> ms_lights =
 };
 
 //コンストラクタ
-Field::Field(const char* Doorfile,const char* Switchfile)
+Field::Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,const char* Switchfile)
 	:ObjectBase(ETaskTag::eField,true)
 {
 	ms_instance = this;
@@ -72,9 +49,9 @@ Field::Field(const char* Doorfile,const char* Switchfile)
 
 	m_lightNo = 2;
 	//経路探索用のノードを作成
-	CreateNavNodes();
+	CreateNavNodes(Nodefile);
 	//ライト作成
-	CreateLights();
+	CreateLights(Lightfile);
 	//ドア作成
 	CreateDoors(Doorfile);
 	//スイッチ作成
@@ -90,75 +67,73 @@ Field::~Field()
 }
 
 //経路探索用のノードを作成
-void Field::CreateNavNodes()
+void Field::CreateNavNodes(const char* file)
 {
-	//テーブル内の座標に経路探索用のノードを作成
-	for (CVector3D nodePos : ms_nodes)
+	FILE* fp = NULL;
+
+	//データをテキスト読み込みでオープン
+	fopen_s(&fp, file, "r");
+	//開くのに失敗
+	if (!fp)return;
+
+	char buf[256] = "";
+
+	//ファイルの末尾まで繰り返す
+	while (!feof(fp))
 	{
-		new NavNode(nodePos);
+		//一行づつbufに格納
+		fgets(buf, 256, fp);
+
+		//ノードの座標
+		CVector3D Pos(0, 0, 0);
+
+		sscanf_s(buf, "%f %f %f", &Pos.x, &Pos.y, &Pos.z);
+
+		//ノード生成
+		new NavNode(Pos);
 	}
+	fclose(fp);
 }
 
 //ステージにライトを作成
-void Field::CreateLights()
+void Field::CreateLights(const char* file)
 {
-	//テーブル内の座標にライトを作成
-	for (CVector3D lightsPos : ms_lights)
+	FILE* fp = NULL;
+
+	//データをテキスト読み込みでオープン
+	fopen_s(&fp, file, "r");
+	//開くのに失敗
+	if (!fp)return;
+
+	char buf[256] = "";
+
+	//ファイルの末尾まで繰り返す
+	while (!feof(fp))
 	{
-		//リビング
-		if (m_lightNo <= 2)	
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 0, 8.0f, CLight::eLight_Point, true);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 3)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 1, 7.0f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 4)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 2, 5.0f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 5)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 3, 3.5f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 9)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 4, 5.0f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 15)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 5, 4.0f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 16)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 6, 6.0f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		else if (m_lightNo <= 17)
-		{
-			//2～番は部屋用ライト番号
-			new Light(lightsPos, m_lightNo, 7, 5.0f, CLight::eLight_Point, false);
-			m_lightNo++;
-		}
-		
+		//一行づつbufに格納
+		fgets(buf, 256, fp);
+
+		CVector3D Pos(0, 0, 0);			//ライトの座標
+		int No = 0;						//ライトナンバー
+		float Range = 0;				//光の大きさ
+		int IsShine = 0;				//光っているかの判断
+		bool Shine = true;				
+
+		sscanf_s(buf, "%f %f %f %d %f %d", &Pos.x, &Pos.y, &Pos.z, &No, &Range, &IsShine);
+
+		//値が0なら電気はついていない
+		if (IsShine == 0) Shine = false;
+
+		//ライト生成
+		new Light(Pos,m_lightNo,No,Range, CLight::eLight_Point,Shine);
+
+		m_lightNo++;
 	}
+	fclose(fp);
+
 }
 
-//ドア生成処理
+//ドアを作成
 void Field::CreateDoors(const char* file)
 {
 	FILE* fp = NULL;
@@ -183,11 +158,13 @@ void Field::CreateDoors(const char* file)
 
 		sscanf_s(buf,"%f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot);
 
+		//ドア生成
 		new Door(Pos,CVector3D(0,DtoR(Rot),0), CVector3D(1, 1, 1), CVector3D(1, 2, 0.3));
 	}
 	fclose(fp);
 }
 
+//スイッチを作成
 void Field::CreateSwitchs(const char* file)
 {
 	FILE* fp = NULL;
@@ -205,14 +182,16 @@ void Field::CreateSwitchs(const char* file)
 		//一行づつbufに格納
 		fgets(buf, 256, fp);
 
-		//ドアの座標
+		//スイッチの座標
 		CVector3D Pos(0, 0, 0);
-		//ドアの向き
+		//スイッチの向き
 		float Rot;
+		//スイッチの番号
 		float No;
 
 		sscanf_s(buf, "%f %f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot, &No);
 
+		//スイッチ生成
 		new Switch(Pos, CVector3D(0, DtoR(Rot), 0), CVector3D(1, 1, 1),No);
 	}
 	fclose(fp);

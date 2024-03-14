@@ -24,15 +24,15 @@ private:
 
 public:
 	//コンストラクタ
-	Field(const char* Doorfile,const char* Switchfile);
+	Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,const char* Switchfile);
 	//デストラクタ
 	~Field();
 
 	//経路探索用のノードを作成
-	void CreateNavNodes();
+	void CreateNavNodes(const char* file);
 
 	//ライトを作成
-	void CreateLights();
+	void CreateLights(const char* file);
 
 	//ドアを作成
 	void CreateDoors(const char* file);

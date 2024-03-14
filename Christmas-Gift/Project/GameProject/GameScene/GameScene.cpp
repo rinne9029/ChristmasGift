@@ -28,11 +28,14 @@ GameScene::GameScene()
 	//フェードイン実行
 	GameData::StartFadeIn = true;
 
-	//ステージ
+	//ステージ生成
+	//テキストデータによってステージ内オブジェクトが変化
 	new Field
 	(
-		"TextData/DoorData1.txt",
-		"TextData/SwitchData1.txt"
+		"TextData/StageNode1.txt",		//ノード
+		"TextData/LightData1.txt",		//ライト
+		"TextData/DoorData1.txt",		//ドア
+		"TextData/SwitchData1.txt"		//スイッチ
 	);
 
 	//サンタ

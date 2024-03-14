@@ -26,10 +26,10 @@ void MainLoop(void) {
 	//--------------------------------------------------------------
 
 	//Qボタンでナビノード描画切り替え:デバッグ用
-	/*if (PUSH(CInput::eButton11))		
+	if (PUSH(CInput::eButton11))		
 	{
 		g_isRenderDebug = !g_isRenderDebug;
-	}*/
+	}
 
 	//全タスクの更新
 	DebugProfiler::StartTimer("Update");	//タスクの更新処理計測スタート
