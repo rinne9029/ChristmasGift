@@ -16,12 +16,16 @@ Title::Title()
 
 	SOUND("BGM_TitleOP")->Play(true);
 
+	m_BackGroundTitle = COPY_RESOURCE("BackGroundTitle", CImage);
 	m_TitleText = COPY_RESOURCE("GameTitleText", CImage);
 	m_StartText = COPY_RESOURCE("StartText", CImage);
 	m_ManualText = COPY_RESOURCE("ManualText", CImage);
 	m_RankingText = COPY_RESOURCE("GameRankingText", CImage);
 	m_Manual1 = COPY_RESOURCE("Manual1", CImage);
 	m_Manual2 = COPY_RESOURCE("Manual2", CImage);
+	m_Stage1 = COPY_RESOURCE("Stage1", CImage);
+	m_Stage2 = COPY_RESOURCE("Stage2", CImage);
+	m_Stage3 = COPY_RESOURCE("Stage3", CImage);
 }
 
 //デストラクタ
@@ -95,7 +99,7 @@ void Title::FuwaFuwa()
 		break;
 	}
 
-	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
+	FONT_T()->Draw(100, 980, 1, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
 }
 
 //モードセレクト処理
@@ -181,8 +185,8 @@ void Title::ManualDraw()
 	m_Manual1.Draw();
 	m_Manual2.SetPos(2240 - 1920 * (m_select - 1), 180);
 	m_Manual2.Draw();
-	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
-	FONT_T()->Draw(1000, 880, 0, 0, 0, "%d/2", m_select);
+	FONT_T()->Draw(100, 980, 1, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(1000, 880, 1, 0, 0, "%d/2", m_select);
 }
 
 void Title::StageSelecte()
@@ -190,10 +194,14 @@ void Title::StageSelecte()
 	//スペースボタン
 	if (PUSH(CInput::eButton5))
 	{
-		SOUND("SE_Click")->Volume(0.5);
-		SOUND("SE_Click")->Play();
-		SOUND("BGM_TitleOP")->Stop();
-		GameData::StartFadeOut = true;
+		//現状ステージ１までしか遊べない
+		if (m_select < 2)
+		{
+			SOUND("SE_Click")->Volume(0.5);
+			SOUND("SE_Click")->Play();
+			SOUND("BGM_TitleOP")->Stop();
+			GameData::StartFadeOut = true;
+		}
 	}
 
 	//Sキー入力
@@ -226,7 +234,14 @@ void Title::StageSelecte()
 
 void Title::StageDraw()
 {
-	FONT_T()->Draw(100, 980, 0, 0, 0, "SPACEキーでスタート");
+	m_Stage1.SetPos(320 - 1920 * (m_select - 1), 0);
+	m_Stage1.Draw();
+	m_Stage2.SetPos(2240 - 1920 * (m_select - 1), 0);
+	m_Stage2.Draw();
+	m_Stage3.SetPos(4160 - 1920 * (m_select - 1), 0);
+	m_Stage3.Draw();
+	FONT_T()->Draw(100, 910, 1, 0, 0, "SPACEキーでスタート");
+	FONT_T()->Draw(100, 980, 1, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
 }
 
 //更新処理
@@ -252,6 +267,7 @@ void Title::Update()
 //2D描画処理
 void Title::Draw()
 {
+	m_BackGroundTitle.Draw();
 	m_TitleText.SetPos(500, 300);
 	m_TitleText.Draw();
 

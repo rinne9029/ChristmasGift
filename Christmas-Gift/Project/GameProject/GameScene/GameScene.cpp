@@ -38,15 +38,15 @@ GameScene::GameScene()
 		"TextData/SwitchData1.txt"		//スイッチ
 	);
 
-	//サンタ
+	//プレイヤー生成
 	new Player
 	(
 		CVector3D(0, 0, 0),
-		CVector3D(0, DtoR(180), 0),						//回転値
-		CVector3D(0, 0, 0)//モデルサイズ
+		CVector3D(0, DtoR(180), 0),	
+		CVector3D(0, 0, 0)
 	);
 
-	//父親
+	//敵：父親生成
 	new Enemy
 	(
 		CVector3D(2.9, 0, 0.351914),
@@ -55,14 +55,14 @@ GameScene::GameScene()
 		0
 	);
 
-	//母親
-	/*new Enemy
+	//敵：母親生成
+	new Enemy
 	(
 		CVector3D(-2.073762, 9.891998, 1.103694),
 		CVector3D(-1, 0, 0),
 		CVector3D(0.01, 0.01, 0.01),
 		1
-	);*/
+	);
 
 
 	new MidPoint
@@ -71,14 +71,6 @@ GameScene::GameScene()
 		CVector3D(0, 0, 0),
 		CVector3D(1, 0.5, 1)
 	);
-
-	//仮
-	/*new MidPoint
-	(
-		CVector3D(0, 0, 0),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 0.5, 1)
-	);*/
 
 	new EndPoint
 	(
