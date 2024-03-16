@@ -5,6 +5,7 @@
 
 bool SleepLife::m_REM = true;
 
+//コンストラクタ
 SleepLife::SleepLife()
 	:Task(ETaskTag::eUI, true)
 	,m_ChengeFace(0)
@@ -23,11 +24,12 @@ SleepLife::SleepLife()
 //更新処理
 void SleepLife::Update()
 {	
+	//睡眠値の回復
 	if(GameData::FacePosition <340)
 	GameData::FacePosition += 0.05f;
+
 	//子供の睡眠が覚醒（ゲームオーバー）
 	if (GameData::FacePosition > 40) return;
-
 	//ゲームオーバー
 	GameData::GameOverCheck = true;
 	//フェードアウト実行
@@ -79,6 +81,7 @@ void SleepLife::Draw()
 	m_NREMText.SetPos(92, 166);
 	m_NREMText.SetSize(256, 32);
 
+	//睡眠状態の変化
 	if (GameData::second <= m_ChengeSleep)
 	{
 		m_REM = !m_REM;

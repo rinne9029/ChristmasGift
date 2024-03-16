@@ -1,5 +1,7 @@
 #pragma once
 
+//ツールチップ管理クラス
+
 class ToolTips : public Task
 {
 private:
@@ -8,10 +10,6 @@ public:
 	bool isDraw;
 	//コンストラクタ
 	ToolTips();
-	//デストラクタ
-	~ToolTips();
-	//更新処理
-	void Update();
 	//2D描画処理
 	void Draw();
 };

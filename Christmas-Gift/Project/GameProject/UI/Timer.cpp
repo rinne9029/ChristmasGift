@@ -1,29 +1,26 @@
 #include "Timer.h"
 #include"GameScene/GameData.h"
 
+//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 Timer::Timer()
 	:Task(ETaskTag::eUI, true)
 {
 	m_Image = COPY_RESOURCE("Text", CImage);
-	count = 0;
+	m_count = 0;
 }
 
-Timer::~Timer()
-{
-}
-
-void Timer::Update()
-{
-}
-
+//2D•`‰æˆ—
 void Timer::Draw()
 {
-	count++;
+	//Œ©‚â‚·‚­‚·‚é‚½‚ß‚Ì”wŒi
+	Utility::DrawQuad(CVector2D(1600, 20), CVector2D(1880, 140), CVector4D(0.7, 0.7, 0.7, 0.5));
+
+	m_count++;
 	//1•bŒo‰ß‚ÅƒJƒEƒ“ƒg‚ð‘‰Á
-	if (count > 60)
+	if (m_count > 60)
 	{
 		GameData::second--;	//‚P•b‰ÁŽZ
-		count = 0;
+		m_count = 0;
 	}
 
 	int cnt = GameData::second;

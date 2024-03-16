@@ -1,7 +1,7 @@
-#include"Title/Title.h"			//タイトル
-#include"Filta/Filta.h"			//フィルター
+#include"Title/Title.h"
+#include"Filta/Filta.h"
 #include"GameScene/GameData.h"
-#include"Task/TaskManager.h"	
+#include"Task/TaskManager.h"
 #include"Debug/DebugPrint.h"
 #include"Debug/DebugProfiler.h"
 
@@ -9,7 +9,7 @@
 //グローバル変数領域
 //-------------------------------------------
 
-//ナビノード描画処理フラグ:デバッグ用
+//ナビノード描画処理フラグ
 bool g_isRenderDebug = false;
 
 //ロード処理用変数
@@ -26,10 +26,10 @@ void MainLoop(void) {
 	//--------------------------------------------------------------
 
 	//Qボタンでナビノード描画切り替え:デバッグ用
-	if (PUSH(CInput::eButton11))		
+	/*if (PUSH(CInput::eButton11))		
 	{
 		g_isRenderDebug = !g_isRenderDebug;
-	}
+	}*/
 
 	//全タスクの更新
 	DebugProfiler::StartTimer("Update");	//タスクの更新処理計測スタート
@@ -93,7 +93,6 @@ void MainLoop(void) {
 	}
 
 	//float lineWidth = 1.0f;
-
 	//世界の軸を表示
 	/*Utility::DrawLine(CVector3D(0, 0, 0), CVector3D(100, 0, 0), CVector4D(1, 0, 0, 1), lineWidth);
 	Utility::DrawLine(CVector3D(0, 0, 0), CVector3D(0, 100, 0), CVector4D(0, 1, 0, 1), lineWidth);
@@ -140,7 +139,7 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton9, 'E');
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
 	CInput::SetButton(0, CInput::eButton11, 'Q');
-	CInput::SetButton(0, CInput::eButton12, 'K');	//ノード配置確認：デバッグ用
+	CInput::SetButton(0, CInput::eButton12, 'K');
 	CInput::SetButton(0, CInput::eUp, 'W');
 	CInput::SetButton(0, CInput::eDown, 'S');
 	CInput::SetButton(0, CInput::eLeft, 'A');
@@ -150,8 +149,8 @@ void Init(void)
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
 
 	//マウス非表示
-	//CInput::ShowCursor(false);
-	//CInput::SetMouseInside(true);
+	CInput::ShowCursor(false);
+	CInput::SetMouseInside(true);
 	CInput::Update();
 	CInput::Update();
 

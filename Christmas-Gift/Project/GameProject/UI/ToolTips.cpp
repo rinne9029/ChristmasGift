@@ -1,5 +1,6 @@
 #include "ToolTips.h"
 
+//コンストラクタ
 ToolTips::ToolTips()
 	:Task(ETaskTag::eUI,true)
 {
@@ -7,14 +8,7 @@ ToolTips::ToolTips()
 	isDraw = false;
 }
 
-ToolTips::~ToolTips()
-{
-}
-
-void ToolTips::Update()
-{
-}
-
+//2D描画処理
 void ToolTips::Draw()
 {
 	if (!isDraw)return;

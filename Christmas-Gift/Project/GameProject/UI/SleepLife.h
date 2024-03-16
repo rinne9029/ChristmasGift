@@ -14,7 +14,7 @@ private:
 	int m_ChengeSleep;		//睡眠状態切り替え時間
 	int m_ChengeFace;		//顔切り替え変数
 public:
-	static bool m_REM;
+	static bool m_REM;		//睡眠の状態フラグ
 	//コンストラクタ
 	SleepLife();
 	//更新処理
