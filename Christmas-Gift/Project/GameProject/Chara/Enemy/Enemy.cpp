@@ -27,6 +27,7 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale,i
 	, m_isvigilance(false)
 	, m_state(eState_Idle)
 	, m_modelno(model)
+	, m_warning(0)
 {
 	//敵の管理クラスのリストに自身を追加
 	EnemyManager::Instance()->Add(this);
@@ -117,24 +118,63 @@ void Enemy::StateIdle()
 	}
 
 
-	//プレイヤーが探知範囲に入ったら追いかける
+	//プレイヤーが探知範囲に入ったら警戒状態
 	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
-		m_vec *= 0;
-		m_state = eState_Chase;
+		//警戒状態
+		m_state = eState_Look;
 	}
 }
 
-////座り待機状態の処理
-//void Enemy::StateSitIdle()
-//{
-//	//アニメーション変更
-//	m_model.ChangeAnimation((int)AnimId::SitIdle);
-//
-//	/*if (IsEyeFoundPlayer() && !mp_player->m_hide) {
-//		m_vec *= 0;
-//		m_state = eState_Chase;
-//	}*/
-//}
+//警戒状態
+void Enemy::StateLook()
+{
+	//アニメーション変更
+	m_model.ChangeAnimation((int)AnimId::Idle);
+
+	m_vec *= 0;
+	//プレイヤーとの距離
+	CVector3D vec = mp_player->m_pos - m_pos;
+	m_dir = vec;
+	float Length = vec.Length();
+
+	//プレイヤーとの距離に応じて発見値の上昇率変更
+	//即座に追いかける
+	if (Length < 5 && IsLookPlayer())
+	{
+		m_warning = 3;
+		//追いかける
+		m_state = eState_Chase;
+	}
+	//警戒値上昇：大
+	else if (Length < 10 && IsLookPlayer())
+	{
+		m_warning += CFPS::GetDeltaTime();
+		if (m_warning > 3 && IsLookPlayer())
+		{
+			m_state = eState_Chase;
+		}
+	}
+	//警戒値上昇：小
+	else if(IsLookPlayer())
+	{
+		m_warning += CFPS::GetDeltaTime() * 0.5;
+		if (m_warning > 3)
+		{
+			m_state = eState_Chase;
+		}
+	}
+	else
+	{
+		m_warning -= CFPS::GetDeltaTime();
+		if (m_warning < 0)
+		{
+			m_warning = 0;
+			m_state = eState_Idle;
+		}
+	}
+
+
+}
 
 void Enemy::StateMove()
 {
@@ -181,10 +221,10 @@ void Enemy::StateMove()
 		}
 	}
 
-	//プレイヤーが探知範囲に入ったら
+	//プレイヤーが探知範囲に入ったら警戒状態
 	if (IsEyeFoundPlayer() && !mp_player->m_hide) {
-		m_vec *= 0;
-		m_state = eState_Chase;
+		//警戒状態
+		m_state = eState_Look;
 		//移動を強制終了するため、移動関連の各ノードを初期化
 		m_moveNode = nullptr;
 		m_nextNode = nullptr;
@@ -195,7 +235,6 @@ void Enemy::StateMove()
 			m_searchNode = nullptr;
 		}
 	}
-
 }
 
 //追跡状態の処理
@@ -326,6 +365,7 @@ void Enemy::StateLost()
 	//目的地まで移動が終われば、
 	else
 	{
+		m_warning = 0;
 		//待機状態へ移行
 		m_state = eState_Idle;
 	}
@@ -415,32 +455,6 @@ bool Enemy::IsEyeFoundPlayer()
 	return true;
 }
 
-//プレイヤー探知のフラグ->聴覚
-/*bool Enemy::IsEarFoundPlayer()
-{
-	//プレイヤーの移動を音で聞き分ける処理
-	if (!mp_player->m_islegsound)
-		return false;
-
-	//音の聞き取り角度
-	ear_ang = DtoR(360);
-	//音の聞き取り距離
-	ear_length = 3;
-
-	m_dir = CVector3D(sin(m_rot.y), 0, cos(m_rot.y));
-	//敵からプレイヤーまでのベクトルを求める
-	CVector3D vec = mp_player->m_pos - m_pos;
-	//求めたベクトルと敵の正面方向のベクトルを内積とって
-	//角度(cosθ)を求める
-	float ear_dot = CVector3D::Dot(m_dir, vec.GetNormalize());
-
-	if (vec.Length() > ear_length)
-		return false;
-
-	return true;
-	
-}*/
-
 bool Enemy::IsLookPlayer() const
 {
 	NavNode* playernodepos = mp_player->GetNavNode();	//プレイヤーのノード
@@ -495,9 +509,9 @@ void Enemy::Update()
 	case eState_Idle:
 		StateIdle();
 		break;
-	/*case eState_SitIdle:
-		StateSitIdle();
-		break;*/
+	case eState_Look:
+		StateLook();
+		break;
 	case eState_Move:
 		StateMove();
 		break;
@@ -527,15 +541,14 @@ void Enemy::Update()
 	//ベースクラスの更新
 	CharaBase::Update();
 
+	//警戒値のゲージ
+	m_WarningGauge = COBB(
+		m_pos + CVector3D(0,2,0),
+		CVector3D(0, 0, 0),
+		CVector3D(0.05, 0.05, 0.05)
+	);
 
-	float lineWidth = 10.0f;
-	//聴覚範囲の表示
-	/*Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * ear_length, CVector4D(1, 0, 1, 1), lineWidth);
-	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + CMatrix::MRotationY(ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
-	Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + CMatrix::MRotationY(-ear_ang) * m_dir * ear_length, CVector4D(0, 1, 1, 1), lineWidth);
-	CMatrix m1;
-	m1.LookAt(m_pos + CVector3D(0, 0.5, 0), m_pos + CVector3D(0, 0.1, 0) + m_dir * ear_length, CVector3D(0, 1, 0));
-	Utility::DrawSector(m1, -ear_ang, ear_ang, ear_length, color);*/
+	//float lineWidth = 10.0f;
 
 	//視野範囲の表示
 	/*Utility::DrawLine(m_pos + CVector3D(0, 1.0, 0), m_pos + CVector3D(0, 1.0, 0) + m_dir * eye_length, CVector4D(1, 0, 1, 1), lineWidth);
@@ -556,6 +569,8 @@ void Enemy::Render()
 	m_model.SetPos(m_pos);		//モデル座標
 	m_model.SetRot(m_rot);		//モデル回転値
 	m_model.Render();			//モデル描画
+
+	Utility::DrawOBB(m_WarningGauge, CVector4D(m_warning/3,(3-m_warning)/3, 0, 1));
 }
 
 

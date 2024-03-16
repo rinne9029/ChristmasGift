@@ -17,21 +17,19 @@ private:
 	NavNode* m_moveNode;		//移動目的地のノード
 	float m_elapsedTime;		//経過時間計測用
 	bool m_isvigilance;			//警戒フラグ
-	int m_modelno;
+	int m_modelno;				//モデル外見
+	float m_warning;			//警戒値
 	
 	//目
 	float eye_length;			//視野距離
 	float eye_ang;				//視野角度
-
-	//耳
-	float ear_length;			//聴覚距離
-	float ear_ang;				//聴覚角度
 
 	NavNode* m_nextNode;		//次に移動するノード格納用
 	NavNode* m_lostNode;		//プレイヤーを見失った場所に配置
 	SearchNode* m_searchNode;	//探索中のノード
 
 	CVector4D color;			//視野範囲の色
+	COBB m_WarningGauge;		//警戒値のゲージ
 
 	//アニメーション番号
 	enum class AnimId
@@ -47,8 +45,8 @@ private:
 	//状態変化
 	enum {
 		eState_Idle,			//待機状態
-		eState_SitIdle,			//座り待機状態
 		eState_Move,			//移動状態
+		eState_Look,			//警戒状態
 		eState_Chase,			//追跡状態
 		eState_Lost,			//プレイヤーを見失った状態
 	};
@@ -57,8 +55,8 @@ private:
 
 	//待機状態
 	void StateIdle();	
-	//座り待機状態
-	//void StateSitIdle();
+	//警戒状態
+	void StateLook();
 	//移動状態
 	void StateMove();		
 	//追跡状態
@@ -74,7 +72,6 @@ private:
 
 	//探知フラグ
 	bool IsEyeFoundPlayer();
-	//bool IsEarFoundPlayer();
 
 	//現在位置からプレイヤーが見えるかどうかのフラグ
 	bool IsLookPlayer() const;
