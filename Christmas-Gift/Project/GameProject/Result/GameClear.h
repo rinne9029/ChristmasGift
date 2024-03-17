@@ -1,5 +1,7 @@
 #pragma once
 
+//ゲームクリア画面管理クラス
+
 class GameClear : public Task {
 private:
 	CImage m_BuckGraund;		//背景
@@ -7,8 +9,6 @@ private:
 	CImage m_RankingText;		//ランキング文字
 	static const int m_max_size = 256;
 	static const int m_max_line = 32;
-	//char m_text[m_max_line][m_max_size];
-	//char m_text[256];
 
 	int m_Rank[5];
 	int m_line_size;

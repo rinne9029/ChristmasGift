@@ -7,6 +7,7 @@ class FieldWall;
 class NavNode;
 
 //フィールド制御クラス
+
 class Field : public ObjectBase {
 private:
 	//フィールドクラスのインスタンス

@@ -4,6 +4,11 @@
 #include"GameScene/GameScene.h"
 #include"GameScene/GameData.h"
 
+#define MAXSELECT 3			//モードセレクト数
+#define MAXSTAGE  3			//ステージ数
+#define MAXMANUAL 2			//説明枚数
+
+
 //コンストラクタ
 Title::Title()
 	:Task(ETaskTag::eScene,true)
@@ -14,6 +19,7 @@ Title::Title()
 	//フェードイン実行
 	GameData::StartFadeIn = true;
 
+	//サウンド再生
 	SOUND("BGM_TitleOP")->Play(true);
 
 	m_BackGroundTitle = COPY_RESOURCE("BackGroundTitle", CImage);
@@ -65,6 +71,9 @@ Title::~Title()
 //ふわふわ動く文字
 void Title::FuwaFuwa()
 {
+	m_TitleText.SetPos(500, 300);
+	m_TitleText.Draw();
+
 	m_fuwafuwa += 0.02f;
 
 	//選ばれた文字がsinカーブでふわふわ動く
@@ -115,7 +124,6 @@ void Title::ModeChenge()
 		case 1:
 			m_step = m_select * 10;
 			m_select = 1;
-			//GameData::StartFadeOut = true;
 			break;
 		case 2:
 			m_step = m_select * 10;
@@ -138,7 +146,7 @@ void Title::ModeChenge()
 		m_fuwafuwa = 0;
 	}
 	//Dキー入力
-	if (PUSH(CInput::eRight) && m_select < 3)
+	if (PUSH(CInput::eRight) && m_select < MAXSELECT)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -171,7 +179,7 @@ void Title::ManualMode()
 	}
 	//Dキー入力
 	//前の説明に戻る
-	if (PUSH(CInput::eRight) && m_select < 2)
+	if (PUSH(CInput::eRight) && m_select < MAXMANUAL)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -224,7 +232,7 @@ void Title::StageSelecte()
 	}
 	//Dキー入力
 	//前のステージ
-	if (PUSH(CInput::eRight) && m_select < 3)
+	if (PUSH(CInput::eRight) && m_select < MAXSTAGE)
 	{
 		SOUND("SE_Select")->Volume(0.5);
 		SOUND("SE_Select")->Play();
@@ -268,8 +276,6 @@ void Title::Update()
 void Title::Draw()
 {
 	m_BackGroundTitle.Draw();
-	m_TitleText.SetPos(500, 300);
-	m_TitleText.Draw();
 
 	//雪を描画する時間
 	static int RespawnTime = 0;

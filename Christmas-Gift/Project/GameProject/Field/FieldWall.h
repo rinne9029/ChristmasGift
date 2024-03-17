@@ -1,6 +1,8 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
 
+//ステージの壁管理クラス
+
 class FieldWall : public ObjectBase
 {
 private:

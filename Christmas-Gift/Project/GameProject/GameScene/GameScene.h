@@ -1,5 +1,7 @@
 #pragma once
 
+//ゲームシーン管理クラス
+
 class  GameScene :public Task {
 private:
 public:

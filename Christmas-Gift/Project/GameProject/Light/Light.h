@@ -1,6 +1,8 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
 
+//ライト管理クラス
+
 class Light : public ObjectBase
 {
 private:

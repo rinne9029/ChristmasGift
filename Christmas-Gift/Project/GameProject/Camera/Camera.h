@@ -3,6 +3,8 @@
 
 class Player;
 
+//プレイヤーカメラ管理クラス
+
 class Camera : public ObjectBase {
 private:
 	Player* mp_player;		//プレイヤー

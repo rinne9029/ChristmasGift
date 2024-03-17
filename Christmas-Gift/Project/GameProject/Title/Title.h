@@ -17,7 +17,6 @@ private:
 	int m_select;				//セレクトフラグ
 	int m_step;				
 	float m_fuwafuwa;			//ふわふわ表示用実数
-	CVector2D m_snowPos;		//雪の座標
 	void FuwaFuwa();			//ふわふわ表示処理
 	void ModeChenge();			//モード変更処理
 	void ManualMode();			//説明モード処理

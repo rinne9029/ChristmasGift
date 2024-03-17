@@ -13,6 +13,7 @@ GameClear::GameClear()
 	GameData::StartFadeIn = true;
 	GameData::GameStart = false;
 
+	//ランキング切り替え
 	ChengeRanking();
 
 	//クリアサウンド再生
@@ -109,7 +110,6 @@ void GameClear::ChengeRanking()
 		}
 	}
 	
-
 	//新しい記録記入
 	//ランク外なら記録しない
 	if (m_Rank[3] > GameData::second)
@@ -136,8 +136,6 @@ void GameClear::ChengeRanking()
 	if (m_Rank[0] < GameData::second) m_Rank[0] = GameData::second;
 	}
 
-	
-
 	//ファイルをテキスト書き込みモードで開く
 	fopen_s(&fp, "Ranking.txt", "w");
 	//開くのに失敗
@@ -153,6 +151,7 @@ void GameClear::ChengeRanking()
 //更新処理
 void GameClear::Update()
 {
+	//フェードイン・フェードアウト中は実行しない
 	if (GameData::StartFadeIn) return;
 	if (GameData::StartFadeOut) return;
 
@@ -181,7 +180,6 @@ void GameClear::Update()
 		m_select++;
 		m_High = 0;	//強調リセット
 	}
-
 }
 
 //2D描画処理

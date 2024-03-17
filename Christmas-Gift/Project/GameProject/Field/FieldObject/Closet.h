@@ -1,6 +1,8 @@
 #pragma once
 #include"GimmickObjectBase.h"
 
+//クローゼット管理クラス
+
 class Closet : public GimmickObjectBase {
 private:
 	CVector3D m_size;		//箱形の大きさ

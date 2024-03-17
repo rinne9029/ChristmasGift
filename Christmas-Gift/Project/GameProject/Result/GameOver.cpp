@@ -3,6 +3,7 @@
 #include"GameScene/GameData.h"
 #include"GameScene/GameScene.h"
 
+//コンストラクタ
 GameOver::GameOver()
 	:Task(ETaskTag::eResult,true)
 {
@@ -17,6 +18,7 @@ GameOver::GameOver()
 	m_ReStartText = COPY_RESOURCE("ReStartText", CImage);
 }
 
+//デストラクタ
 GameOver::~GameOver()
 {
 	switch (m_select)
@@ -32,6 +34,7 @@ GameOver::~GameOver()
 	}
 }
 
+//強調表示処理
 void GameOver::HighLight()
 {
 	m_High = m_High + 0.1;
@@ -55,8 +58,10 @@ void GameOver::HighLight()
 	}
 }
 
+//更新処理
 void GameOver::Update()
 {
+	//フェードイン・フェードアウト中は実行しない
 	if (GameData::StartFadeIn) return;
 	if (GameData::StartFadeOut) return;
 
@@ -86,6 +91,7 @@ void GameOver::Update()
 	}
 }
 
+//描画処理
 void GameOver::Draw()
 {
 	//背景描画

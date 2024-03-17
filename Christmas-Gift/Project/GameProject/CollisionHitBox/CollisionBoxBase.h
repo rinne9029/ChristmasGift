@@ -1,6 +1,6 @@
 #pragma once
 
-//アクション用当たり判定のベース
+//当たり判定ベース
 
 class ToolTips;
 

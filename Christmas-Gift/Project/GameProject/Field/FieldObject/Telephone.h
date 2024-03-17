@@ -1,6 +1,8 @@
 #pragma once
 #include"GimmickObjectBase.h"
 
+//電話管理クラス
+
 class Telephone : public GimmickObjectBase {
 private:
 

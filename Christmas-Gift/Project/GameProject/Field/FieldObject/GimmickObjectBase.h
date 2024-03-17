@@ -2,6 +2,8 @@
 #include"GLLibrary/CModel.h"
 #include"../../ObjectBase/ObjectBase.h"
 
+//全オブジェクトのベースクラス
+
 class GimmickObjectBase : public ObjectBase
 {
 private:

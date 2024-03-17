@@ -1,6 +1,8 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
 
+//プレゼント管理クラス
+
 class PresentBox : public ObjectBase {
 private:
 	CModelObj m_model;

@@ -1,6 +1,8 @@
 #pragma once
 #include"ObjectBase/ObjectBase.h"
 
+//ステージの床管理クラス
+
 class FieldFloor : public ObjectBase
 {
 private:

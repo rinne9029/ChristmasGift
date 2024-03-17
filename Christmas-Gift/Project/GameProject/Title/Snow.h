@@ -10,8 +10,6 @@ private:
 public:
 	//コンストラクタ
 	Snow();
-	//デストラクタ
-	~Snow();
 	//更新処理
 	void Update();
 	//2D描画処理

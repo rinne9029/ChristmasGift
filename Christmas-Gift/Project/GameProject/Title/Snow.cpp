@@ -5,14 +5,9 @@ Snow::Snow()
 	:Task(ETaskTag::eScene,true)
 {
 	m_snow = COPY_RESOURCE("Snow", CImage);
-	int wide = rand() % 1920;				//横座標をランダム
-	m_snowPos = CVector2D(wide, -20);		//座標
-	m_snowAng = 0;							//回転値
-}
-
-//デストラクタ
-Snow::~Snow()
-{
+	int wide = rand() % 1920;				//X座標をランダム
+	m_snowPos = CVector2D(wide, -20);		//初期座標
+	m_snowAng = 0;							//初期回転値
 }
 
 //更新処理

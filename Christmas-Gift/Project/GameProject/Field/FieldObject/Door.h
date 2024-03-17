@@ -2,6 +2,8 @@
 #include"GimmickObjectBase.h"
 #include"UI/ToolTips.h"
 
+//ドア管理クラス
+
 class Door : public Task {
 private:
 	CModelObj m_model;

@@ -1,5 +1,7 @@
 #pragma once
 
+//ゲームオーバ画面管理クラス
+
 class GameOver : public Task {
 private:
 	CImage m_BuckGraund;		//背景

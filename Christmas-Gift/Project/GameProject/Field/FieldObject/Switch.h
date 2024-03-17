@@ -1,6 +1,8 @@
 #pragma once
 #include"GimmickObjectBase.h"
 
+//スイッチ管理クラス
+
 class Switch : public GimmickObjectBase {
 private:
 
