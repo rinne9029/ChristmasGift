@@ -6,7 +6,6 @@
 #include"Field/FieldObject/Closet.h"
 #include"Field/FieldObject/Telephone.h"
 #include"CollisionHitBox/MidPoint.h"
-#include"CollisionHitBox/EndPoint.h"
 #include"UI/SleepLife.h"
 #include"UI/Timer.h"
 #include"Result/GameClear.h"
@@ -35,15 +34,16 @@ GameScene::GameScene()
 		"TextData/StageNode1.txt",		//ノード
 		"TextData/LightData1.txt",		//ライト
 		"TextData/DoorData1.txt",		//ドア
-		"TextData/SwitchData1.txt"		//スイッチ
+		"TextData/SwitchData1.txt",		//スイッチ
+		"TextData/ClosetData1.txt"		//クローゼット
 	);
 
 	//プレイヤー生成
 	new Player
 	(
-		CVector3D(0, 0, 0),
+		CVector3D(4.55,-0.2,6.18),
 		CVector3D(0, DtoR(180), 0),	
-		CVector3D(0, 0, 0)
+		CVector3D(0.01, 0.01, 0.01)
 	);
 
 	//敵：父親生成
@@ -64,44 +64,13 @@ GameScene::GameScene()
 		1
 	);
 
-
+	//プレゼント設置ポイント
 	new MidPoint
 	(
 		CVector3D(5.998150, 9.8, -1.6),
 		CVector3D(0, 0, 0),
 		CVector3D(1, 0.5, 1)
 	);
-
-	new EndPoint
-	(
-		CVector3D(4.555758, 0, 6.188184),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 1, 1)
-	);
-
-	new Closet
-	(
-		CVector3D(3.261635, 9.053699, 4.970999),			//座標
-		CVector3D(0, DtoR(270), 0),		//回転値
-		CVector3D(1, 0.7, 1),				//オブジェクトの大きさ
-		2
-	);
-
-	new Closet
-	(
-		CVector3D(0, 0, 0),			//座標
-		CVector3D(0, DtoR(270), 0),		//回転値
-		CVector3D(1, 0.7, 1),				//オブジェクトの大きさ
-		2
-	);
-
-	//new Closet
-	//(
-	//	CVector3D(0.261635, 9.053699, 2.970999),			//座標
-	//	CVector3D(0, DtoR(180), 0),		//回転値
-	//	CVector3D(1.2, 1.2, 2),				//オブジェクトの大きさ
-	//	2
-	//);
 
 	new SleepLife();			//睡眠ゲージ
 	new Timer();				//制限時間	

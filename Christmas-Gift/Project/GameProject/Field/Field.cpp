@@ -3,6 +3,7 @@
 #include"FieldWall.h"
 #include"FieldObject/Door.h"
 #include"Field/FieldObject/Switch.h"
+#include"Field/FieldObject/Closet.h"
 #include"Light/Light.h"
 #include"../Navigation/NavManager.h"
 #include"../Navigation/NavNode.h"
@@ -11,30 +12,8 @@
 
 Field* Field::ms_instance = nullptr;
 
-//ライト用のテーブル
-std::list<CVector3D> ms_lights =
-{
-	CVector3D(2.8,1.5,2.1),		//リビング
-	CVector3D(1,1.5,12.1),		//1階廊下①
-	CVector3D(-5,1.5,5.3),		//1階廊下②
-	CVector3D(-10.5,1.5,2.5),	//洗面所
-	CVector3D(-4.6,3.7,12.9),	//階段
-	CVector3D(-7.0,6.8,13.0),
-	CVector3D(-7.0,11.8,13.0),
-	CVector3D(-7.9,8.1,10.0),	
-	CVector3D(-7.7,9.8,6.6),//2階廊下
-	CVector3D(-4.2,9.8,6.6),
-	CVector3D(0.4,9.8,6.7),
-	CVector3D(5.0,9.8,6.8),
-	CVector3D(-10.6,9.8,12.5),
-	CVector3D(-10.6,9.8,8.5),
-	CVector3D(-2.0,10.5,0.4),//両親部屋
-	CVector3D(5.8,9.8,0.6),//子供部屋
-	
-};
-
 //コンストラクタ
-Field::Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,const char* Switchfile)
+Field::Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,const char* Switchfile,const char* Closetfile)
 	:ObjectBase(ETaskTag::eField,true)
 {
 	ms_instance = this;
@@ -56,6 +35,8 @@ Field::Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,con
 	CreateDoors(Doorfile);
 	//スイッチ作成
 	CreateSwitchs(Switchfile);
+	//クローゼット作成
+	CreateCloset(Closetfile);
 }
 
 Field::~Field()
@@ -193,6 +174,36 @@ void Field::CreateSwitchs(const char* file)
 
 		//スイッチ生成
 		new Switch(Pos, CVector3D(0, DtoR(Rot), 0), CVector3D(1, 1, 1),No);
+	}
+	fclose(fp);
+}
+
+void Field::CreateCloset(const char* file)
+{
+	FILE* fp = NULL;
+
+	//データをテキスト読み込みでオープン
+	fopen_s(&fp, file, "r");
+	//開くのに失敗
+	if (!fp)return;
+
+	char buf[256] = "";
+
+	//ファイルの末尾まで繰り返す
+	while (!feof(fp))
+	{
+		//一行づつbufに格納
+		fgets(buf, 256, fp);
+
+		//クローゼットの座標
+		CVector3D Pos(0, 0, 0);
+		//クローゼットの向き
+		float Rot;
+
+		sscanf_s(buf, "%f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot);
+
+		//クローゼット生成
+		new Closet(Pos, CVector3D(0, DtoR(Rot), 0), CVector3D(1, 0.7, 1),2);
 	}
 	fclose(fp);
 }

@@ -33,27 +33,8 @@ Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale
 	, m_hide(false)											
 	, m_state(eState_Idle)		
 {
-	FILE* fp = NULL;
-
-	//	データをテキストの読み込みでオープン
-	fopen_s(&fp, "PlayerData.txt", "r");
-	if (!fp) return;
-
-	char buf[256] = "";
-
-	while (!feof(fp))
-	{
-		fgets(buf, 256, fp);
-		CVector3D Pos(0, 0, 0);
-		CVector3D Size(0, 0, 0);
-
-		sscanf_s(buf, "%f %f %f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Size.x, &Size.y, &Size.z);
-
-		m_pos = Pos;
-		m_scale = Size;
-	}
-
-	fclose(fp);
+	m_pos = pos;
+	m_scale = scale;
 
 	m_height = 1.9f;			//高さ
 	m_rad = 0.3f;				//半径
@@ -112,9 +93,6 @@ void Player::StateSquat()
 	//しゃがみスピードを代入
 	m_movespeed = DOWN_SPEED;
 
-	//隠れ状態の切り替え
-	//if (m_hide) m_hide = false;
-
 	//コントロールボタン
 	if (PUSH(CInput::eButton7))
 	{
@@ -131,12 +109,12 @@ void Player::StateClosetIn()
 	//ボタン入力で即ハイドを解除しないように
 	static int count;
 	count++;
-	//重力無視
-	m_vec.y = 0;
 	//クローゼットの中心に移動
 	m_pos = m_Closet_pos;
 	if (PUSH(CInput::eMouseL) && count >1)
 	{
+		SOUND("SE_DoorClose")->Volume(0.3);
+		SOUND("SE_DoorClose")->Play();
 		//カウントの初期化
 		count = 0;
 		//元の位置へ戻る
@@ -272,6 +250,7 @@ void Player::Update()
 		Shot();
 	}
 	//ベースクラスの更新
+	if(m_state != eState_ClosetIn)
 	CharaBase::Update();
 
 	//ステート状態による状態変化
@@ -307,12 +286,6 @@ void Player::Update()
 
 	//プレイヤーカプセルの表示
 	//Utility::DrawCapsule(m_lineS, m_lineE, m_rad, CVector4D(1, 0, 0, 1));
-
-	//デバッグ用:kボタンでプレイヤーの座標を表示（ノード配置調整用）
-	/*if (PUSH(CInput::eButton12))
-	{
-		printf("CVector3D(%f,%f,%f),\n", m_pos.x,m_pos.y+1,m_pos.z);
-	}*/
 }
 
 //描画処理
@@ -325,9 +298,8 @@ void Player::Render()
 	//一人称時モデルを描画しない
 	//m_model.Render();
 
-	//デバッグ用:レイの線を表示
-	float a = 10000;
-	Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), a);
+	if (m_state == eState_ClosetIn) return;
+	Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), 10000);
 }
 
 //衝突処理
@@ -353,27 +325,27 @@ void Player::Collision(Task* t)
 		}
 	}
 	break;
-	case ETaskTag::eTansu:
+	case ETaskTag::eFieldObject:
 	{
-		//float dist;
-		//CVector3D axis;
-		//if (CCollision::CollisionOBBCapsule(t->m_obb2, m_lineS, m_lineE, m_rad, &axis, &dist))
-		//{
-		//	if (axis.y > 0.5f)
-		//	{
-		//		//面が上向き->地面に当たった
-		//		//重力落下速度を0に戻す
-		//		if (m_vec.y < 0)
-		//			m_vec.y = 0;
-		//	}
-		//	//ハイド以外
-		//	if (m_state != eState_Hide)
-		//	{
-		//		//押し戻し
-		//		float s = m_rad - dist;
-		//		m_pos += axis * s;
-		//	}
-		//}
+		float dist;
+		CVector3D axis;
+		if (CCollision::CollisionOBBCapsule(t->m_obb2, m_lineS, m_lineE, m_rad, &axis, &dist))
+		{
+			//ハイド以外
+			if (m_state != eState_ClosetIn)
+			{
+				if (axis.y > 0.5f)
+				{
+					//面が上向き->地面に当たった
+					//重力落下速度を0に戻す
+					if (m_vec.y < 0)
+						m_vec.y = 0;
+				}
+				//押し戻し
+				float s = m_rad - dist;
+				m_pos += axis * s;
+			}
+		}
 	}
 	break;
 	case ETaskTag::eDoor:
@@ -519,6 +491,9 @@ void Player::Shot()
 					//ハイド状態へ移行
 					m_hide = true;
 					m_state = eState_ClosetIn;
+					//音声再生
+					SOUND("SE_DoorOpen")->Volume(0.3);
+					SOUND("SE_DoorOpen")->Play();
 
 				}
 			}

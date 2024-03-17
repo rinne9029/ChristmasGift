@@ -244,7 +244,7 @@ void Enemy::StateChase()
 	m_model.ChangeAnimation((int)AnimId::Run);
 
 	//追跡中のBGMの音量をリセット
-	SOUND("BGM_Chase")->Volume(1);
+	SOUND("BGM_Chase")->Volume(0.3);
 	if (SOUND("BGM_Chase")->CheckEnd())
 	{
 		//追跡中のBGM再生（ループあり）
@@ -337,7 +337,7 @@ void Enemy::StateLost()
 	{
 		// 見失った場合は、視野範囲を無視して、
 		// プレイヤーまでの視線が通るかどうかで判定する
-		if (IsLookPlayer())
+		if (IsLookPlayer() && !mp_player->m_hide)
 		{
 			//追跡状態へ移行
 			m_state = eState_Chase;
@@ -596,12 +596,12 @@ void Enemy::Collision(Task* t)
 		}
 	}
 	break;
-	case ETaskTag::eHideBox:
+	case ETaskTag::eFieldObject:
 	{
 		//クローゼットの当たり判定
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(t->m_obb1, m_lineS, m_lineE, m_rad, &axis, &dist)) {
+		if (CCollision::CollisionOBBCapsule(t->m_obb2, m_lineS, m_lineE, m_rad, &axis, &dist)) {
 			if (axis.y > 0.5f) 
 			{
 				//面が上向き->地面に当たった

@@ -25,7 +25,7 @@ private:
 
 public:
 	//コンストラクタ
-	Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,const char* Switchfile);
+	Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,const char* Switchfile,const char* ClosetData);
 	//デストラクタ
 	~Field();
 
@@ -40,6 +40,9 @@ public:
 
 	//スイッチを作成
 	void CreateSwitchs(const char* file);
+
+	//クローゼットを作成
+	void CreateCloset(const char* file);
 
 	//フィールドのコリジョンを取得
 	CModel* GetColModel() const;

@@ -20,6 +20,7 @@ Title::Title()
 	GameData::StartFadeIn = true;
 
 	//サウンド再生
+	SOUND("BGM_TitleOP")->Volume(0.2);
 	SOUND("BGM_TitleOP")->Play(true);
 
 	m_BackGroundTitle = COPY_RESOURCE("BackGroundTitle", CImage);
@@ -117,7 +118,7 @@ void Title::ModeChenge()
 	//スペースボタン
 	if (PUSH(CInput::eButton5))
 	{
-		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Volume(0.3);
 		SOUND("SE_Click")->Play();
 		switch (m_select)
 		{
@@ -139,7 +140,7 @@ void Title::ModeChenge()
 	//Aキー入力
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Volume(0.3);
 		SOUND("SE_Select")->Play();
 		m_select--;
 		//ふわふわ表示リセット
@@ -148,7 +149,7 @@ void Title::ModeChenge()
 	//Dキー入力
 	if (PUSH(CInput::eRight) && m_select < MAXSELECT)
 	{
-		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Volume(0.3);
 		SOUND("SE_Select")->Play();
 		m_select++;
 		//ふわふわ表示リセット
@@ -162,7 +163,7 @@ void Title::ManualMode()
 	//Sキー入力
 	if (PUSH(CInput::eDown))
 	{
-		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Volume(0.3);
 		SOUND("SE_Click")->Play();
 		//モードセレクトに戻る
 		m_step = 0;
@@ -173,7 +174,7 @@ void Title::ManualMode()
 	//次の説明
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Volume(0.3);
 		SOUND("SE_Select")->Play();
 		m_select--;
 	}
@@ -181,7 +182,7 @@ void Title::ManualMode()
 	//前の説明に戻る
 	if (PUSH(CInput::eRight) && m_select < MAXMANUAL)
 	{
-		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Volume(0.3);
 		SOUND("SE_Select")->Play();
 		m_select++;
 	}
@@ -205,7 +206,7 @@ void Title::StageSelecte()
 		//現状ステージ１までしか遊べない
 		if (m_select < 2)
 		{
-			SOUND("SE_Click")->Volume(0.5);
+			SOUND("SE_Click")->Volume(0.3);
 			SOUND("SE_Click")->Play();
 			SOUND("BGM_TitleOP")->Stop();
 			GameData::StartFadeOut = true;
@@ -215,7 +216,7 @@ void Title::StageSelecte()
 	//Sキー入力
 	if (PUSH(CInput::eDown))
 	{
-		SOUND("SE_Click")->Volume(0.5);
+		SOUND("SE_Click")->Volume(0.3);
 		SOUND("SE_Click")->Play();
 		//モードセレクトに戻る
 		m_step = 0;
@@ -226,7 +227,7 @@ void Title::StageSelecte()
 	//次のステージ
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Volume(0.3);
 		SOUND("SE_Select")->Play();
 		m_select--;
 	}
@@ -234,7 +235,7 @@ void Title::StageSelecte()
 	//前のステージ
 	if (PUSH(CInput::eRight) && m_select < MAXSTAGE)
 	{
-		SOUND("SE_Select")->Volume(0.5);
+		SOUND("SE_Select")->Volume(0.3);
 		SOUND("SE_Select")->Play();
 		m_select++;
 	}

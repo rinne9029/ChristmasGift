@@ -24,6 +24,9 @@ void GimmickObjectBase::Render()
 	m_model->SetRot(m_rot);
 	m_model->SetScale(m_size);
 	m_model->Render();
+
+	//デバッグ用：OBB描画
+	//Utility::DrawOBB(m_obb2, CVector4D(1, 0, 0, 1));
 }
 
 bool GimmickObjectBase::CollisionRay(const CVector3D& start, const CVector3D& end, CVector3D* outHitPos, CVector3D* outHitNormal)

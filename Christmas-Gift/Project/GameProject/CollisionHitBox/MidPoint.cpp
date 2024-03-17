@@ -1,4 +1,5 @@
 #include "MidPoint.h"
+#include"EndPoint.h"
 #include"Item/PresentBox.h"
 #include"UI/ToolTips.h"
 #include"GameScene/GameData.h"
@@ -46,6 +47,13 @@ void MidPoint::Collision(Task* t)
 				);
 				//判定描画終了
 				m_IsRender = false;
+				//脱出ポイント
+				new EndPoint
+				(
+					CVector3D(4.555758, 0, 6.188184),
+					CVector3D(0, 0, 0),
+					CVector3D(0.5, 1, 0.5)
+				);
 			}
 		}
 		else
