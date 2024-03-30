@@ -13,7 +13,7 @@
 #include"GameData.h"
 
 //コンストラクタ
-GameScene::GameScene()
+GameScene::GameScene(int stage)
 	:Task(ETaskTag::eScene,true)
 {
 	//ゲーム状況のリセット
@@ -24,57 +24,78 @@ GameScene::GameScene()
 	GameData::second = 300;
 	GameData::GameStart = true;
 
+	m_stage = stage;
+
 	//フェードイン実行
 	GameData::StartFadeIn = true;
 
 	//ステージ生成
-	//テキストデータによってステージ内オブジェクトが変化
-	new Field
-	(
-		"TextData/StageNode1.txt",		//ノード
-		"TextData/LightData1.txt",		//ライト
-		"TextData/DoorData1.txt",		//ドア
-		"TextData/SwitchData1.txt",		//スイッチ
-		"TextData/ClosetData1.txt"		//クローゼット
-	);
+	switch (stage)
+	{
+	//ステージ１生成
+	case 1:
+	{
+		//テキストデータによってステージ内オブジェクトが変化
+		new Field
+		(
+			"TextData/StageNode1.txt",		//ノード
+			"TextData/LightData1.txt",		//ライト
+			"TextData/DoorData1.txt",		//ドア
+			"TextData/SwitchData1.txt",		//スイッチ
+			"TextData/ClosetData1.txt"		//クローゼット
+		);
 
-	//プレイヤー生成
-	new Player
-	(
-		CVector3D(4.55,-0.2,6.18),
-		CVector3D(0, DtoR(180), 0),	
-		CVector3D(0.01, 0.01, 0.01)
-	);
+		//プレイヤー生成
+		new Player
+		(
+			CVector3D(4.55, -0.2, 6.18),
+			CVector3D(0, DtoR(180), 0),
+			CVector3D(0.01, 0.01, 0.01)
+		);
 
-	//敵：父親生成
-	new Enemy
-	(
-		CVector3D(2.9, 0, 0.351914),
-		CVector3D(-1, 0, 0),
-		CVector3D(0.01, 0.01, 0.01),
-		0
-	);
+		//敵：父親生成
+		new Enemy
+		(
+			CVector3D(2.9, 0, 0.351914),
+			CVector3D(-1, 0, 0),
+			CVector3D(0.01, 0.01, 0.01),
+			0
+		);
 
-	//敵：母親生成
-	new Enemy
-	(
-		CVector3D(-2.073762, 9.891998, 1.103694),
-		CVector3D(-1, 0, 0),
-		CVector3D(0.01, 0.01, 0.01),
-		1
-	);
+		//敵：母親生成
+		new Enemy
+		(
+			CVector3D(-2.073762, 9.891998, 1.103694),
+			CVector3D(-1, 0, 0),
+			CVector3D(0.01, 0.01, 0.01),
+			1
+		);
 
-	//プレゼント設置ポイント
-	new MidPoint
-	(
-		CVector3D(5.998150, 9.8, -1.6),
-		CVector3D(0, 0, 0),
-		CVector3D(1, 0.5, 1)
-	);
+		//プレゼント設置ポイント
+		new MidPoint
+		(
+			CVector3D(5.998150, 9.8, -1.6),
+			CVector3D(0, 0, 0),
+			CVector3D(1, 0.5, 1)
+		);
 
-	new SleepLife();			//睡眠ゲージ
-	new Timer();				//制限時間	
+		new SleepLife();			//睡眠ゲージ
+		new Timer();				//制限時間
+	}
+	break;
+	//ステージ２生成
+	case 2:
+	{
 
+	}
+	break;
+	//ステージ３生成
+	case 3:
+	{
+
+	}
+	break;
+	}
 }
 
 //デストラクタ
@@ -94,7 +115,7 @@ GameScene::~GameScene()
 		SOUND("SE_Walk")->Stop();
 		SOUND("SE_Run")->Stop();
 		//ゲームオーバーシーン移行
-		new GameOver();
+		new GameOver(m_stage);
 	}
 }
 

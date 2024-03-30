@@ -54,15 +54,15 @@ Title::~Title()
 		{
 		case 1:
 			//ステージ1
-			new GameScene();
+			new GameScene(m_select);
 			break;
 		case 2:
 			//ステージ2
-			new GameScene();
+			new GameScene(m_select);
 			break;
 		case 3:
 			//ステージ3
-			new GameScene();
+			new GameScene(m_select);
 			break;
 		}
 		break;

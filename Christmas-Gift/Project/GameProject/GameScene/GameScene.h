@@ -4,9 +4,10 @@
 
 class  GameScene :public Task {
 private:
+	int m_stage;		//現在のステージ
 public:
 	//コンストラクタ
-	GameScene();
+	GameScene(int stage);
 	//デストラクタ
 	~GameScene();
 	//更新処理

@@ -4,11 +4,14 @@
 #include"GameScene/GameScene.h"
 
 //コンストラクタ
-GameOver::GameOver()
+GameOver::GameOver(int stage)
 	:Task(ETaskTag::eResult,true)
 {
 	GameData::StartFadeIn = true;
 	GameData::GameStart = false;
+
+	//現在のステージ
+	m_stage = stage;
 
 	//ゲームオーバーサウンド再生
 	SOUND("SE_GameOver")->Play();
@@ -29,7 +32,7 @@ GameOver::~GameOver()
 		break;
 		//リトライ
 	case 1:
-		new GameScene();
+		new GameScene(m_stage);
 		break;
 	}
 }

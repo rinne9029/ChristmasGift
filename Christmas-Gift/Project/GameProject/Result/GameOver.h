@@ -8,11 +8,12 @@ private:
 	CImage m_TitleText;			//タイトル文字
 	CImage m_ReStartText;		//リトライ文字
 	int m_select;				//セレクトフラグ
+	int m_stage;				//現在のステージ
 	float m_High;				//強調表示用実数
 	void HighLight();			//強調表示処理
 public:
 	//コンストラクタ
-	GameOver();
+	GameOver(int stage);
 	//デストラクタ
 	~GameOver();
 	//更新処理
