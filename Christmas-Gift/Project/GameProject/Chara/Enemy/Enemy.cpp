@@ -77,6 +77,12 @@ void Enemy::StateIdle()
 	//アニメーション変更
 	m_model.ChangeAnimation((int)AnimId::Idle);
 
+	//足音　右、左、交互に再生
+	if (m_model.GetAnimationFrame() == walk_se_frame[walk_se_idx]) {
+		SOUND("SE_WalkMono")->Play3D(m_pos, CVector3D::zero, false);
+		walk_se_idx = (walk_se_idx + 1) % 2;
+	}
+
 	//デバッグ用:視野のカラー
 	//View_Color();
 

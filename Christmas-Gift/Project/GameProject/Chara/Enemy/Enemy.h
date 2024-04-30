@@ -24,6 +24,9 @@ private:
 	float eye_length;			//視野距離
 	float eye_ang;				//視野角度
 
+	int walk_se_idx;			//歩き効果音のフラグ 0:右足 1:左足
+	int walk_se_frame[2];		//歩き効果音発生フレーム 0:右足 1:左足
+
 	NavNode* m_nextNode;		//次に移動するノード格納用
 	NavNode* m_lostNode;		//プレイヤーを見失った場所に配置
 	SearchNode* m_searchNode;	//探索中のノード

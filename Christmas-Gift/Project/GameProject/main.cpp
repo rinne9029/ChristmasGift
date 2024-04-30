@@ -280,6 +280,11 @@ void Init(void)
 			SOUND("SE_Clearfanfare")->Load("Sound/SE/Clearfanfare.wav", 1);
 			SOUND("SE_GameOver")->Load("Sound/SE/GameOverSE.wav", 1);
 
+			//モノラル音声(+非ループ)
+			SOUND("SE_WalkMono")->Load("Sound/SE/WalkMono.wav", 8);
+			//調整 5mまで聞こえる、5m以降はカット, 1.0減衰率
+			SOUND("SE_WalkMono")->SetDistance(5.0f, 5.0f, 1.0f);
+
 			//BGM
 			SOUND("BGM_TitleOP")->Load("Sound/BGM/TitleOP.wav", 1);
 			SOUND("BGM_Chase")->Load("Sound/BGM/Chase.wav", 2);
