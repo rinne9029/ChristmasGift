@@ -17,7 +17,7 @@ SleepLife::SleepLife()
 	m_REMText = COPY_RESOURCE("REMsleep", CImage);
 	m_NREMText = COPY_RESOURCE("NREMsleep", CImage);
 
-	//0`100•bƒ‰ƒ“ƒ_ƒ€
+	//0`20•bƒ‰ƒ“ƒ_ƒ€
 	m_ChengeSleep = 300 - rand() % 20;
 }
 
