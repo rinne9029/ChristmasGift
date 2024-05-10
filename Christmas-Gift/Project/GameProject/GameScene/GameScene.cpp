@@ -53,23 +53,23 @@ GameScene::GameScene(int stage)
 			CVector3D(0.01, 0.01, 0.01)
 		);
 
-		//敵：父親生成
-		new Enemy
-		(
-			CVector3D(2.9, 0, 0.351914),
-			CVector3D(-1, 0, 0),
-			CVector3D(0.01, 0.01, 0.01),
-			0
-		);
+		////敵：父親生成
+		//new Enemy
+		//(
+		//	CVector3D(2.9, 0, 0.351914),
+		//	CVector3D(-1, 0, 0),
+		//	CVector3D(0.01, 0.01, 0.01),
+		//	0
+		//);
 
-		//敵：母親生成
-		new Enemy
-		(
-			CVector3D(-2.073762, 9.891998, 1.103694),
-			CVector3D(-1, 0, 0),
-			CVector3D(0.01, 0.01, 0.01),
-			1
-		);
+		////敵：母親生成
+		//new Enemy
+		//(
+		//	CVector3D(-2.073762, 9.891998, 1.103694),
+		//	CVector3D(-1, 0, 0),
+		//	CVector3D(0.01, 0.01, 0.01),
+		//	1
+		//);
 
 		//プレゼント設置ポイント
 		new MidPoint

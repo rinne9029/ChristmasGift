@@ -12,13 +12,13 @@ Door::Door(const CVector3D& pos,const CVector3D& rot,const CVector3D& scale,cons
 
 	m_tooltips = new ToolTips();
 
-	m_obb1 = COBB(
+	m_CollisionObb = COBB(
 		m_pos,
 		m_rot,
 		m_obbscale
 	);
 	
-	m_obb2 = COBB(
+	m_FlagObb = COBB(
 		m_pos,
 		m_rot,
 		m_obbscale + CVector3D(0.1, 0.1, 0.1)
@@ -50,7 +50,7 @@ void Door::Collision(Task* t)
 		float dist;
 		CVector3D axis;
 		static int OpenCheck = 0;	//開閉を制限する変数
-		if (CCollision::CollisionOBBCapsule(m_obb2, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
+		if (CCollision::CollisionOBBCapsule(m_FlagObb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
 			//ドアが閉じているなら
 			if (!m_isopen)
@@ -75,7 +75,7 @@ void Door::Collision(Task* t)
 	{
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(m_obb2, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
+		if (CCollision::CollisionOBBCapsule(m_FlagObb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
 			m_tooltips->isDraw = true;
 			if (PUSH(CInput::eMouseL))
@@ -88,7 +88,7 @@ void Door::Collision(Task* t)
 					SOUND("SE_DoorOpen")->Play();
 					m_rot = m_rot + CVector3D(0, DtoR(90), 0);
 					//接触判定用の箱を削除
-					m_obb1 = COBB(
+					m_CollisionObb = COBB(
 						m_pos,
 						m_rot,
 						CVector3D(0,0,0)
@@ -101,7 +101,7 @@ void Door::Collision(Task* t)
 					SOUND("SE_DoorClose")->Play();
 					m_rot = m_rot - CVector3D(0, DtoR(90), 0);
 					//接触判定用の箱を出す
-					m_obb1 = COBB(
+					m_CollisionObb = COBB(
 						m_pos,
 						m_rot,
 						m_obbscale

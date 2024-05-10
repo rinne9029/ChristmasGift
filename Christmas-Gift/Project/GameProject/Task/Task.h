@@ -48,10 +48,10 @@ public:
 	CVector3D m_lineE;		//オブジェクト線分終点
 
 	//箱形用
-	COBB m_obb1;				//接触判定用箱
-	COBB m_obb2;				//フラグ判定用箱
+	COBB m_CollisionObb;	//接触判定用箱
+	COBB m_FlagObb;			//フラグ判定用箱
 
-	//int m_kill;				//削除フラグ
+	//int m_kill;			//削除フラグ
 
 private:
 	//ETaskTag m_tag;			//タスクの種類

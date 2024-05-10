@@ -159,7 +159,7 @@ public:
 	**/
 	static bool CollisionOBBShpere(const COBB &obb, const CVector3D &cener, float radius, CVector3D *axis=nullptr,float *length=nullptr);
 	/*!
-	@brief	カプセルと球の衝突判定
+	@brief	カプセルとObbの衝突判定
 	@param	obb			[in] OBB
 	@param	lineS		[in] カプセル始点
 	@param	lineE		[in] カプセル終点

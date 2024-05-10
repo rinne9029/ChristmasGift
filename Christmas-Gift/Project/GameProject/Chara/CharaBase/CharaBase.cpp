@@ -71,6 +71,24 @@ void CharaBase::Collision(Task* t)
 			m_lineE += v;
 		}
 		break;
+	case ETaskTag::eFieldObject:
+	{
+		float dist;
+		CVector3D axis;
+		if (CCollision::CollisionOBBCapsule(t->m_CollisionObb, m_lineS, m_lineE, m_rad, &axis, &dist)) {
+			if (axis.y > 0.5f)
+			{
+				//–Ê‚ªãŒü‚«->’n–Ê‚É“–‚½‚Á‚½
+				//d—Í—Ž‰º‘¬“x‚ð0‚É–ß‚·
+				if (m_vec.y < 0)
+					m_vec.y = 0;
+			}
+			//‰Ÿ‚µ–ß‚µ
+			float s = m_rad - dist;
+			m_pos += axis * s;
+		}
+	}
+	break;
 	}
 }
 

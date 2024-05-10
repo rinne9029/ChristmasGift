@@ -11,7 +11,7 @@ EndPoint::EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 
 	m_IsRender = true;
 
-	m_obb2 = COBB(
+	m_FlagObb = COBB(
 		m_pos,
 		m_rot,
 		m_size
@@ -27,7 +27,7 @@ void EndPoint::Collision(Task* t)
 	case ETaskTag::ePlayer:
 		float dist;
 		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(m_obb2, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
+		if (CCollision::CollisionOBBCapsule(m_FlagObb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
 			//プレゼントが設置できていなければ処理はスルー
 			if (!GameData::isGift) return;

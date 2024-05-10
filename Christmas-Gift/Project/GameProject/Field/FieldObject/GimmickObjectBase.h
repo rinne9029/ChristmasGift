@@ -13,7 +13,6 @@ public:
 	int m_objectno;				//オブジェクト別番号
 	GimmickObjectBase(const CVector3D& pos,const CVector3D& rot,const CVector3D& size,ETaskTag tag,bool remove);
 	~GimmickObjectBase();
-	void Update();
 	void Render();
 	bool CollisionRay(const CVector3D& start, const CVector3D& end, CVector3D* outHitPos, CVector3D* outHitNormal);
 };

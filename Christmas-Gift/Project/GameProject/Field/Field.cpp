@@ -178,6 +178,7 @@ void Field::CreateSwitchs(const char* file)
 	fclose(fp);
 }
 
+//クローゼットを作成
 void Field::CreateCloset(const char* file)
 {
 	FILE* fp = NULL;
@@ -213,7 +214,6 @@ CModel* Field::GetColModel() const
 {
 	return m_colModel;
 }
-
 CModel* Field::GetColWallModel() const
 {
 	return m_colWallModel;

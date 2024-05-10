@@ -602,25 +602,6 @@ void Enemy::Collision(Task* t)
 		}
 	}
 	break;
-	case ETaskTag::eFieldObject:
-	{
-		//クローゼットの当たり判定
-		float dist;
-		CVector3D axis;
-		if (CCollision::CollisionOBBCapsule(t->m_obb2, m_lineS, m_lineE, m_rad, &axis, &dist)) {
-			if (axis.y > 0.5f) 
-			{
-				//面が上向き->地面に当たった
-				//重力落下速度を0に戻す
-				if (m_vec.y < 0)
-					m_vec.y = 0;
-			}
-			//押し戻し
-			float s = m_rad - dist;
-			m_pos += axis * s;
-		}
-	}
-	break;
 	}
 
 }
