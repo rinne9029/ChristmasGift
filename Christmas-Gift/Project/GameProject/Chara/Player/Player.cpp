@@ -25,8 +25,6 @@
 //コンストラクタ
 Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	:CharaBase(ETaskTag::ePlayer, true)
-	, mp_filta(nullptr)
-	, mp_light(nullptr)
 	, mp_switch(nullptr)
 	, m_tooltips(nullptr)
 	, key_ang(0.0f)				
@@ -128,10 +126,6 @@ void Player::StateClosetIn()
 //更新処理
 void Player::Update()
 {
-	//フィルター
-	if (!mp_filta) mp_filta = dynamic_cast<Filta*>(TaskManager::FindObject(ETaskTag::eFilta));
-	//ライト
-	if (!mp_light)mp_light = dynamic_cast<Light*>(TaskManager::FindObject(ETaskTag::eFieldLight));
 	//スイッチ
 	if (!mp_switch)mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
 	

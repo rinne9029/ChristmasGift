@@ -2,8 +2,6 @@
 #include"../CharaBase/CharaBase.h"
 
 class Camera;
-class Filta;
-class Light;
 class Switch;
 class GimmickObject;
 class ToolTips;
@@ -12,13 +10,10 @@ class ToolTips;
 
 class Player : public CharaBase {
 private:
-	Filta* mp_filta;		//フィルター
-	Light* mp_light;		//電気
 	Switch* mp_switch;		//スイッチ
-
 	Camera* m_camera;		//カメラ
 	ToolTips* m_tooltips;	//ツールチップ
-	NavNode* node;
+	NavNode* node;			//ノード
 
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
