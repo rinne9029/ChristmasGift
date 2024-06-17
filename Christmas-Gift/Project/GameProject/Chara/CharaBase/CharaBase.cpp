@@ -9,8 +9,6 @@
 CharaBase::CharaBase(ETaskTag tag,bool remove)
 	:ObjectBase(tag,remove)
 	, m_isGround(false)
-	, m_scale(0.0f, 0.0f, 0.0f)
-	, m_movespeed(0)
 {
 	m_remove = true;
 }
