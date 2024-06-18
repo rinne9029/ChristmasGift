@@ -10,8 +10,6 @@ Door::Door(const CVector3D& pos,const CVector3D& rot,const CVector3D& scale,cons
 	m_scale = scale;
 	m_obbscale = obbscale;
 
-	m_tooltips = new ToolTips();
-
 	m_CollisionObb = COBB(
 		m_pos,
 		m_rot,
@@ -77,7 +75,8 @@ void Door::Collision(Task* t)
 		CVector3D axis;
 		if (CCollision::CollisionOBBCapsule(m_FlagObb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
-			m_tooltips->isDraw = true;
+			//ツールチップ生成
+			if(m_tooltips == nullptr)m_tooltips = new ToolTips();
 			if (PUSH(CInput::eMouseL))
 			{
 				m_isopen = !m_isopen;
@@ -111,7 +110,13 @@ void Door::Collision(Task* t)
 		}
 		else
 		{
-			m_tooltips->isDraw = false;
+			if (m_tooltips != nullptr)
+			{
+				//ツールチップ削除
+				m_tooltips->m_Iskill = true;
+				m_tooltips = nullptr;
+			}
+			
 		}
 		break;
 	}

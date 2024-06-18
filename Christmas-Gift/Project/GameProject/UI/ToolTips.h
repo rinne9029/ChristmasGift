@@ -7,7 +7,7 @@ class ToolTips : public Task
 private:
 	CImage m_Image;
 public:
-	bool isDraw;
+	bool m_Iskill;
 	//コンストラクタ
 	ToolTips();
 	//2D描画処理

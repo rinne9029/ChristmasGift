@@ -16,7 +16,6 @@ EndPoint::EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 		m_rot,
 		m_size
 	);
-	m_tooltips = new ToolTips();
 }
 
 //衝突処理
@@ -32,8 +31,9 @@ void EndPoint::Collision(Task* t)
 			//プレゼントが設置できていなければ処理はスルー
 			if (!GameData::isGift) return;
 
-			//ツールチップ表示
-			m_tooltips->isDraw = true;
+			//ツールチップ生成
+			if(m_tooltips == nullptr)m_tooltips = new ToolTips();
+			
 			//左クリックでゲームクリア
 			if (PUSH(CInput::eMouseL))
 			{
@@ -43,8 +43,12 @@ void EndPoint::Collision(Task* t)
 		}
 		else
 		{
-			//ツールチップ非表示
-			m_tooltips->isDraw = false;
+			if (m_tooltips != nullptr)
+			{
+				//ツールチップ削除
+				m_tooltips->m_Iskill = true;
+				m_tooltips = nullptr;
+			}
 		}
 	}
 }

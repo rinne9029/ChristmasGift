@@ -12,8 +12,6 @@ MidPoint::MidPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 	m_size = size;
 
 	m_IsRender = true;
-	//ツールチップ
-	m_tooltips = new ToolTips();
 
 	m_FlagObb = COBB(
 		m_pos,
@@ -35,7 +33,9 @@ void MidPoint::Collision(Task* t)
 		if (CCollision::CollisionOBBCapsule(m_FlagObb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
 			if (GameData::isGift) return;
-			m_tooltips->isDraw = true;
+
+			//ツールチップ生成
+			if(m_tooltips == nullptr)m_tooltips = new ToolTips();
 			//マウス左クリック
 			if (PUSH(CInput::eMouseL))
 			{
@@ -54,11 +54,24 @@ void MidPoint::Collision(Task* t)
 					CVector3D(0, 0, 0),
 					CVector3D(0.5, 1, 0.5)
 				);
-
-				//ツールチップ非表示
-				m_tooltips->isDraw = false;
-
+				if (m_tooltips != nullptr)
+				{
+					//ツールチップ削除
+					m_tooltips->m_Iskill = true;
+					m_tooltips = nullptr;
+				}
+				
 				Kill();
+			}
+		}
+		//当たり判定から出たら
+		else
+		{
+			if (m_tooltips != nullptr)
+			{
+				//ツールチップ削除
+				m_tooltips->m_Iskill = true;
+				m_tooltips = nullptr;
 			}
 		}
 	}

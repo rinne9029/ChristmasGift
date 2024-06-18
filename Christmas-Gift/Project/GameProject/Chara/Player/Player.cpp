@@ -43,9 +43,6 @@ Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale
 	//プレイヤーの向き方向にカメラ作成
 	m_camera = new Camera(rot);
 
-	//ツールチップ作成
-	m_tooltips = new ToolTips();
-
 	//プレイヤー位置に経路探索用のノードを作成
 	m_navNode = new NavNode
 	(
@@ -128,12 +125,6 @@ void Player::Update()
 {
 	//スイッチ
 	if (!mp_switch)mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
-	
-	//自身の光源
-	CLight::SetType(1, CLight::eLight_Point);
-	CLight::SetRange(1, 1.0f);
-	CLight::SetColor(1, CVector3D(0, 0, 0), CVector3D(0.8, 0.8, 0.7));
-	CLight::SetPos(1, m_pos + CVector3D(0, 1.0f, 0));
 
 	//カメラ視点
 	//キー入力されてない時
@@ -141,9 +132,8 @@ void Player::Update()
 	m_rot.y = Utility::NormalizeAngle(m_camera->m_rot.y + key_ang);
 
 
-	//フェードイン・フェードアウト中はアップデート処理をしない
-	if (GameData::StartFadeIn)return;
-	if (GameData::StartFadeOut)return;
+	//フェードイン・フェードアウト中は処理をしない
+	if (GameData::StartFadeIn || GameData::StartFadeOut)return;
 
 	//キー方向ベクトルをリセット
 	CVector3D key_dir = CVector3D(0, 0, 0);
@@ -401,8 +391,8 @@ void Player::Shot()
 	//最も近いオブジェクトに当たる
 	if (hit_object)
 	{
-		//ツールチップを表示
-		m_tooltips->isDraw = true;
+		//ツールチップ作成
+		if(m_tooltips == nullptr)m_tooltips = new ToolTips();
 		
 		//当たっているオブジェクトのナンバーに応じて処理を変更
 		switch (hit_object->m_objectno)
@@ -475,7 +465,11 @@ void Player::Shot()
 	}
 	else
 	{
-		m_tooltips->isDraw = false;
+		if (m_tooltips != nullptr)
+		{
+			m_tooltips->m_Iskill = true;
+			m_tooltips = nullptr;
+		}
 	}
 	m_lS = lineS;
 	m_lE = lineE;
