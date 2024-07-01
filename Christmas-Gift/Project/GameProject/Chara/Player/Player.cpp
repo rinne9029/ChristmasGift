@@ -283,7 +283,10 @@ void Player::Render()
 	//m_model.Render();
 
 	if (m_state == eState_ClosetIn) return;
-	Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), 10000);
+	//レイの描画（デバッグ）
+	//Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), 10000);
+	//オブジェクトを選択するカーソル
+	Utility::DrawQuad(CVector2D(954, 510), CVector2D(12, 12), CVector4D(0, 1, 0, 1));
 }
 
 //衝突処理

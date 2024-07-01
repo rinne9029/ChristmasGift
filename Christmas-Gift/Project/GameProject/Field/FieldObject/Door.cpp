@@ -19,7 +19,7 @@ Door::Door(const CVector3D& pos,const CVector3D& rot,const CVector3D& scale,cons
 	m_FlagObb = COBB(
 		m_pos,
 		m_rot,
-		m_obbscale + CVector3D(0.1, 0.1, 0.1)
+		CVector3D(0.7, 2.1, 0.4)
 	);
 
 }
@@ -36,7 +36,7 @@ void Door::Render()
 	m_model.Render();
 
 	//デバッグ用
-	//Utility::DrawOBB(m_obb, CVector4D(1, 0, 0, 1));
+	Utility::DrawOBB(m_FlagObb, CVector4D(1, 0, 0, 1));
 }
 
 void Door::Collision(Task* t)
