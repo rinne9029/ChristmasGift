@@ -31,10 +31,17 @@ void MainLoop(void) {
 		g_isRenderDebug = !g_isRenderDebug;
 	}*/
 
-	//Qボタンで一時停止
+	//Tabボタンで一時停止
 	if (PUSH(CInput::eButton4) && GameData::GameStart)
 	{
-		GameData::isPauseGame = !GameData::isPauseGame;
+		//フェードイン・フェードアウト中は処理をしない
+		if (GameData::StartFadeIn || GameData::StartFadeOut)
+		{
+		}
+		else
+		{
+			GameData::isPauseGame = !GameData::isPauseGame;
+		}
 	}
 
 	
@@ -282,6 +289,8 @@ void Init(void)
 			ADD_RESOURCE("Text", CImage::CreateImage("UI/Text.png"));
 			//UI画像読み込み
 			ADD_RESOURCE("SleepMeter", CImage::CreateImage("UI/SleepMeter.png"));
+			ADD_RESOURCE("UI_Manual", CImage::CreateImage("UI/Manual.png"));
+
 			//睡眠値の表情
 			ADD_RESOURCE("Relief", CImage::CreateImage("UI/Relief.png"));	//大丈夫
 			ADD_RESOURCE("Usually", CImage::CreateImage("UI/Usually.png"));	//普通

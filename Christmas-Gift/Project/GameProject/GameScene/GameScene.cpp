@@ -56,12 +56,12 @@ GameScene::GameScene(int stage)
 		);
 
 		//エフェクト生成
-		new Destination
+		/*new Destination
 		(
 			COPY_RESOURCE("Star", CModelObj),
 			CVector3D(4.55, 1, 6.18),
 			CVector3D(0.1, 0.1, 0.1)
-		);
+		);*/
 
 		//敵：父親生成
 		/*new Enemy

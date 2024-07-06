@@ -39,6 +39,7 @@ void Pause::PauseMenu1()
 		case 2:
 			//ポーズ画面停止
 			GameData::isPauseGame = false;
+			GameData::GameStart = false;
 			//フェードインスタート
 			GameData::StartFadeOut = true;
 			break;
@@ -55,10 +56,11 @@ void Pause::PauseMenu2()
 		//一つ前の画面に戻る
 		step--;
 	}
+	m_Manual.SetPos(320,90);
+	m_Manual.Draw();
 
-
-	Utility::DrawQuad(CVector2D(900, 800), CVector2D(115, 60), CVector4D(1, 0, 0, 0.4));
-	FONT_T()->Draw(912, 850, 0, 0, 0, "戻る");
+	Utility::DrawQuad(CVector2D(900, 850), CVector2D(115, 60), CVector4D(1, 0, 0, 0.4));
+	FONT_T()->Draw(912, 900, 0, 0, 0, "戻る");
 
 }
 
@@ -67,6 +69,7 @@ Pause::Pause()
 	,select(1)
 	,step(1)
 {
+	m_Manual = COPY_RESOURCE("UI_Manual", CImage);
 }
 
 void Pause::Draw()
