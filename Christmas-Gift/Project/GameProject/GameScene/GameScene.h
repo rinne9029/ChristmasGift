@@ -2,7 +2,7 @@
 
 //ゲームシーン管理クラス
 
-class  GameScene :public Task {
+class  GameScene : public Task {
 private:
 	int m_stage;		//現在のステージ
 public:

@@ -8,7 +8,6 @@
 #include"../Navigation/NavManager.h"
 #include"../Navigation/NavNode.h"
 #include"../ObjectBase/ObjectBase.h"
-#include"GameScene/GameData.h"
 
 Field* Field::ms_instance = nullptr;
 

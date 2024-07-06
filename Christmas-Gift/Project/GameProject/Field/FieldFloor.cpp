@@ -1,6 +1,5 @@
 #include"FieldFloor.h"
 #include"../ObjectBase/ObjectBase.h"
-#include"GameScene/GameData.h"
 
 FieldFloor::FieldFloor()
 	:ObjectBase(ETaskTag::eFieldFloor,true)

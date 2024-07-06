@@ -1,7 +1,6 @@
 #include"SleepLife.h"
 #include"Chara/Player/Player.h"
 #include"Filta/Filta.h"
-#include"GameScene/GameData.h"
 
 bool SleepLife::m_REM = true;
 

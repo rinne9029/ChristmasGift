@@ -1,5 +1,4 @@
 #include "Timer.h"
-#include"GameScene/GameData.h"
 
 //コンストラクタ
 Timer::Timer()
@@ -9,12 +8,8 @@ Timer::Timer()
 	m_count = 0;
 }
 
-//2D描画処理
-void Timer::Draw()
+void Timer::Update()
 {
-	//見やすくするための背景
-	Utility::DrawQuad(CVector2D(1600, 20), CVector2D(1880, 140), CVector4D(0.7, 0.7, 0.7, 0.5));
-
 	m_count++;
 	//1秒経過でカウントを増加
 	if (m_count > 60)
@@ -22,6 +17,15 @@ void Timer::Draw()
 		GameData::second--;	//１秒加算
 		m_count = 0;
 	}
+}
+
+//2D描画処理
+void Timer::Draw()
+{
+	//見やすくするための背景
+	Utility::DrawQuad(CVector2D(1600, 20), CVector2D(1880, 140), CVector4D(0.7, 0.7, 0.7, 0.5));
+
+	
 
 	int cnt = GameData::second;
 	//タイマー描画切り替え

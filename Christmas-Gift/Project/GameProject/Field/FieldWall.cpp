@@ -1,6 +1,5 @@
 #include"FieldWall.h"
 #include"../ObjectBase/ObjectBase.h"
-#include"GameScene/GameData.h"
 
 FieldWall::FieldWall()
 	:ObjectBase(ETaskTag::eFieldWall,true)

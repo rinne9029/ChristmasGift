@@ -8,9 +8,11 @@
 #include"CollisionHitBox/MidPoint.h"
 #include"UI/SleepLife.h"
 #include"UI/Timer.h"
+#include"UI/Pause.h"
+#include"Title/Title.h"
+#include"Effect/Destination.h"
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"
-#include"GameData.h"
 
 //コンストラクタ
 GameScene::GameScene(int stage)
@@ -53,14 +55,22 @@ GameScene::GameScene(int stage)
 			CVector3D(0.01, 0.01, 0.01)
 		);
 
-		////敵：父親生成
-		//new Enemy
-		//(
-		//	CVector3D(2.9, 0, 0.351914),
-		//	CVector3D(-1, 0, 0),
-		//	CVector3D(0.01, 0.01, 0.01),
-		//	0
-		//);
+		//エフェクト生成
+		new Destination
+		(
+			COPY_RESOURCE("Star", CModelObj),
+			CVector3D(4.55, 1, 6.18),
+			CVector3D(0.1, 0.1, 0.1)
+		);
+
+		//敵：父親生成
+		/*new Enemy
+		(
+			CVector3D(2.9, 0, 0.351914),
+			CVector3D(-1, 0, 0),
+			CVector3D(0.01, 0.01, 0.01),
+			0
+		);*/
 
 		////敵：母親生成
 		//new Enemy
@@ -96,6 +106,7 @@ GameScene::GameScene(int stage)
 	}
 	break;
 	}
+	new Pause();		//ポーズ画面
 }
 
 //デストラクタ
@@ -116,6 +127,14 @@ GameScene::~GameScene()
 		SOUND("SE_Run")->Stop();
 		//ゲームオーバーシーン移行
 		new GameOver(m_stage);
+	}
+	//それ以外
+	else
+	{
+		SOUND("SE_Walk")->Stop();
+		SOUND("SE_Run")->Stop();
+		//ゲームオーバーシーン移行
+		new Title();
 	}
 }
 

@@ -1,6 +1,5 @@
 #include "EndPoint.h"
 #include"UI/ToolTips.h"
-#include"GameScene/GameData.h"
 
 EndPoint::EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
 	:CollisionBoxBase(ETaskTag::eCollisionBox,true)

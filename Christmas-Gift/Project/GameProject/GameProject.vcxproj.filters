@@ -8,9 +8,6 @@
     <ClInclude Include="Field\Field.h">
       <Filter>Field</Filter>
     </ClInclude>
-    <ClInclude Include="Item\Item.h">
-      <Filter>Item</Filter>
-    </ClInclude>
     <ClInclude Include="Task\Task.h">
       <Filter>Task</Filter>
     </ClInclude>
@@ -113,6 +110,12 @@
     <ClInclude Include="Title\Snow.h">
       <Filter>Title</Filter>
     </ClInclude>
+    <ClInclude Include="Effect\Destination.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Pause.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Camera">
@@ -175,6 +178,9 @@
     <Filter Include="Ranking">
       <UniqueIdentifier>{293d2d58-a49c-4e5c-a840-524a5d8adb29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{0caee3c1-56bb-4def-9f29-fe87fbf676b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -183,9 +189,6 @@
     </ClCompile>
     <ClCompile Include="Field\Field.cpp">
       <Filter>Field</Filter>
-    </ClCompile>
-    <ClCompile Include="Item\Item.cpp">
-      <Filter>Item</Filter>
     </ClCompile>
     <ClCompile Include="Task\Task.cpp">
       <Filter>Task</Filter>
@@ -288,6 +291,12 @@
     </ClCompile>
     <ClCompile Include="Title\Snow.cpp">
       <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\Destination.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Pause.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

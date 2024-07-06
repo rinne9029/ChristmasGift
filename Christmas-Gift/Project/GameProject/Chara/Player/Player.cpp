@@ -13,7 +13,6 @@
 #include"GameScene/GameScene.h"
 #include"Navigation/NavNode.h"
 #include"Navigation/NavManager.h"
-#include"GameScene/GameData.h"
 
 //マクロ
 #define JUMP 0.20f			//ジャンプ力
@@ -63,7 +62,7 @@ void Player::StateIdle()
 {
 
 	//スペースボタン入力
-	if (PUSH(CInput::eButton5) && m_isGround)
+	if (PUSH(CInput::eButton1) && m_isGround)
 	{
 		//着地フラグOFF
 		m_isGround = false;
@@ -72,7 +71,7 @@ void Player::StateIdle()
 	}
 
 	//コントロールボタン入力
-	if (PUSH(CInput::eButton7))
+	if (PUSH(CInput::eButton3))
 	{
 		//しゃがみアニメーション
 		m_model.ChangeAnimation((int)AnimId::Crouch);
@@ -89,7 +88,7 @@ void Player::StateSquat()
 	m_movespeed = DOWN_SPEED;
 
 	//コントロールボタン
-	if (PUSH(CInput::eButton7))
+	if (PUSH(CInput::eButton3))
 	{
 		//立ちアニメーション
 		m_model.ChangeAnimation((int)AnimId::Stand);
@@ -167,7 +166,7 @@ void Player::Update()
 				m_model.ChangeAnimation((int)AnimId::Walk);
 
 				//シフトキー入力
-				if (HOLD(CInput::eButton6))
+				if (HOLD(CInput::eButton2))
 				{
 					//ダッシュ移動
 					m_movespeed = RUN_SPEED;

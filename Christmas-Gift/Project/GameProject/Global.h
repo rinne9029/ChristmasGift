@@ -5,6 +5,7 @@
 
 #include"Task/Task.h"
 #include"Task/TaskManager.h"
+#include"GameScene/GameData.h"
 
 // デバッグ表示をするかどうか
 extern bool g_isRenderDebug;

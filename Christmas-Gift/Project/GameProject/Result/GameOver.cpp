@@ -1,6 +1,5 @@
 #include "GameOver.h"
 #include"Title/Title.h"
-#include"GameScene/GameData.h"
 #include"GameScene/GameScene.h"
 
 //コンストラクタ
@@ -69,7 +68,7 @@ void GameOver::Update()
 	if (GameData::StartFadeOut) return;
 
 	//スペースキーで決定
-	if (PUSH(CInput::eButton5))
+	if (PUSH(CInput::eButton1))
 	{
 		SOUND("SE_Click")->Volume(0.3);
 		SOUND("SE_Click")->Play();

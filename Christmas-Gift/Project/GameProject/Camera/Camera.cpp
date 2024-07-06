@@ -49,6 +49,9 @@ void Camera::StateClosetIn()
 //更新処理
 void Camera::Update()
 {
+	//フェードイン・フェードアウト中は処理をしない
+	if (GameData::StartFadeOut)return;
+
 	//プレイヤー
 	if (!mp_player)		mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
 
@@ -73,7 +76,7 @@ void Camera::Render()
 	};
 
 	//ctrlボタン
-	if (PUSH(CInput::eButton7) && m_state == eState_Idle) {
+	if (PUSH(CInput::eButton3) && m_state == eState_Idle) {
 		m_idx = (m_idx + 1) % 2;	//視点切り替え
 	}
 

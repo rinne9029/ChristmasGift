@@ -21,6 +21,7 @@
     <ClInclude Include="CollisionHitBox\MidPoint.h" />
     <ClInclude Include="Debug\DebugPrint.h" />
     <ClInclude Include="Debug\DebugProfiler.h" />
+    <ClInclude Include="Effect\Destination.h" />
     <ClInclude Include="Field\Field.h" />
     <ClInclude Include="Field\FieldFloor.h" />
     <ClInclude Include="Field\FieldObject\Closet.h" />
@@ -33,7 +34,6 @@
     <ClInclude Include="GameScene\GameData.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="Global.h" />
-    <ClInclude Include="Item\Item.h" />
     <ClInclude Include="Item\PresentBox.h" />
     <ClInclude Include="Light\Light.h" />
     <ClInclude Include="Navigation\NavManager.h" />
@@ -46,6 +46,7 @@
     <ClInclude Include="Task\TaskManager.h" />
     <ClInclude Include="Title\Snow.h" />
     <ClInclude Include="Title\Title.h" />
+    <ClInclude Include="UI\Pause.h" />
     <ClInclude Include="UI\SleepLife.h" />
     <ClInclude Include="UI\Timer.h" />
     <ClInclude Include="UI\ToolTips.h" />
@@ -61,6 +62,7 @@
     <ClCompile Include="CollisionHitBox\MidPoint.cpp" />
     <ClCompile Include="Debug\DebugPrint.cpp" />
     <ClCompile Include="Debug\DebugProfiler.cpp" />
+    <ClCompile Include="Effect\Destination.cpp" />
     <ClCompile Include="Field\Field.cpp" />
     <ClCompile Include="Field\FieldFloor.cpp" />
     <ClCompile Include="Field\FieldObject\Closet.cpp" />
@@ -72,7 +74,6 @@
     <ClCompile Include="Filta\Filta.cpp" />
     <ClCompile Include="GameScene\GameData.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
-    <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Item\PresentBox.cpp" />
     <ClCompile Include="Light\Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -86,6 +87,7 @@
     <ClCompile Include="Task\TaskManager.cpp" />
     <ClCompile Include="Title\Snow.cpp" />
     <ClCompile Include="Title\Title.cpp" />
+    <ClCompile Include="UI\Pause.cpp" />
     <ClCompile Include="UI\SleepLife.cpp" />
     <ClCompile Include="UI\Timer.cpp" />
     <ClCompile Include="UI\ToolTips.cpp" />

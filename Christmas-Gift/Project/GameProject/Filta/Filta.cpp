@@ -1,6 +1,5 @@
 #include"Filta.h"
 #include"Chara/Player/Player.h"
-#include"GameScene/GameData.h"
 
 #define FADETIME 1	//フェードイン、フェードアウト完了時間
 

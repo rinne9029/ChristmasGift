@@ -21,6 +21,7 @@ public:
 	static bool StartFadeIn;			//フェードインスタート
 	static bool StartFadeOut;			//フェードアウトスタート
 	static bool GameStart;				//ゲームスタートフラグ
+	static bool isPauseGame;			//一時停止
 
 	//整数
 	static int second;					//秒数

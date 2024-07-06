@@ -2,7 +2,6 @@
 #include"Ranking/Ranking.h"
 #include"Title/Snow.h"
 #include"GameScene/GameScene.h"
-#include"GameScene/GameData.h"
 
 #define MAXSELECT 3			//モードセレクト数
 #define MAXSTAGE  3			//ステージ数
@@ -109,14 +108,16 @@ void Title::FuwaFuwa()
 		break;
 	}
 
-	FONT_T()->Draw(100, 980, 1, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
+	Utility::DrawQuad(CVector2D(0, 930), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
+	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
+
 }
 
 //モードセレクト処理
 void Title::ModeChenge()
 {
 	//スペースボタン
-	if (PUSH(CInput::eButton5))
+	if (PUSH(CInput::eButton1))
 	{
 		SOUND("SE_Click")->Volume(0.3);
 		SOUND("SE_Click")->Play();
@@ -190,18 +191,20 @@ void Title::ManualMode()
 
 void Title::ManualDraw()
 {
+	Utility::DrawQuad(CVector2D(0, 930), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
+
 	m_Manual1.SetPos(320 - 1920 * (m_select - 1), 180);
 	m_Manual1.Draw();
 	m_Manual2.SetPos(2240 - 1920 * (m_select - 1), 180);
 	m_Manual2.Draw();
-	FONT_T()->Draw(100, 980, 1, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
-	FONT_T()->Draw(1000, 880, 1, 0, 0, "%d/2", m_select);
+	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(1000, 880, 0, 0, 0, "%d/2", m_select);
 }
 
 void Title::StageSelecte()
 {
 	//スペースボタン
-	if (PUSH(CInput::eButton5))
+	if (PUSH(CInput::eButton1))
 	{
 		//現状ステージ１までしか遊べない
 		if (m_select < 2)
@@ -243,14 +246,16 @@ void Title::StageSelecte()
 
 void Title::StageDraw()
 {
+	Utility::DrawQuad(CVector2D(0, 860), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
+	Utility::DrawQuad(CVector2D(0, 930), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
 	m_Stage1.SetPos(320 - 1920 * (m_select - 1), 0);
 	m_Stage1.Draw();
 	m_Stage2.SetPos(2240 - 1920 * (m_select - 1), 0);
 	m_Stage2.Draw();
 	m_Stage3.SetPos(4160 - 1920 * (m_select - 1), 0);
 	m_Stage3.Draw();
-	FONT_T()->Draw(100, 910, 1, 0, 0, "SPACEキーでスタート");
-	FONT_T()->Draw(100, 980, 1, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(100, 910, 0, 0, 0, "SPACEキーでスタート");
+	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
 }
 
 //更新処理
@@ -278,6 +283,7 @@ void Title::Draw()
 {
 	m_BackGroundTitle.Draw();
 
+
 	//雪を描画する時間
 	static int RespawnTime = 0;
 	RespawnTime++;
@@ -294,6 +300,8 @@ void Title::Draw()
 	switch (m_step)
 	{
 	case 0:
+		//文字を見やすくするための帯
+		Utility::DrawQuad(CVector2D(0, 660), CVector2D(1920, 220), CVector4D(1, 1, 1, 0.4));
 		FuwaFuwa();
 		break;
 	case 10:

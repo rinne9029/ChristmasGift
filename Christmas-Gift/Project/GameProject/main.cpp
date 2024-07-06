@@ -1,6 +1,5 @@
 #include"Title/Title.h"
 #include"Filta/Filta.h"
-#include"GameScene/GameData.h"
 #include"Task/TaskManager.h"
 #include"Debug/DebugPrint.h"
 #include"Debug/DebugProfiler.h"
@@ -19,6 +18,7 @@ CImage g_Loading;
 CImage g_LoadingText;
 CImage g_LoadingBackGround;
 
+
 void MainLoop(void) {
 	//--------------------------------------------------------------
 	//ゲーム中の動きはここに書く
@@ -31,11 +31,26 @@ void MainLoop(void) {
 		g_isRenderDebug = !g_isRenderDebug;
 	}*/
 
-	//全タスクの更新
-	DebugProfiler::StartTimer("Update");	//タスクの更新処理計測スタート
-	TaskManager::Instance()->Update();
-	DebugProfiler::EndTimer("Update");		//タスクの更新処理計測終了
+	//Qボタンで一時停止
+	if (PUSH(CInput::eButton4) && GameData::GameStart)
+	{
+		GameData::isPauseGame = !GameData::isPauseGame;
+	}
 
+	
+	if (GameData::isPauseGame && GameData::GameStart)
+	{
+		//ポーズ中は更新処理をしない
+	}
+	else
+	{
+		//全タスクの更新
+		DebugProfiler::StartTimer("Update");	//タスクの更新処理計測スタート
+		TaskManager::Instance()->Update();
+		DebugProfiler::EndTimer("Update");		//タスクの更新処理計測終了
+	}
+		
+	
 	//全タスクの3D描画
 	DebugProfiler::StartTimer("Render");	//タスク3D描画処理計測スタート
 	//ディファードレンダリング
@@ -92,6 +107,8 @@ void MainLoop(void) {
 		g_LoadingText.Draw();
 	}
 
+	
+
 	//float lineWidth = 1.0f;
 	//世界の軸を表示
 	/*Utility::DrawLine(CVector3D(0, 0, 0), CVector3D(100, 0, 0), CVector4D(1, 0, 0, 1), lineWidth);
@@ -128,18 +145,6 @@ void Init(void)
 	CFPS::Init();
 	//ボタンの設定
 	CInput::Init();
-	CInput::SetButton(0, CInput::eButton1, 'Z');
-	CInput::SetButton(0, CInput::eButton2, 'X');
-	CInput::SetButton(0, CInput::eButton3, 'C');
-	CInput::SetButton(0, CInput::eButton4, 'V');
-	CInput::SetButton(0, CInput::eButton5, VK_SPACE);
-	CInput::SetButton(0, CInput::eButton6, VK_SHIFT);
-	CInput::SetButton(0, CInput::eButton7, VK_CONTROL);
-	CInput::SetButton(0, CInput::eButton8, 'F');
-	CInput::SetButton(0, CInput::eButton9, 'E');
-	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
-	CInput::SetButton(0, CInput::eButton11, 'Q');
-	CInput::SetButton(0, CInput::eButton12, 'K');
 	CInput::SetButton(0, CInput::eUp, 'W');
 	CInput::SetButton(0, CInput::eDown, 'S');
 	CInput::SetButton(0, CInput::eLeft, 'A');
@@ -147,6 +152,20 @@ void Init(void)
 	CInput::SetButton(0, CInput::eMouseL, VK_LBUTTON);
 	CInput::SetButton(0, CInput::eMouseR, VK_RBUTTON);
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
+	CInput::SetButton(0, CInput::eButton1, VK_SPACE);
+	CInput::SetButton(0, CInput::eButton2, VK_SHIFT);
+	CInput::SetButton(0, CInput::eButton3, VK_CONTROL);
+	CInput::SetButton(0, CInput::eButton4, VK_TAB);		
+
+	CInput::SetButton(0, CInput::eButton5, 'I');
+	CInput::SetButton(0, CInput::eButton6, 'U');
+	CInput::SetButton(0, CInput::eButton7, 'O');
+	CInput::SetButton(0, CInput::eButton8, 'F');
+	CInput::SetButton(0, CInput::eButton9, 'E');
+	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
+	CInput::SetButton(0, CInput::eButton11, VK_PAUSE);
+	CInput::SetButton(0, CInput::eButton12, 'K');
+	
 
 	//マウス非表示
 	CInput::ShowCursor(false);
@@ -215,17 +234,26 @@ void Init(void)
 			ADD_RESOURCE("Father", CModel::CreateModel("Charactor/Enemy/father.a3m"));
 			ADD_RESOURCE("Mother", CModel::CreateModel("Charactor/Mother/Mother.a3m"));
 			
-			//タンス読み込み
+			//フィールドに設置するオブジェクト読み込み
+			//タンス
 			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
-			//プレゼントボックス読み込み
+			//プレゼントボックス
 			ADD_RESOURCE("PresentBox", CModel::CreateModel("object/presentbox.obj", 1, 1, 1));
-			//電話機読み込み
+			//電話機
 			ADD_RESOURCE("Telephone", CModel::CreateModel("object/telephone.obj",1,1,1));
-			//電気スイッチ読み込み
+			//電気スイッチ
 			ADD_RESOURCE("Switch", CModel::CreateModel("object/switch.obj",1,1,1));
-			//ドア読み込み
+			//ドア
 			ADD_RESOURCE("Door", CModel::CreateModel("object/door.obj", 1, 1, 1));
 			
+			//ステージ読み込み
+			//描画ステージ
+			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 10, 10, 10));
+			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 10, 10, 10));
+			//当たり判定ステージ
+			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 10, 10, 10));
+			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 10, 10, 10));
+
 			//タイトル関連画像読み込み
 			ADD_RESOURCE("BackGroundTitle", CImage::CreateImage("Title/BackGroundTitle.png"));
 			ADD_RESOURCE("GameTitleText", CImage::CreateImage("Title/TitleText.png"));
@@ -262,13 +290,8 @@ void Init(void)
 			ADD_RESOURCE("REMsleep", CImage::CreateImage("UI/REMsleep.png"));	//レム睡眠文字
 			ADD_RESOURCE("NREMsleep", CImage::CreateImage("UI/NREMsleep.png"));	//ノンレム睡眠文字
 
-			//ステージ読み込み
-			//描画ステージ
-			ADD_RESOURCE("Map", CModel::CreateModel("Field/Field/debugstage1yuka.obj", 10, 10, 10));
-			ADD_RESOURCE("WallMap", CModel::CreateModel("Field/Field/debugstage1kabe.obj", 10, 10, 10));
-			//当たり判定ステージ
-			ADD_RESOURCE("MapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 10, 10, 10));
-			ADD_RESOURCE("WallMapCol", CModel::CreateModel("Field/Field/debugstage1col.obj", 10, 10, 10));
+			//エフェクト読み込み
+			ADD_RESOURCE("Star", CModel::CreateModel("Effect/star.obj"));	//星
 			
 			//SE
 			SOUND("SE_DoorOpen")->Load("Sound/SE/DoorOpen.wav", 1);

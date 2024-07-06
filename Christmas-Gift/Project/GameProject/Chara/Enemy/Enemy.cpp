@@ -506,6 +506,8 @@ SearchNode* Enemy::GetSearchNode() const
 //更新処理
 void Enemy::Update()
 {
+	//フェードイン・フェードアウト中は処理をしない
+	if (GameData::StartFadeOut)return;
 	//プレイヤー
 	if (!mp_player)	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
 	

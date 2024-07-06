@@ -23,6 +23,7 @@ enum class ETaskTag
 	eNavManager,				//ノードマネージャー
 	eUI,						//ユーザーインターフェース
 	eResult,					//リザルト
+	eEffect,					//エフェクト
 	eFilta,						//フィルター
 	eDebug,						//デバッグ用
 };
@@ -39,6 +40,7 @@ public:
 	CVector3D m_at;			//オブジェクト注視点
 	CVector3D m_vec;		//オブジェクト移動ベクトル
 	CVector3D m_dir;		//オブジェクト前方向ベクトル
+	CVector3D m_scale;		//オブジェクト大きさ
 
 	//当たり判定用
 	//球、カプセル用

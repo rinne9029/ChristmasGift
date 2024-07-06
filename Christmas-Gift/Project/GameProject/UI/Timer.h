@@ -10,6 +10,8 @@ private:
 public:
 	//コンストラクタ
 	Timer();
+	//更新処理
+	void Update();
 	//2D描画処理
 	void Draw();
 };

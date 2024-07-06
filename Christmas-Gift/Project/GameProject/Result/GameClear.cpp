@@ -1,7 +1,6 @@
 #include "GameClear.h"
 #include"Title/Title.h"
 #include"Ranking/Ranking.h"
-#include"GameScene/GameData.h"
 
 //コンストラクタ
 GameClear::GameClear()
@@ -156,7 +155,7 @@ void GameClear::Update()
 	if (GameData::StartFadeOut) return;
 
 	//スペースキーで決定
-	if (PUSH(CInput::eButton5))
+	if (PUSH(CInput::eButton1))
 	{
 		SOUND("SE_Click")->Volume(0.3);
 		SOUND("SE_Click")->Play();

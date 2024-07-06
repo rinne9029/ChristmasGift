@@ -9,6 +9,7 @@ bool GameData::GameOverCheck = false;
 bool GameData::StartFadeIn = false;
 bool GameData::StartFadeOut = false;
 bool GameData::GameStart = false;
+bool GameData::isPauseGame = false;
 
 int GameData::second = 0;					//タイマー
 
