@@ -71,46 +71,108 @@ Title::~Title()
 //ふわふわ動く文字
 void Title::FuwaFuwa()
 {
-	m_TitleText.SetPos(500, 300);
+	m_TitleText.SetPos(610, 50);
+	m_TitleText.SetSize(700, 700);
 	m_TitleText.Draw();
 
 	m_fuwafuwa += 0.02f;
+
+	//文字を見やすくするための帯
+	Utility::DrawQuad(CVector2D(0, 710), CVector2D(1920, 220), CVector4D(1, 1, 1, 0.4));
 
 	//選ばれた文字がsinカーブでふわふわ動く
 	switch (m_select)
 	{
 		//スタート文字
 	case 1:
-		m_StartText.SetPos(200, 750 - abs(sin(m_fuwafuwa)) * 64);
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(350, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Start");
+
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(870, 880, 0, 0, 0, "Manual");
+		
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(1442, 880, 0, 0, 0, "Ranking");
+
+		/*m_StartText.SetPos(200, 800 - abs(sin(m_fuwafuwa)) * 64);
 		m_StartText.Draw();
-		m_ManualText.SetPos(855, 750);
+		m_ManualText.SetPos(855, 800);
 		m_ManualText.Draw();
-		m_RankingText.SetPos(1270, 750);
-		m_RankingText.Draw();
+		m_RankingText.SetPos(1270, 800);
+		m_RankingText.Draw();*/
 		break;
 		//説明書文字
 	case 2:
-		m_StartText.SetPos(200, 750);
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(350, 880, 0, 0, 0, "Start");
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(870, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Manual");
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(1442, 880, 0, 0, 0, "Ranking");
+		/*m_StartText.SetPos(200, 800);
 		m_StartText.Draw();
-		m_ManualText.SetPos(855, 750 - abs(sin(m_fuwafuwa)) * 64);
+		m_ManualText.SetPos(855, 800 - abs(sin(m_fuwafuwa)) * 64);
 		m_ManualText.Draw();
-		m_RankingText.SetPos(1270, 750);
-		m_RankingText.Draw();
+		m_RankingText.SetPos(1270, 800);
+		m_RankingText.Draw();*/
 		break;
 		//ランキング文字
 	case 3:
-		m_StartText.SetPos(200, 750);
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(350, 880, 0, 0, 0, "Start");
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(870, 880, 0, 0, 0, "Manual");
+		CREATE_FONT_F
+		(
+			"name",
+			"C:\\Windows\\Fonts\\BOD_CI.TTF",
+			128
+		)->Draw(1442, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Ranking");
+		/*m_StartText.SetPos(200, 800);
 		m_StartText.Draw();
-		m_ManualText.SetPos(855, 750);
+		m_ManualText.SetPos(855, 800);
 		m_ManualText.Draw();
-		m_RankingText.SetPos(1270, 750 - abs(sin(m_fuwafuwa)) * 64);
-		m_RankingText.Draw();
+		m_RankingText.SetPos(1270, 800 - abs(sin(m_fuwafuwa)) * 64);
+		m_RankingText.Draw();*/
 		break;
 	}
 
-	Utility::DrawQuad(CVector2D(0, 930), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
-	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
+	Utility::DrawQuad(CVector2D(0, 980), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
+	FONT_T()->Draw(100, 1030, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
 
+	
 }
 
 //モードセレクト処理
@@ -300,8 +362,6 @@ void Title::Draw()
 	switch (m_step)
 	{
 	case 0:
-		//文字を見やすくするための帯
-		Utility::DrawQuad(CVector2D(0, 660), CVector2D(1920, 220), CVector4D(1, 1, 1, 0.4));
 		FuwaFuwa();
 		break;
 	case 10:
