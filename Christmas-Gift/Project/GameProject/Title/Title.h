@@ -5,10 +5,7 @@
 class Title : public Task {
 private:
 	CImage m_BackGroundTitle;	//タイトル背景
-	CImage m_TitleText;			//タイトル名テキスト
-	CImage m_StartText;			//スタートテキスト
-	CImage m_ManualText;		//説明テキスト
-	CImage m_RankingText;		//ランキングテキスト
+	CImage m_TitleRogo;			//タイトル名テキスト
 	CImage m_Manual1;			//説明書１
 	CImage m_Manual2;			//説明書２
 	CImage m_Stage1;			//ステージ１

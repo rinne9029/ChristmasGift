@@ -23,10 +23,7 @@ Title::Title()
 	SOUND("BGM_TitleOP")->Play(true);
 
 	m_BackGroundTitle = COPY_RESOURCE("BackGroundTitle", CImage);
-	m_TitleText = COPY_RESOURCE("GameTitleText", CImage);
-	m_StartText = COPY_RESOURCE("StartText", CImage);
-	m_ManualText = COPY_RESOURCE("ManualText", CImage);
-	m_RankingText = COPY_RESOURCE("GameRankingText", CImage);
+	m_TitleRogo = COPY_RESOURCE("GameTitleRogo", CImage);
 	m_Manual1 = COPY_RESOURCE("Manual1", CImage);
 	m_Manual2 = COPY_RESOURCE("Manual2", CImage);
 	m_Stage1 = COPY_RESOURCE("Stage1", CImage);
@@ -71,9 +68,9 @@ Title::~Title()
 //‚Ó‚í‚Ó‚í“®‚­•¶Žš
 void Title::FuwaFuwa()
 {
-	m_TitleText.SetPos(610, 50);
-	m_TitleText.SetSize(700, 700);
-	m_TitleText.Draw();
+	m_TitleRogo.SetPos(610, 50);
+	m_TitleRogo.SetSize(700, 700);
+	m_TitleRogo.Draw();
 
 	m_fuwafuwa += 0.02f;
 
@@ -105,13 +102,6 @@ void Title::FuwaFuwa()
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
 		)->Draw(1442, 880, 0, 0, 0, "Ranking");
-
-		/*m_StartText.SetPos(200, 800 - abs(sin(m_fuwafuwa)) * 64);
-		m_StartText.Draw();
-		m_ManualText.SetPos(855, 800);
-		m_ManualText.Draw();
-		m_RankingText.SetPos(1270, 800);
-		m_RankingText.Draw();*/
 		break;
 		//à–¾‘•¶Žš
 	case 2:
@@ -133,12 +123,6 @@ void Title::FuwaFuwa()
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
 		)->Draw(1442, 880, 0, 0, 0, "Ranking");
-		/*m_StartText.SetPos(200, 800);
-		m_StartText.Draw();
-		m_ManualText.SetPos(855, 800 - abs(sin(m_fuwafuwa)) * 64);
-		m_ManualText.Draw();
-		m_RankingText.SetPos(1270, 800);
-		m_RankingText.Draw();*/
 		break;
 		//ƒ‰ƒ“ƒLƒ“ƒO•¶Žš
 	case 3:
@@ -160,12 +144,6 @@ void Title::FuwaFuwa()
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
 		)->Draw(1442, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Ranking");
-		/*m_StartText.SetPos(200, 800);
-		m_StartText.Draw();
-		m_ManualText.SetPos(855, 800);
-		m_ManualText.Draw();
-		m_RankingText.SetPos(1270, 800 - abs(sin(m_fuwafuwa)) * 64);
-		m_RankingText.Draw();*/
 		break;
 	}
 

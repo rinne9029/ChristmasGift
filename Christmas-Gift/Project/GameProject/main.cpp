@@ -263,10 +263,7 @@ void Init(void)
 
 			//タイトル関連画像読み込み
 			ADD_RESOURCE("BackGroundTitle", CImage::CreateImage("Title/BackGroundTitle.png"));
-			ADD_RESOURCE("GameTitleText", CImage::CreateImage("Title/TitleText.png"));
-			ADD_RESOURCE("StartText", CImage::CreateImage("Title/StartText.png"));
-			ADD_RESOURCE("ManualText", CImage::CreateImage("Title/ManualText.png"));
-			ADD_RESOURCE("GameRankingText", CImage::CreateImage("Title/RankingText.png"));
+			ADD_RESOURCE("GameTitleRogo", CImage::CreateImage("Title/TitleRogo.png"));
 			ADD_RESOURCE("Manual1", CImage::CreateImage("Title/Manual1.png"));
 			ADD_RESOURCE("Manual2", CImage::CreateImage("Title/Manual2.png"));
 			ADD_RESOURCE("Snow", CImage::CreateImage("Title/snow.png"));
