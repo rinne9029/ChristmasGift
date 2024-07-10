@@ -22,6 +22,7 @@
     <ClInclude Include="Debug\DebugPrint.h" />
     <ClInclude Include="Debug\DebugProfiler.h" />
     <ClInclude Include="Effect\Destination.h" />
+    <ClInclude Include="Effect\EffectBase.h" />
     <ClInclude Include="Field\Field.h" />
     <ClInclude Include="Field\FieldFloor.h" />
     <ClInclude Include="Field\FieldObject\Closet.h" />
@@ -63,6 +64,7 @@
     <ClCompile Include="Debug\DebugPrint.cpp" />
     <ClCompile Include="Debug\DebugProfiler.cpp" />
     <ClCompile Include="Effect\Destination.cpp" />
+    <ClCompile Include="Effect\EffectBase.cpp" />
     <ClCompile Include="Field\Field.cpp" />
     <ClCompile Include="Field\FieldFloor.cpp" />
     <ClCompile Include="Field\FieldObject\Closet.cpp" />

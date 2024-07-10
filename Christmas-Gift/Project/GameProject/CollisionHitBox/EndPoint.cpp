@@ -1,5 +1,6 @@
 #include "EndPoint.h"
 #include"UI/ToolTips.h"
+#include"Effect/Destination.h"
 
 EndPoint::EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& size)
 	:CollisionBoxBase(ETaskTag::eCollisionBox,true)
@@ -8,13 +9,29 @@ EndPoint::EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 	m_rot = rot;
 	m_size = size;
 
-	m_IsRender = true;
-
 	m_FlagObb = COBB(
 		m_pos,
 		m_rot,
 		m_size
 	);
+}
+
+void EndPoint::Update()
+{
+	if (m_time < 60)
+	{
+		m_time++;
+	}
+	else
+	{
+		new Destination
+		(
+			COPY_RESOURCE("Effect_Gool_Side", CModelObj),
+			CVector3D(m_pos),
+			CVector3D(1, 1, 1)
+		);
+		m_time = 0;
+	}
 }
 
 //衝突処理
@@ -32,6 +49,7 @@ void EndPoint::Collision(Task* t)
 
 			//ツールチップ生成
 			if(m_tooltips == nullptr)m_tooltips = new ToolTips();
+			m_tooltips->m_Text = "脱出";
 			
 			//左クリックでゲームクリア
 			if (PUSH(CInput::eMouseL))

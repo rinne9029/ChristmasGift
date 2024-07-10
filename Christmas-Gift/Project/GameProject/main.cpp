@@ -301,7 +301,8 @@ void Init(void)
 
 			//エフェクト読み込み
 			ADD_RESOURCE("Star", CModel::CreateModel("Effect/star.obj"));	//星
-			
+			ADD_RESOURCE("Effect_Gool_Side", CModel::CreateModel("Effect/Gool_Effect_Side.obj"));
+
 			//SE
 			SOUND("SE_DoorOpen")->Load("Sound/SE/DoorOpen.wav", 1);
 			SOUND("SE_DoorClose")->Load("Sound/SE/DoorClose.wav", 1);

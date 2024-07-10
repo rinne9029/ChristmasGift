@@ -6,8 +6,8 @@ void Pause::PauseMenu1()
 {
 	Utility::DrawQuad(CVector2D(855, 500 + 100 * select), CVector2D(210, 62), CVector4D(1, 0, 0, 0.4));
 
-	FONT_T()->Draw(864, 650, 0, 0, 0, "操作方法");
-	FONT_T()->Draw(864, 750, 0, 0, 0, "タイトル");
+	FONT_T()->Draw(864, 650, 0, 1, 0, "操作方法");
+	FONT_T()->Draw(864, 750, 0, 1, 0, "タイトル");
 
 	if(PUSH(CInput::eUp) && select > 1)
 	{
@@ -60,7 +60,8 @@ void Pause::PauseMenu2()
 	m_Manual.Draw();
 
 	Utility::DrawQuad(CVector2D(900, 850), CVector2D(115, 60), CVector4D(1, 0, 0, 0.4));
-	FONT_T()->Draw(912, 900, 0, 0, 0, "戻る");
+	
+	FONT_T()->Draw(912, 900, 1, 0, 0, "戻る");
 
 }
 

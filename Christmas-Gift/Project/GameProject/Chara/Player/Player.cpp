@@ -34,7 +34,7 @@ Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale
 	m_scale = scale;
 
 	m_height = 1.9f;			//高さ
-	m_rad = 0.3f;				//半径
+	m_rad = 0.5f;				//半径
 
 	//プレイヤーモデル読み込み
 	m_model = COPY_RESOURCE("Player", CModelA3M);
@@ -351,7 +351,7 @@ void Player::Shot()
 	CVector3D hit_field_point;
 	//衝突したステージオブジェクト
 	Field* hit_field = nullptr;
-	if (Field* f = dynamic_cast<Field*>(TaskManager::FindObject(ETaskTag::eField))) 
+	if (Field* f = dynamic_cast<Field*>(TaskManager::FindObject(ETaskTag::eField)))
 	{
 		//接触面の法線（使わない）
 		CVector3D n;
@@ -367,7 +367,7 @@ void Player::Shot()
 	GimmickObjectBase* hit_object = nullptr;
 	//全オブジェクトを探索
 	auto list = TaskManager::FindObjects(ETaskTag::eFieldObject);
-	for (auto t : list) 
+	for (auto t : list)
 	{
 		if (GimmickObjectBase* o = dynamic_cast<GimmickObjectBase*>(t))
 		{
@@ -375,56 +375,61 @@ void Player::Shot()
 			CVector3D c;
 			CVector3D n;
 			//弾の線分でオブジェクトとの判定を行う
-			if(o->CollisionRay(lineS,lineE,&c,&n))
+			if (o->CollisionRay(lineS, lineE, &c, &n))
 			{
 				//発射位置から最も近いオブジェクトを調べる
 				float l = (c - lineS).LengthSq();
-					if (dist > l) 
-					{
-						dist = l;
-							hit_object = o;
-					}
+				if (dist > l)
+				{
+					dist = l;
+					hit_object = o;
+				}
 			}
 		}
 		//接触したオブジェクトが見つかれば探索をやめる
 		if (hit_object != nullptr)	break;
-			
+
 	}
 	//最も近いオブジェクトに当たる
 	if (hit_object)
 	{
 		//ツールチップ作成
-		if(m_tooltips == nullptr)m_tooltips = new ToolTips();
-		
+		if (m_tooltips == nullptr)m_tooltips = new ToolTips();
 		//当たっているオブジェクトのナンバーに応じて処理を変更
 		switch (hit_object->m_objectno)
 		{
 		case 0:
 		{
+			m_tooltips->m_Text = "";
 			//左クリックで敵を集める
 			if (PUSH(CInput::eMouseL))
 			{
-				
+
 			}
 		}
 		break;
 		case 1:
-		{	
-			//左クリックで電気を消す
-			if (PUSH(CInput::eMouseL)) 
+		{
+			if (mp_switch = dynamic_cast<Switch*>(hit_object))
 			{
-				if (mp_switch = dynamic_cast<Switch*>(hit_object))
+				auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
+				for (auto t : lightlist)
 				{
-					auto lightlist = TaskManager::FindObjects(ETaskTag::eFieldLight);
-					for (auto t : lightlist)
+					if (Light* l = dynamic_cast<Light*>(t))
 					{
-						if (Light* l = dynamic_cast<Light*>(t))
+						if (l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
 						{
-							if (l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
+							m_tooltips->m_Text = "電気を消す";
+							//左クリックで電気を消す
+							if (PUSH(CInput::eMouseL))
 							{
 								l->m_islight = false;
 							}
-							else if (!l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
+						}
+						else if (!l->m_islight && mp_switch->m_SwitchNo == l->m_roomNo)
+						{
+							m_tooltips->m_Text = "電気をつける";
+							if (PUSH(CInput::eMouseL))
 							{
 								l->m_islight = true;
 							}
@@ -432,12 +437,22 @@ void Player::Shot()
 					}
 				}
 			}
-			
 		}
 		break;
 		//クローゼット
 		case 2:
 		{
+			if (m_state == eState_ClosetIn)
+			{
+				m_tooltips->m_Text = "出る";
+			}
+			else
+			{
+				m_tooltips->m_Text = "隠れる";
+			}
+			
+
+			
 			//左クリックで隠れる
 			if (PUSH(CInput::eMouseL) && m_state == eState_Idle)
 			{
@@ -457,10 +472,9 @@ void Player::Shot()
 					//音声再生
 					SOUND("SE_DoorOpen")->Volume(0.3);
 					SOUND("SE_DoorOpen")->Play();
-
 				}
 			}
-			
+
 		}
 		break;
 		}

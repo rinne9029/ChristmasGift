@@ -6,7 +6,9 @@ class ToolTips : public Task
 {
 private:
 	CImage m_Image;
+	
 public:
+	char* m_Text;
 	bool m_Iskill;
 	//コンストラクタ
 	ToolTips();

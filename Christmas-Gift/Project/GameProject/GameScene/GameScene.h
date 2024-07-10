@@ -5,6 +5,7 @@
 class  GameScene : public Task {
 private:
 	int m_stage;		//現在のステージ
+	int a;
 public:
 	//コンストラクタ
 	GameScene(int stage);

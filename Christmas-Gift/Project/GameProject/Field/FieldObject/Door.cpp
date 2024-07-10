@@ -75,8 +75,17 @@ void Door::Collision(Task* t)
 		CVector3D axis;
 		if (CCollision::CollisionOBBCapsule(m_FlagObb, t->m_lineS, t->m_lineE, t->m_rad, &axis, &dist))
 		{
+			if (m_tooltips == nullptr)m_tooltips = new ToolTips();
 			//ツールチップ生成
-			if(m_tooltips == nullptr)m_tooltips = new ToolTips();
+			if (m_isopen)
+			{
+				m_tooltips->m_Text = "開ける";
+			}
+			else
+			{
+				m_tooltips->m_Text = "閉じる";
+			}
+			
 			if (PUSH(CInput::eMouseL))
 			{
 				m_isopen = !m_isopen;

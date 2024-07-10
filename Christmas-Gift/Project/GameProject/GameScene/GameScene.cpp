@@ -25,6 +25,7 @@ GameScene::GameScene(int stage)
 	GameData::GameOverCheck = false;
 	GameData::second = 300;
 	GameData::GameStart = true;
+	a = 0;
 
 	m_stage = stage;
 
@@ -63,6 +64,9 @@ GameScene::GameScene(int stage)
 			CVector3D(0.1, 0.1, 0.1)
 		);*/
 
+		
+		
+
 		//敵：父親生成
 		/*new Enemy
 		(
@@ -84,7 +88,7 @@ GameScene::GameScene(int stage)
 		//プレゼント設置ポイント
 		new MidPoint
 		(
-			CVector3D(5.998150, 9.8, -1.6),
+			CVector3D(5.998150, 9.0, -1.6),
 			CVector3D(0, 0, 0),
 			CVector3D(1, 0.5, 1)
 		);

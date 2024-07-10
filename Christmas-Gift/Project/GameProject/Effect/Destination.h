@@ -1,12 +1,12 @@
 #pragma once
+#include"EffectBase.h"
 
 //目標地点管理クラス
 
-class Destination : public Task
+class Destination : public EffectBase
 {
 private:
 	CModelObj m_model;
-
 public:
 	//コンストラクタ
 	Destination(CModelObj model,const CVector3D& pos,const CVector3D& scale);

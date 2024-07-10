@@ -9,7 +9,8 @@ private:
 public:
 	//コンストラクタ
 	EndPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& size);
-
+	//更新処理
+	void Update();
 	//衝突処理
 	void Collision(Task* t);
 };
