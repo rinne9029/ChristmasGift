@@ -34,7 +34,7 @@ Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale
 	m_scale = scale;
 
 	m_height = 1.9f;			//高さ
-	m_rad = 0.5f;				//半径
+	m_rad = 0.4f;				//半径
 
 	//プレイヤーモデル読み込み
 	m_model = COPY_RESOURCE("Player", CModelA3M);

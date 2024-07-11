@@ -10,6 +10,7 @@
 #include"UI/Timer.h"
 #include"UI/Pause.h"
 #include"Title/Title.h"
+#include"UI/TargetText.h"
 #include"Effect/Destination.h"
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"
@@ -23,7 +24,7 @@ GameScene::GameScene(int stage)
 	GameData::FacePosition = 340;
 	GameData::GameClearCheck = false;
 	GameData::GameOverCheck = false;
-	GameData::second = 300;
+	GameData::second = GAME_TIME;
 	GameData::GameStart = true;
 	a = 0;
 
@@ -55,6 +56,8 @@ GameScene::GameScene(int stage)
 			CVector3D(0, DtoR(180), 0),
 			CVector3D(0.01, 0.01, 0.01)
 		);
+
+		
 
 		//エフェクト生成
 		/*new Destination
@@ -95,6 +98,7 @@ GameScene::GameScene(int stage)
 
 		new SleepLife();			//睡眠ゲージ
 		new Timer();				//制限時間
+		new TargetText();			//現在の目標
 	}
 	break;
 	//ステージ２生成
@@ -146,7 +150,7 @@ GameScene::~GameScene()
 void GameScene::Update()
 {
 	//5分経過でゲームオーバー
-	if (GameData::second < 0)
+	if (GameData::second == 0)
 	{
 		//ゲームオーバーフラグOn
 		GameData::GameOverCheck = true;

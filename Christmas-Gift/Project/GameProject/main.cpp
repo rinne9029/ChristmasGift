@@ -287,6 +287,8 @@ void Init(void)
 			//UI‰æ‘œ“Ç‚İ‚İ
 			ADD_RESOURCE("SleepMeter", CImage::CreateImage("UI/SleepMeter.png"));
 			ADD_RESOURCE("UI_Manual", CImage::CreateImage("UI/Manual.png"));
+			ADD_RESOURCE("Clock", CImage::CreateImage("UI/Clock.png"));
+			ADD_RESOURCE("ClockHands", CImage::CreateImage("UI/Clockhands.png"));
 
 			//‡–°’l‚Ì•\î
 			ADD_RESOURCE("Relief", CImage::CreateImage("UI/Relief.png"));	//‘åä•v

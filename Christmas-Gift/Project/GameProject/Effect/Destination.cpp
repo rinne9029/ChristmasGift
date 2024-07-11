@@ -23,4 +23,5 @@ void Destination::Render()
 	m_model.GetMaterial(0)->m_alpha = m_alpha;
 	m_model.Render();
 	
+	
 }

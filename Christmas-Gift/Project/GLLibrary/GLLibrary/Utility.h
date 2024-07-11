@@ -118,6 +118,7 @@ namespace Utility {
 	void DrawQuad(const CVector3D vertex[], int count, const CVector4D& color, const CMatrix& mat);
 	void DrawCircle(const CVector2D vertex[], const int count,const CVector2D& pos, const CVector4D& color);
 	void DrawSector(const CMatrix& mat, const float start, const float end, const float size, const CVector4D& color);
+	void DrawCircle(const CVector2D& pos, const float size, const float angle, const CVector4D& color);
 }
 
 #define RtoD(x) Utility::RadianToDgree(x)

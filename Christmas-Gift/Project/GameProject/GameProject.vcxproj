@@ -49,6 +49,7 @@
     <ClInclude Include="Title\Title.h" />
     <ClInclude Include="UI\Pause.h" />
     <ClInclude Include="UI\SleepLife.h" />
+    <ClInclude Include="UI\TargetText.h" />
     <ClInclude Include="UI\Timer.h" />
     <ClInclude Include="UI\ToolTips.h" />
   </ItemGroup>
@@ -91,6 +92,7 @@
     <ClCompile Include="Title\Title.cpp" />
     <ClCompile Include="UI\Pause.cpp" />
     <ClCompile Include="UI\SleepLife.cpp" />
+    <ClCompile Include="UI\TargetText.cpp" />
     <ClCompile Include="UI\Timer.cpp" />
     <ClCompile Include="UI\ToolTips.cpp" />
   </ItemGroup>

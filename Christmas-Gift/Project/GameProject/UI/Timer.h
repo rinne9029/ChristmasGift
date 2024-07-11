@@ -5,7 +5,8 @@
 class Timer : public Task
 {
 private:
-	CImage m_Image;
+	CImage m_Clock;
+	CImage m_ClockHands;
 	int m_count;
 public:
 	//コンストラクタ

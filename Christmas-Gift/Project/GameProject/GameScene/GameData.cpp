@@ -11,6 +11,6 @@ bool GameData::StartFadeOut = false;
 bool GameData::GameStart = false;
 bool GameData::isPauseGame = false;
 
-int GameData::second = 0;					//タイマー
+float GameData::second = 0;					//タイマー
 
 float GameData::FacePosition = 340;			//顔UI配置

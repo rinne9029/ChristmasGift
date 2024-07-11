@@ -699,6 +699,66 @@ void Utility::DrawSector(const CMatrix& mat, const float start, const float end,
 	delete[] s;
 	delete[] c;
 }
+void Utility::DrawCircle(const CVector2D& pos, const float size, const float angle, const CVector4D& color)
+{
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	//各種機能を無効に
+	//カリング無効
+	glDisable(GL_CULL_FACE);
+	//ライティング無効
+	glDisable(GL_LIGHTING);
+	//デプステスト無効
+	glDisable(GL_DEPTH_TEST);
+	//
+	//正射投影の行列を作成
+	//
+	const CMatrix& mProj = CCamera::GetCurrent()->Get2DProjectionMatrix();
+
+	const int cut = 32 * angle / 360;
+	CVector3D* vertex = new CVector3D[cut + 2];
+	int idx = 0;
+	vertex[0] = CVector3D(0, 0, 0);
+	idx++;
+	float startAngle = 0.0f;
+	float endAngle = Utility::DgreeToRadian(angle);
+	for (int i = 0; i <= cut; ++i, ++idx) {
+		float per = (float)i / cut;
+		float ang = Utility::Lerp(startAngle, endAngle, per);
+		float s = sinf(ang);
+		float c = cosf(ang);
+		vertex[idx] = CVector3D(s, -c, 0);
+	}
+
+
+	CMatrix pvm = mProj * CMatrix::MTranselate(pos) * CMatrix::MScale(size, size, 1);
+	CShader* shader = CShader::GetInstance("Solid");
+	shader->Enable();
+
+
+	glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "PVWMatrix"), 1, GL_FALSE, pvm.f);
+	glUniform4fv(glGetUniformLocation(shader->GetProgram(), "Color"), 1, color.v);
+
+	glEnableVertexAttribArray(CShader::eVertexLocation);
+
+	glVertexAttribPointer(CShader::eVertexLocation, 3, GL_FLOAT, GL_FALSE, 0, vertex);
+
+	glDrawArrays(GL_TRIANGLE_FAN, 0, cut + 2);
+
+
+	glDisableVertexAttribArray(CShader::eVertexLocation);
+
+	shader->Disable();
+
+	glEnable(GL_CULL_FACE);
+
+	glEnable(GL_LIGHTING);
+
+	glEnable(GL_DEPTH_TEST);
+
+	glPopAttrib();
+
+	delete[] vertex;
+}
 //
 //void Utility::DrawCapsule(CVector2D & s, CVector2D &e, float size, CVector4D & color)
 //{

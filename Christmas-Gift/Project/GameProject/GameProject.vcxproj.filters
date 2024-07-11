@@ -119,6 +119,9 @@
     <ClInclude Include="Effect\EffectBase.h">
       <Filter>Effect</Filter>
     </ClInclude>
+    <ClInclude Include="UI\TargetText.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Camera">
@@ -303,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="Effect\EffectBase.cpp">
       <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\TargetText.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 #pragma once
+#define GAME_TIME 300
 
 class GameData
 {
@@ -24,7 +25,7 @@ public:
 	static bool isPauseGame;			//ˆê’â~
 
 	//®”
-	static int second;					//•b”
+	static float second;					//•b”
 
 	//À”
 	static float FacePosition;			//UIŠç‚ÌˆÊ’u

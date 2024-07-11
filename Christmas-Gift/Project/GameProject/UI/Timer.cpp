@@ -4,36 +4,40 @@
 Timer::Timer()
 	:Task(ETaskTag::eUI, true)
 {
-	m_Image = COPY_RESOURCE("Text", CImage);
+	m_Clock = COPY_RESOURCE("Clock", CImage);
+	m_ClockHands = COPY_RESOURCE("ClockHands", CImage);
 	m_count = 0;
 }
 
 void Timer::Update()
 {
-	m_count++;
-	//1•bŒo‰ß‚ÅƒJƒEƒ“ƒg‚ð‘‰Á
-	if (m_count > 60)
-	{
-		GameData::second--;	//‚P•b‰ÁŽZ
-		m_count = 0;
-	}
+		GameData::second -= CFPS::GetDeltaTime();	//‚P•b‰ÁŽZ
+		if (GameData::second < 0)
+		{
+			GameData::second = 0;
+		}
 }
 
 //2D•`‰æˆ—
 void Timer::Draw()
 {
-	//Œ©‚â‚·‚­‚·‚é‚½‚ß‚Ì”wŒi
-	Utility::DrawQuad(CVector2D(1600, 20), CVector2D(1880, 140), CVector4D(0.7, 0.7, 0.7, 0.5));
+	CVector2D size = CVector2D(256, 256);
+	CVector2D pos = CVector2D(1700, size.y * 0.5f);
+	m_Clock.SetSize(size);
+	m_Clock.SetCenter(size * 0.5f);
+	m_Clock.SetPos(pos);
+	m_Clock.Draw();
 
-	
+	float timeRatio = 1.0f - GameData::second / GAME_TIME;
+	CVector4D color = CVector4D(1, 0, 0,0.5);
+	glBlendFunc(GL_ONE, GL_ONE);
+	Utility::DrawCircle(pos, size.x * 0.3f, 360.0f * timeRatio, color);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	int cnt = GameData::second;
-	//ƒ^ƒCƒ}[•`‰æØ‚è‘Ö‚¦
-	for (int i = 0; i < 3; i++, cnt /= 10) {
-		int s = cnt % 10;
-		m_Image.SetRect(8 * s, 30, 8 * s + 8, 40);
-		m_Image.SetSize(64, 64);
-		m_Image.SetPos(1792 - 64 * i, 50);
-		m_Image.Draw();
-	}
+	m_ClockHands.SetSize(size);
+	m_ClockHands.SetCenter(size * 0.5);
+	m_ClockHands.SetPos(pos);
+	m_ClockHands.SetAng(DtoR(-360.0f * timeRatio));
+	m_ClockHands.Draw();
+
 }
