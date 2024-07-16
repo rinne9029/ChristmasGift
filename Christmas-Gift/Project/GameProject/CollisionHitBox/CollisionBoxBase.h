@@ -8,7 +8,7 @@ class CollisionBoxBase : public Task
 {
 public:
 	ToolTips* m_tooltips;
-	int m_time;
+	float m_time;
 	//コンストラクタ
 	CollisionBoxBase(ETaskTag tag,bool remove);
 

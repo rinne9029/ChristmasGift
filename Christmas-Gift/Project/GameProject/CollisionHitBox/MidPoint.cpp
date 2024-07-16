@@ -21,19 +21,20 @@ MidPoint::MidPoint(const CVector3D& pos, const CVector3D& rot, const CVector3D& 
 
 void MidPoint::Update()
 {
-	if (m_time < 60)
+	if (m_time < 1.0f)
 	{
-		m_time++;
+		m_time += CFPS::GetDeltaTime();
 	}
 	else
 	{
+		//エフェクト生成
 		new Destination
 		(
 			COPY_RESOURCE("Effect_Gool_Side", CModelObj),
 			CVector3D(m_pos),
-			CVector3D(1, 1, 1)
+			CVector3D(1.0f, 1.0f, 1.0f)
 		);
-		m_time = 0;
+		m_time = 0.0f;
 	}
 }
 

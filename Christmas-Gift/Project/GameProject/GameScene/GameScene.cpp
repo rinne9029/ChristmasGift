@@ -26,7 +26,6 @@ GameScene::GameScene(int stage)
 	GameData::GameOverCheck = false;
 	GameData::second = GAME_TIME;
 	GameData::GameStart = true;
-	a = 0;
 
 	m_stage = stage;
 

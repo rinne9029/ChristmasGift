@@ -5,6 +5,7 @@ class Camera;
 class Switch;
 class GimmickObject;
 class ToolTips;
+class Closet;
 
 //プレイヤー機能クラス
 
@@ -14,6 +15,7 @@ private:
 	Camera* m_camera;		//カメラ
 	ToolTips* m_tooltips;	//ツールチップ
 	NavNode* node;			//ノード
+	Closet* mp_closet;		//クローゼット
 
 	float key_ang;			//方向ベクトルの角度
 	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標

@@ -129,12 +129,10 @@ void Player::Update()
 {
 	//スイッチ
 	if (!mp_switch)mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
-
-	//カメラ視点
+	if (!mp_closet)mp_closet = dynamic_cast<Closet*>(TaskManager::FindObject(ETaskTag::eFieldObject));
 	//キー入力されてない時
 	//カメラの角度でキャラクターの正面角度が決まる
 	m_rot.y = Utility::NormalizeAngle(m_camera->m_rot.y + key_ang);
-
 
 	//フェードイン・フェードアウト中は処理をしない
 	if (GameData::StartFadeIn || GameData::StartFadeOut)return;
@@ -461,6 +459,7 @@ void Player::Shot()
 			//左クリックで隠れる
 			if (PUSH(CInput::eMouseL) && m_state == eState_Idle)
 			{
+				mp_closet->m_model->UpdateMatrix();
 				//触れたクローゼットの座標を保存
 				m_Closet_pos = hit_object->m_pos;
 

@@ -243,7 +243,7 @@ void Init(void)
 			
 			//フィールドに設置するオブジェクト読み込み
 			//タンス
-			ADD_RESOURCE("Closet", CModel::CreateModel("object/tansu2.obj",1,1,1));
+			ADD_RESOURCE("Closet", CModel::CreateModel("object/closet.obj",1,1,1));
 			//プレゼントボックス
 			ADD_RESOURCE("PresentBox", CModel::CreateModel("object/presentbox.obj", 1, 1, 1));
 			//電話機
