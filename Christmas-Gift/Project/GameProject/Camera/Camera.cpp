@@ -11,6 +11,7 @@ Camera::Camera(const CVector3D& rot)
 	, m_idx(0)
 	, m_state(eState_Idle)
 {
+	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
 	m_pos = CVector3D(0, 1.5, 0);
 	m_rot = rot;
 }
@@ -50,10 +51,7 @@ void Camera::StateClosetIn()
 void Camera::Update()
 {
 	//フェードイン・フェードアウト中は処理をしない
-	if (GameData::StartFadeOut)return;
-
-	//プレイヤー
-	if (!mp_player)		mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
+	if (GameData::StartFadeOut || GameData::StartFadeIn)return;
 
 	switch (m_state) {
 	case eState_Idle:
@@ -64,11 +62,6 @@ void Camera::Update()
 		break;
 	}
 
-}
-
-//描画処理
-void Camera::Render()
-{
 	//カメラの座標
 	CVector3D camera_pos[2] = {
 		CVector3D(0,1.5,0),	//立ちの高さ
@@ -82,6 +75,17 @@ void Camera::Render()
 
 	//割合補間
 	m_pos = m_pos * 0.90f + camera_pos[m_idx] * 0.10f;
+	
+	
+
+}
+
+//描画処理
+void Camera::Render()
+{
+	
+
+	
 
 	CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)					//character_matrix
 		* CMatrix::MTranselate(m_pos) * CMatrix::MRotation(m_rot)				//branch_matrix
