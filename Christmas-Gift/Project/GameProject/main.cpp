@@ -347,7 +347,7 @@ static void ResizeCallback(GLFWwindow* window, int w, int h)
 	//CCamera::GetCamera()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	CCamera::GetCamera()->Viewport(0, 0, w, h);
-	CCamera::GetCurrent()->Perspective(DtoR(45.0), (float)w / (float)h, 0.7, 10000.0);
+	CCamera::GetCurrent()->Perspective(DtoR(45.0), (float)w / (float)h, 0.01, 10000.0);
 	
 	glfwGetWindowPos(window, &GL::window_x, &GL::window_y);
 	GL::UpdateWindowRect(GL::window_x, GL::window_y, w, h);

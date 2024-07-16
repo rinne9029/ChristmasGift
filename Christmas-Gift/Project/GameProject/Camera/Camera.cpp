@@ -1,12 +1,11 @@
 #include"Camera.h"
 #include"../Chara/Player/Player.h"
-#include"Field/Field.h"
-#include"Field/FieldObject/Closet.h"
-#include"Field/FieldWall.h"
+
+#define CAMERA_SPEED 0.002f	//カメラの回転スピード
 
 //コンストラクタ
 Camera::Camera(const CVector3D& rot)
-	:ObjectBase(ETaskTag::eCamera, true)
+	:Task(ETaskTag::eCamera, true)
 	, mp_player(nullptr)
 	, m_idx(0)
 	, m_state(eState_Idle)
@@ -19,22 +18,12 @@ Camera::Camera(const CVector3D& rot)
 //通常状態
 void Camera::StateIdle()
 {
-	//プレイヤーがクローゼットに隠れたなら
-	if (mp_player->m_state == 2)	m_state = eState_ClosetIn;
-
-	//カメラ回転速度
-	float cam_speed = 0.002f;
-
 	//マウス操作で回転
 	CVector2D mouse_vec = CInput::GetMouseVec();
+	m_rot += CVector3D(mouse_vec.y, -mouse_vec.x, 0) * CAMERA_SPEED;
 
-	//回転
-	m_rot += CVector3D(mouse_vec.y, -mouse_vec.x, 0) * cam_speed;
-
-	//上下角度制限
+	//カメラの上下角度制限
 	m_rot.x = min(DtoR(40), max(DtoR(-40), m_rot.x));
-
-
 }
 
 //隠れた状態
@@ -42,9 +31,6 @@ void Camera::StateClosetIn()
 {
 	//カメラの向きをクローゼットの正面方向に変更
 	m_rot = mp_player->m_Closet_rot - CVector3D(0, DtoR(90), 0);
-
-	//通常状態のカメラに戻す
-	if (mp_player->m_state != 2)		m_state = eState_Idle;
 }
 
 //更新処理
@@ -70,26 +56,20 @@ void Camera::Update()
 
 	//ctrlボタン
 	if (PUSH(CInput::eButton3) && m_state == eState_Idle) {
-		m_idx = (m_idx + 1) % 2;	//視点切り替え
+		m_idx = (m_idx + 1) % 2;	//立ちとしゃがみの切り替え
 	}
 
 	//割合補間
-	m_pos = m_pos * 0.90f + camera_pos[m_idx] * 0.10f;
+	m_pos = m_pos * 0.9f + camera_pos[m_idx] * 0.1f;
 	
-	
-
 }
 
 //描画処理
 void Camera::Render()
 {
-	
-
-	
-
 	CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)					//character_matrix
 		* CMatrix::MTranselate(m_pos) * CMatrix::MRotation(m_rot)				//branch_matrix
-		* CMatrix::MTranselate(CVector3D(0, 0, -0.8));							//camera_matrix
+		* CMatrix::MTranselate(CVector3D(0, 0, 0));							//camera_matrix
 		//カメラ位置を行列で設定
 	CCamera::GetCurrent()->SetTranseRot(cam_matrix);
 }

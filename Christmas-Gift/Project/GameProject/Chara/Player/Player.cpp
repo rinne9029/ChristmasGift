@@ -15,10 +15,12 @@
 #include"Navigation/NavManager.h"
 
 //マクロ
-#define JUMP 0.20f			//ジャンプ力
+#define JUMP 0.2f			//ジャンプ力
 #define WALK_SPEED 0.04f	//通常スピード
 #define DOWN_SPEED 0.02f	//しゃがみスピード
 #define RUN_SPEED 0.07f		//走りスピード
+#define HEIGHT 1.9f			//高さ
+#define RAD 0.4f			//半径
 
 
 //コンストラクタ
@@ -30,16 +32,17 @@ Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale
 	, m_hide(false)											
 	, m_state(eState_Idle)		
 {
-	m_pos = pos;
-	m_scale = scale;
-
-	m_height = 1.9f;			//高さ
-	m_rad = 0.4f;				//半径
-
 	//プレイヤーモデル読み込み
 	m_model = COPY_RESOURCE("Player", CModelA3M);
 
-	//プレイヤーの向き方向にカメラ作成
+	m_pos = pos;
+	m_scale = scale;
+
+	//当たり判定の設定
+	m_height = HEIGHT;
+	m_rad = RAD;
+
+	//プレイヤーと同じ方向のカメラ作成
 	m_camera = new Camera(rot);
 
 	//プレイヤー位置に経路探索用のノードを作成
@@ -60,7 +63,7 @@ Player::~Player()
 //通常状態
 void Player::StateIdle()
 {
-
+	m_camera->m_state = m_camera->eState_Idle;
 	//スペースボタン入力
 	if (PUSH(CInput::eButton1) && m_isGround)
 	{
@@ -84,6 +87,7 @@ void Player::StateIdle()
 //しゃがみ状態
 void Player::StateSquat()
 {
+	m_camera->m_state = m_camera->eState_Idle;
 	//しゃがみスピードを代入
 	m_movespeed = DOWN_SPEED;
 
@@ -100,6 +104,7 @@ void Player::StateSquat()
 //ハイド状態
 void Player::StateClosetIn()
 {
+	m_camera->m_state = m_camera->eState_ClosetIn;
 	//ボタン入力で即ハイドを解除しないように
 	static int count;
 	count++;
