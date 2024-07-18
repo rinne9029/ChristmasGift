@@ -112,7 +112,7 @@ void Player::StateClosetIn()
 	m_pos = m_Closet_pos;
 	if (PUSH(CInput::eMouseL) && count >1)
 	{
-		SOUND("SE_DoorClose")->Volume(0.3);
+		SOUND("SE_DoorClose")->Volume(0.3f);
 		SOUND("SE_DoorClose")->Play();
 		//カウントの初期化
 		count = 0;
@@ -138,26 +138,26 @@ void Player::Update()
 	if (GameData::StartFadeIn || GameData::StartFadeOut)return;
 
 	//キー方向ベクトルをリセット
-	CVector3D key_dir = CVector3D(0, 0, 0);
+	CVector3D key_dir = CVector3D(0.0f, 0.0f, 0.0f);
 
 	//ハイド中はキー入力を受け付けない
 	if (m_state != eState_ClosetIn)
 	{
 		//入力したキー方向のベクトルを設定する
-		if (HOLD(CInput::eUp)) key_dir.z = 1;
-		if (HOLD(CInput::eDown))key_dir.z = -1;
-		if (HOLD(CInput::eLeft))key_dir.x = 1;
-		if (HOLD(CInput::eRight))key_dir.x = -1;
+		if (HOLD(CInput::eUp)) key_dir.z = 1.0f;
+		if (HOLD(CInput::eDown))key_dir.z = -1.0f;
+		if (HOLD(CInput::eLeft))key_dir.x = 1.0f;
+		if (HOLD(CInput::eRight))key_dir.x = -1.0f;
 	
 
 		//キー入力されたら
-		if (key_dir.LengthSq() > 0.1)
+		if (key_dir.LengthSq() > 0.1f)
 		{
 			//キーの方向ベクトルを角度に逆算する
 			key_ang = atan2(key_dir.x, key_dir.z);
 
 			//方向ベクトル
-			CVector3D dir(sin(m_rot.y), 0, cos(m_rot.y));
+			CVector3D dir(sin(m_rot.y), 0.0f, cos(m_rot.y));
 
 			//移動
 			m_pos += dir * m_movespeed;
@@ -184,7 +184,7 @@ void Player::Update()
 						//歩き音停止
 						SOUND("SE_Walk")->Stop();
 						//走り音2倍速
-						SOUND("SE_Run")->Pitch(2);
+						SOUND("SE_Run")->Pitch(2.0f);
 
 						SOUND("SE_Run")->GetOffset();
 						//走り音再生
@@ -201,7 +201,7 @@ void Player::Update()
 						//走り音停止
 						SOUND("SE_Run")->Stop();
 						//歩き音2倍速
-						SOUND("SE_Walk")->Pitch(2);
+						SOUND("SE_Walk")->Pitch(2.0f);
 						//歩き音再生
 						SOUND("SE_Walk")->Play();
 					}
@@ -257,11 +257,11 @@ void Player::Update()
 
 	if (m_state != eState_Squat)
 	{
-		m_navNode->m_pos = m_pos + CVector3D(0, 1.5, 0);
+		m_navNode->m_pos = m_pos + CVector3D(0.0f, 1.5f, 0.0f);
 	}
 	else
 	{
-		m_navNode->m_pos = m_pos + CVector3D(0, 0.5, 0);
+		m_navNode->m_pos = m_pos + CVector3D(0.0f, 0.5f, 0.0f);
 	}
 
 	NavNode* node = NavManager::Instance()->GetNearNavNode(m_navNode);
@@ -288,7 +288,7 @@ void Player::Render()
 	//レイの描画（デバッグ）
 	//Utility::DrawLine(m_lS, m_lE, CVector4D(1, 0, 0, 1), 10000);
 	//オブジェクトを選択するカーソル
-	Utility::DrawQuad(CVector2D(954, 510), CVector2D(12, 12), CVector4D(0, 1, 0, 1));
+	Utility::DrawQuad(CVector2D(954.0f, 510.0f), CVector2D(12.0f, 12.0f), CVector4D(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
 //衝突処理
@@ -324,8 +324,8 @@ void Player::Collision(Task* t)
 			{
 				//面が上向き->地面に当たった
 				//重力落下速度を0に戻す
-				if (m_vec.y < 0)
-					m_vec.y = 0;
+				if (m_vec.y < 0.0f)
+					m_vec.y = 0.0f;
 			}
 			//押し戻し
 			float s = m_rad - dist;
@@ -474,7 +474,7 @@ void Player::Shot()
 					m_hide = true;
 					m_state = eState_ClosetIn;
 					//音声再生
-					SOUND("SE_DoorOpen")->Volume(0.3);
+					SOUND("SE_DoorOpen")->Volume(0.3f);
 					SOUND("SE_DoorOpen")->Play();
 				}
 			}

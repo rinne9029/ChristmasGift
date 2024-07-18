@@ -280,6 +280,7 @@ void Init(void)
 
 			//フィルター画像読み込み
 			ADD_RESOURCE("Filta", CImage::CreateImage("Filta/Filta.png"));
+			ADD_RESOURCE("DangerFilta", CImage::CreateImage("Filta/DangerFilta.png"));
 
 			//ツールチップ用画像読み込み
 			ADD_RESOURCE("MouseL", CImage::CreateImage("UI/MouseL.png"));

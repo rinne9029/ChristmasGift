@@ -11,13 +11,17 @@
 #include"UI/Pause.h"
 #include"Title/Title.h"
 #include"UI/TargetText.h"
+#include"Filta/DangerFilta.h"
 #include"Effect/Destination.h"
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"
 
+#define DANGER_TIME 240
+
 //コンストラクタ
 GameScene::GameScene(int stage)
 	:Task(ETaskTag::eScene,true)
+	,m_dangerfilta(NULL)
 {
 	//ゲーム状況のリセット
 	GameData::isGift = false;
@@ -95,9 +99,11 @@ GameScene::GameScene(int stage)
 			CVector3D(1, 0.5, 1)
 		);
 
+		
 		new SleepLife();			//睡眠ゲージ
 		new Timer();				//制限時間
 		new TargetText();			//現在の目標
+
 	}
 	break;
 	//ステージ２生成
@@ -148,6 +154,10 @@ GameScene::~GameScene()
 //更新処理
 void GameScene::Update()
 {
+	if (GameData::second < DANGER_TIME && m_dangerfilta == NULL)
+	{
+		m_dangerfilta = new DangerFilta();		//危険状態を伝えるフィルター
+	}
 	//5分経過でゲームオーバー
 	if (GameData::second == 0)
 	{

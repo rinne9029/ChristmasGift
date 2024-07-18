@@ -38,15 +38,15 @@ void CharaBase::Collision(Task* t)
 				{
 					//面が下向き→天井に当たった	
 					//上昇速度を0に戻す
-					if (m_vec.y > 0)
-						m_vec.y = 0;
+					if (m_vec.y > 0.0f)
+						m_vec.y = 0.0f;
 				}
 				else if (t.m_normal.y > 0.5f)
 				{
 					//面が上向き→地面に当たった
 					//重力落下速度を0に戻す
-					if (m_vec.y < 0) {
-						m_vec.y = 0;
+					if (m_vec.y < 0.0f) {
+						m_vec.y = 0.0f;
 						m_isGround = true;
 					}
 					
@@ -56,7 +56,7 @@ void CharaBase::Collision(Task* t)
 				CVector3D nv = t.m_normal * (m_rad - t.m_dist);
 				//最も大きな移動量を求める
 				v.y = fabs(v.y) > fabs(nv.y) ? v.y : nv.y;
-				if (max_y > m_pos.y + 1)
+				if (max_y > m_pos.y + 1.0f)
 				{
 					v.x = fabs(v.x) > fabs(nv.x) ? v.x : nv.x;
 					v.z = fabs(v.z) > fabs(nv.z) ? v.z : nv.z;
@@ -78,8 +78,8 @@ void CharaBase::Collision(Task* t)
 			{
 				//面が上向き->地面に当たった
 				//重力落下速度を0に戻す
-				if (m_vec.y < 0)
-					m_vec.y = 0;
+				if (m_vec.y < 0.0f)
+					m_vec.y = 0.0f;
 			}
 			//押し戻し
 			float s = m_rad - dist;
@@ -106,8 +106,8 @@ void CharaBase::Update()
 	}
 
 	//楕円形当たり判定
-	m_lineS = m_pos + CVector3D(0, m_height - m_rad, 0);
-	m_lineE = m_pos + CVector3D(0, m_rad, 0);
+	m_lineS = m_pos + CVector3D(0.0f, m_height - m_rad, 0.0f);
+	m_lineE = m_pos + CVector3D(0.0f, m_rad, 0.0f);
 
 	m_vec.y -= GRAVITY;
 	m_pos.y += m_vec.y;

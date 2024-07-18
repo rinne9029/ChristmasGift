@@ -11,7 +11,7 @@ Camera::Camera(const CVector3D& rot)
 	, m_state(eState_Idle)
 {
 	mp_player = dynamic_cast<Player*>(TaskManager::FindObject(ETaskTag::ePlayer));
-	m_pos = CVector3D(0, 1.5, 0);
+	m_pos = CVector3D(0.0f, 1.5f, 0.0f);
 	m_rot = rot;
 }
 
@@ -20,7 +20,7 @@ void Camera::StateIdle()
 {
 	//マウス操作で回転
 	CVector2D mouse_vec = CInput::GetMouseVec();
-	m_rot += CVector3D(mouse_vec.y, -mouse_vec.x, 0) * CAMERA_SPEED;
+	m_rot += CVector3D(mouse_vec.y, -mouse_vec.x, 0.0f) * CAMERA_SPEED;
 
 	//カメラの上下角度制限
 	m_rot.x = min(DtoR(40), max(DtoR(-40), m_rot.x));
@@ -30,7 +30,7 @@ void Camera::StateIdle()
 void Camera::StateClosetIn()
 {
 	//カメラの向きをクローゼットの正面方向に変更
-	m_rot = mp_player->m_Closet_rot - CVector3D(0, DtoR(90), 0);
+	m_rot = mp_player->m_Closet_rot - CVector3D(0.0f, DtoR(90), 0.0f);
 }
 
 //更新処理
@@ -50,8 +50,8 @@ void Camera::Update()
 
 	//カメラの座標
 	CVector3D camera_pos[2] = {
-		CVector3D(0,1.5,0),	//立ちの高さ
-		CVector3D(0,0.7,0),	//しゃがみの高さ
+		CVector3D(0.0f,1.5f,0.0f),	//立ちの高さ
+		CVector3D(0.0f,0.7f,0.0f),	//しゃがみの高さ
 	};
 
 	//ctrlボタン
@@ -69,7 +69,7 @@ void Camera::Render()
 {
 	CMatrix cam_matrix = CMatrix::MTranselate(mp_player->m_pos)					//character_matrix
 		* CMatrix::MTranselate(m_pos) * CMatrix::MRotation(m_rot)				//branch_matrix
-		* CMatrix::MTranselate(CVector3D(0, 0, 0));							//camera_matrix
+		* CMatrix::MTranselate(CVector3D(0.0f, 0.0f, 0.0f));							//camera_matrix
 		//カメラ位置を行列で設定
 	CCamera::GetCurrent()->SetTranseRot(cam_matrix);
 }

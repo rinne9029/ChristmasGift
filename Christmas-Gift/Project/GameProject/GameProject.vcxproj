@@ -31,6 +31,7 @@
     <ClInclude Include="Field\FieldObject\Switch.h" />
     <ClInclude Include="Field\FieldObject\Telephone.h" />
     <ClInclude Include="Field\FieldWall.h" />
+    <ClInclude Include="Filta\DangerFilta.h" />
     <ClInclude Include="Filta\Filta.h" />
     <ClInclude Include="GameScene\GameData.h" />
     <ClInclude Include="GameScene\GameScene.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="Field\FieldObject\Switch.cpp" />
     <ClCompile Include="Field\FieldObject\Telephone.cpp" />
     <ClCompile Include="Field\FieldWall.cpp" />
+    <ClCompile Include="Filta\DangerFilta.cpp" />
     <ClCompile Include="Filta\Filta.cpp" />
     <ClCompile Include="GameScene\GameData.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />

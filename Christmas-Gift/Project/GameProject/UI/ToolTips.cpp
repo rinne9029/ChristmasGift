@@ -11,7 +11,7 @@ ToolTips::ToolTips()
 //2D•`‰æˆ—
 void ToolTips::Draw()
 {
-	Utility::DrawQuad(CVector2D(1040, 320), CVector2D(500, 128), CVector4D(1, 1, 1, 0.4));
+	Utility::DrawQuad(CVector2D(1040, 320), CVector2D(500, 128), CVector4D(1, 1, 1, 0.4f));
 	FONT_T()->Draw(1134, 400, 1, 0, 0,m_Text);
 	m_Image.SetPos(1060,330);
 	m_Image.SetSize(64,128);

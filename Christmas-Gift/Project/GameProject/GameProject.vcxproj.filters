@@ -122,6 +122,9 @@
     <ClInclude Include="UI\TargetText.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Filta\DangerFilta.h">
+      <Filter>Filta</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Camera">
@@ -309,6 +312,9 @@
     </ClCompile>
     <ClCompile Include="UI\TargetText.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Filta\DangerFilta.cpp">
+      <Filter>Filta</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

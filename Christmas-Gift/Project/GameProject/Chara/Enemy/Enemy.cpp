@@ -27,7 +27,7 @@ Enemy::Enemy(const CVector3D& pos,const CVector3D& dir, const CVector3D& scale,i
 	, m_isvigilance(false)
 	, m_state(eState_Idle)
 	, m_modelno(model)
-	, m_warning(0)
+	, m_warning(0.0f)
 {
 	//敵の管理クラスのリストに自身を追加
 	EnemyManager::Instance()->Add(this);
@@ -86,7 +86,7 @@ void Enemy::StateIdle()
 	//デバッグ用:視野のカラー
 	//View_Color();
 
-	m_vec *= 0;
+	m_vec *= 0.0f;
 
 	//待機時間
 	if (m_elapsedTime < IDLE_TIME)
@@ -137,7 +137,7 @@ void Enemy::StateLook()
 	//アニメーション変更
 	m_model.ChangeAnimation((int)AnimId::Idle);
 
-	m_vec *= 0;
+	m_vec *= 0.0f;
 	//プレイヤーとの距離
 	CVector3D vec = mp_player->m_pos - m_pos;
 	m_dir = vec;
@@ -145,17 +145,17 @@ void Enemy::StateLook()
 
 	//プレイヤーとの距離に応じて発見値の上昇率変更
 	//即座に追いかける
-	if (Length < 5 && IsLookPlayer())
+	if (Length < 5.0f && IsLookPlayer())
 	{
-		m_warning = 3;
+		m_warning = 3.0f;
 		//追いかける
 		m_state = eState_Chase;
 	}
 	//警戒値上昇：大
-	else if (Length < 10 && IsLookPlayer())
+	else if (Length < 10.0f && IsLookPlayer())
 	{
 		m_warning += CFPS::GetDeltaTime();
-		if (m_warning > 3 && IsLookPlayer())
+		if (m_warning > 3.0f && IsLookPlayer())
 		{
 			m_state = eState_Chase;
 		}
@@ -164,7 +164,7 @@ void Enemy::StateLook()
 	else if(IsLookPlayer())
 	{
 		m_warning += CFPS::GetDeltaTime() * 0.5;
-		if (m_warning > 3)
+		if (m_warning > 3.0f)
 		{
 			m_state = eState_Chase;
 		}
@@ -172,9 +172,9 @@ void Enemy::StateLook()
 	else
 	{
 		m_warning -= CFPS::GetDeltaTime();
-		if (m_warning < 0)
+		if (m_warning < 0.0f)
 		{
-			m_warning = 0;
+			m_warning = 0.0f;
 			m_state = eState_Idle;
 		}
 	}
@@ -250,7 +250,7 @@ void Enemy::StateChase()
 	m_model.ChangeAnimation((int)AnimId::Run);
 
 	//追跡中のBGMの音量をリセット
-	SOUND("BGM_Chase")->Volume(0.3);
+	SOUND("BGM_Chase")->Volume(0.3f);
 	if (SOUND("BGM_Chase")->CheckEnd())
 	{
 		//追跡中のBGM再生（ループあり）
@@ -371,7 +371,7 @@ void Enemy::StateLost()
 	//目的地まで移動が終われば、
 	else
 	{
-		m_warning = 0;
+		m_warning = 0.0f;
 		//待機状態へ移行
 		m_state = eState_Idle;
 	}
@@ -436,7 +436,7 @@ bool Enemy::IsEyeFoundPlayer()
 	//視野の角度
 	eye_ang = DtoR(60);
 	//視野の距離
-	eye_length = 10;
+	eye_length = 10.0f;
 	//プレイヤーの座標
 	CVector3D player_pos = mp_player->m_pos;
 
@@ -551,9 +551,9 @@ void Enemy::Update()
 
 	//警戒値のゲージ
 	m_WarningGauge = COBB(
-		m_pos + CVector3D(0,2,0),
-		CVector3D(0, 0, 0),
-		CVector3D(0.05, 0.05, 0.05)
+		m_pos + CVector3D(0.0f,2.0f,0.0f),
+		CVector3D(0.0f, 0.0f, 0.0f),
+		CVector3D(0.05f, 0.05f, 0.05f)
 	);
 
 	//float lineWidth = 10.0f;
@@ -578,7 +578,7 @@ void Enemy::Render()
 	m_model.SetRot(m_rot);		//モデル回転値
 	m_model.Render();			//モデル描画
 
-	Utility::DrawOBB(m_WarningGauge, CVector4D(m_warning/3,(3-m_warning)/3, 0, 1));
+	Utility::DrawOBB(m_WarningGauge, CVector4D(m_warning / 3.0f,(3.0f - m_warning) / 3.0f, 0.0f, 1.0f));
 }
 
 
