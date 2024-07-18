@@ -20,17 +20,17 @@ void TargetText::Update()
 
 void TargetText::Draw()
 {
-	Utility::DrawQuad(CVector2D(700, 0), CVector2D(500, 100), CVector4D(1, 1, 1, 0.4));
+	Utility::DrawQuad(CVector2D(700.0f, 0.0f), CVector2D(500.0f, 100.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
 	CREATE_FONT_F
 	(
 		"name",
 		"C:\\Windows\\Fonts\\msgothic.ttc",
 		32
-	)->Draw(720, 34, 0, 0, 0, "Mission");
+	)->Draw(720, 34, 0.0f, 0.0f, 0.0f, "Mission");
 	CREATE_FONT_F
 	(
 		"name",
 		"C:\\Windows\\Fonts\\msgothic.ttc",
 		32
-	)->Draw(756, 70, 0, 0, 0, m_Text);
+	)->Draw(756, 70, 0.0f, 0.0f, 0.0f, m_Text);
 }

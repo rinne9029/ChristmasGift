@@ -19,7 +19,7 @@ Title::Title()
 	GameData::StartFadeIn = true;
 
 	//サウンド再生
-	SOUND("BGM_TitleOP")->Volume(0.2);
+	SOUND("BGM_TitleOP")->Volume(0.2f);
 	SOUND("BGM_TitleOP")->Play(true);
 
 	m_BackGroundTitle = COPY_RESOURCE("BackGroundTitle", CImage);
@@ -68,14 +68,14 @@ Title::~Title()
 //ふわふわ動く文字
 void Title::FuwaFuwa()
 {
-	m_TitleRogo.SetPos(610, 50);
-	m_TitleRogo.SetSize(700, 700);
+	m_TitleRogo.SetPos(610.0f, 50.0f);
+	m_TitleRogo.SetSize(700.0f, 700.0f);
 	m_TitleRogo.Draw();
 
 	m_fuwafuwa += 0.02f;
 
 	//文字を見やすくするための帯
-	Utility::DrawQuad(CVector2D(0, 710), CVector2D(1920, 220), CVector4D(1, 1, 1, 0.4));
+	Utility::DrawQuad(CVector2D(0.0f, 710.0f), CVector2D(1920.0f, 220.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
 
 	//選ばれた文字がsinカーブでふわふわ動く
 	switch (m_select)
@@ -87,21 +87,21 @@ void Title::FuwaFuwa()
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(350, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Start");
+		)->Draw(350, 880 - abs(sin(m_fuwafuwa)) * 64, 0.0f, 0.0f, 0.0f, "Start");
 
 		CREATE_FONT_F
 		(
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(870, 880, 0, 0, 0, "Manual");
+		)->Draw(870, 880, 0.0f, 0.0f, 0.0f, "Manual");
 		
 		CREATE_FONT_F
 		(
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(1442, 880, 0, 0, 0, "Ranking");
+		)->Draw(1442, 880, 0.0f, 0.0f, 0.0f, "Ranking");
 		break;
 		//説明書文字
 	case 2:
@@ -110,19 +110,19 @@ void Title::FuwaFuwa()
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(350, 880, 0, 0, 0, "Start");
+		)->Draw(350, 880, 0.0f, 0.0f, 0.0f, "Start");
 		CREATE_FONT_F
 		(
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(870, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Manual");
+		)->Draw(870, 880 - abs(sin(m_fuwafuwa)) * 64, 0.0f, 0.0f, 0.0f, "Manual");
 		CREATE_FONT_F
 		(
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(1442, 880, 0, 0, 0, "Ranking");
+		)->Draw(1442, 880, 0.0f, 0.0f, 0.0f, "Ranking");
 		break;
 		//ランキング文字
 	case 3:
@@ -131,24 +131,24 @@ void Title::FuwaFuwa()
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(350, 880, 0, 0, 0, "Start");
+		)->Draw(350, 880, 0.0f, 0.0f, 0.0f, "Start");
 		CREATE_FONT_F
 		(
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(870, 880, 0, 0, 0, "Manual");
+		)->Draw(870, 880, 0.0f, 0.0f, 0.0f, "Manual");
 		CREATE_FONT_F
 		(
 			"name",
 			"C:\\Windows\\Fonts\\BOD_CI.TTF",
 			128
-		)->Draw(1442, 880 - abs(sin(m_fuwafuwa)) * 64, 0, 0, 0, "Ranking");
+		)->Draw(1442, 880 - abs(sin(m_fuwafuwa)) * 64, 0.0f, 0.0f, 0.0f, "Ranking");
 		break;
 	}
 
-	Utility::DrawQuad(CVector2D(0, 980), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
-	FONT_T()->Draw(100, 1030, 0, 0, 0, "A入力 ← ： D入力 → ： スペース入力 決定");
+	Utility::DrawQuad(CVector2D(0.0f, 980.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
+	FONT_T()->Draw(100, 1030, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： スペース入力 決定");
 
 	
 }
@@ -159,7 +159,7 @@ void Title::ModeChenge()
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3);
+		SOUND("SE_Click")->Volume(0.3f);
 		SOUND("SE_Click")->Play();
 		switch (m_select)
 		{
@@ -181,20 +181,20 @@ void Title::ModeChenge()
 	//Aキー入力
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select--;
 		//ふわふわ表示リセット
-		m_fuwafuwa = 0;
+		m_fuwafuwa = 0.0f;
 	}
 	//Dキー入力
 	if (PUSH(CInput::eRight) && m_select < MAXSELECT)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select++;
 		//ふわふわ表示リセット
-		m_fuwafuwa = 0;
+		m_fuwafuwa = 0.0f;
 	}
 }
 
@@ -215,7 +215,7 @@ void Title::ManualMode()
 	//次の説明
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select--;
 	}
@@ -223,7 +223,7 @@ void Title::ManualMode()
 	//前の説明に戻る
 	if (PUSH(CInput::eRight) && m_select < MAXMANUAL)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select++;
 	}
@@ -231,14 +231,14 @@ void Title::ManualMode()
 
 void Title::ManualDraw()
 {
-	Utility::DrawQuad(CVector2D(0, 930), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
+	Utility::DrawQuad(CVector2D(0.0f, 930.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
 
-	m_Manual1.SetPos(320 - 1920 * (m_select - 1), 180);
+	m_Manual1.SetPos(320.0f - 1920.0f * (m_select - 1), 180.0f);
 	m_Manual1.Draw();
-	m_Manual2.SetPos(2240 - 1920 * (m_select - 1), 180);
+	m_Manual2.SetPos(2240.0f - 1920.0f * (m_select - 1), 180.0f);
 	m_Manual2.Draw();
-	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
-	FONT_T()->Draw(1000, 880, 0, 0, 0, "%d/2", m_select);
+	FONT_T()->Draw(100, 980, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(1000, 880, 0.0f, 0.0f, 0.0f, "%d/2", m_select);
 }
 
 void Title::StageSelecte()
@@ -249,7 +249,7 @@ void Title::StageSelecte()
 		//現状ステージ１までしか遊べない
 		if (m_select < 2)
 		{
-			SOUND("SE_Click")->Volume(0.3);
+			SOUND("SE_Click")->Volume(0.3f);
 			SOUND("SE_Click")->Play();
 			SOUND("BGM_TitleOP")->Stop();
 			GameData::StartFadeOut = true;
@@ -259,7 +259,7 @@ void Title::StageSelecte()
 	//Sキー入力
 	if (PUSH(CInput::eDown))
 	{
-		SOUND("SE_Click")->Volume(0.3);
+		SOUND("SE_Click")->Volume(0.3f);
 		SOUND("SE_Click")->Play();
 		//モードセレクトに戻る
 		m_step = 0;
@@ -270,7 +270,7 @@ void Title::StageSelecte()
 	//次のステージ
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select--;
 	}
@@ -278,7 +278,7 @@ void Title::StageSelecte()
 	//前のステージ
 	if (PUSH(CInput::eRight) && m_select < MAXSTAGE)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select++;
 	}
@@ -286,16 +286,16 @@ void Title::StageSelecte()
 
 void Title::StageDraw()
 {
-	Utility::DrawQuad(CVector2D(0, 860), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
-	Utility::DrawQuad(CVector2D(0, 930), CVector2D(1920, 56), CVector4D(1, 1, 1, 0.4));
-	m_Stage1.SetPos(320 - 1920 * (m_select - 1), 0);
+	Utility::DrawQuad(CVector2D(0.0f, 860.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
+	Utility::DrawQuad(CVector2D(0.0f, 930.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
+	m_Stage1.SetPos(320.0f - 1920.0f * (m_select - 1), 0.0f);
 	m_Stage1.Draw();
-	m_Stage2.SetPos(2240 - 1920 * (m_select - 1), 0);
+	m_Stage2.SetPos(2240.0f - 1920.0f * (m_select - 1), 0.0f);
 	m_Stage2.Draw();
-	m_Stage3.SetPos(4160 - 1920 * (m_select - 1), 0);
+	m_Stage3.SetPos(4160.0f - 1920.0f * (m_select - 1), 0.0f);
 	m_Stage3.Draw();
-	FONT_T()->Draw(100, 910, 0, 0, 0, "SPACEキーでスタート");
-	FONT_T()->Draw(100, 980, 0, 0, 0, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(100, 910, 0.0f, 0.0f, 0.0f, "SPACEキーでスタート");
+	FONT_T()->Draw(100, 980, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： S入力 戻る");
 }
 
 //更新処理

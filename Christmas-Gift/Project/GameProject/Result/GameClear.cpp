@@ -6,7 +6,7 @@
 GameClear::GameClear()
 	:Task(ETaskTag::eResult, true)
 	, m_select(0)
-	, m_High(0)
+	, m_High(0.0f)
 {
 	//フェードイン実行
 	GameData::StartFadeIn = true;
@@ -42,23 +42,23 @@ GameClear::~GameClear()
 //ハイライト表示処理
 void GameClear::HighLight()
 {
-	m_High = m_High + 0.05;
+	m_High = m_High + 0.05f;
 	switch (m_select)
 	{
 		//タイトル文字強調
 	case 0:
-		m_TitleText.SetPos(674, 540);
-		m_TitleText.SetSize(512 + 40 * cos(m_High), 128 + 10 * cos(m_High));
+		m_TitleText.SetPos(674.0f, 540.0f);
+		m_TitleText.SetSize(512.0f + 40.0f * cos(m_High), 128.0f + 10.0f * cos(m_High));
 		m_TitleText.Draw();
-		m_RankingText.SetPos(674, 720);
+		m_RankingText.SetPos(674.0f, 720.0f);
 		m_RankingText.Draw();
 		break;
 		//ランキング文字強調
 	case 1:
-		m_TitleText.SetPos(674, 540);
+		m_TitleText.SetPos(674.0f, 540.0f);
 		m_TitleText.Draw();
-		m_RankingText.SetPos(674, 720);
-		m_RankingText.SetSize(640 + 50 * cos(m_High), 128 + 10 * cos(m_High));
+		m_RankingText.SetPos(674.0f, 720.0f);
+		m_RankingText.SetSize(640.0f + 50.0f * cos(m_High), 128.0f + 10.0f * cos(m_High));
 		m_RankingText.Draw();
 	}
 }
@@ -157,7 +157,7 @@ void GameClear::Update()
 	//スペースキーで決定
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3);
+		SOUND("SE_Click")->Volume(0.3f);
 		SOUND("SE_Click")->Play();
 		//フェードアウト実行
 		GameData::StartFadeOut = true;
@@ -166,18 +166,18 @@ void GameClear::Update()
 	//Wキー入力
 	if (PUSH(CInput::eUp) && m_select > 0)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select--;
-		m_High = 0;	//強調リセット
+		m_High = 0.0f;	//強調リセット
 	}
 	//Sキー入力
 	if (PUSH(CInput::eDown) && m_select < 1)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select++;
-		m_High = 0;	//強調リセット
+		m_High = 0.0f;	//強調リセット
 	}
 }
 
@@ -189,5 +189,5 @@ void GameClear::Draw()
 	//強調表示描画
 	HighLight();
 	//タイム表示
-	FONT_T()->Draw(1350, 250, 0, 0, 0, "残り時間：%d秒",GameData::second);
+	FONT_T()->Draw(1350, 250, 0.0f, 0.0f, 0.0f, "残り時間：%d秒",GameData::second);
 }

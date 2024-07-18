@@ -6,8 +6,8 @@
 //コンストラクタ
 Filta::Filta()
 	:Task(ETaskTag::eFilta,false)
-	, m_alpha(1.0)
-	, m_time(1)
+	, m_alpha(1.0f)
+	, m_time(1.0f)
 {
 	m_filta = COPY_RESOURCE("Filta", CImage);
 }
@@ -17,7 +17,7 @@ void Filta::Fadein()
 {
 	m_time -= CFPS::GetDeltaTime();
 	//フェードイン中
-	if (m_alpha > 0)
+	if (m_alpha > 0.0f)
 	{
 		m_alpha = m_time / FADETIME;
 	}
@@ -34,7 +34,7 @@ void Filta::Fadeout()
 {
 	m_time += CFPS::GetDeltaTime();
 	//フェードアウト中
-	if (m_alpha < 1)
+	if (m_alpha < 1.0f)
 	{
 		m_alpha = m_time / FADETIME;
 	}
@@ -61,6 +61,6 @@ void Filta::Update()
 void Filta::Draw()
 {
 	//フィルター描画
-	m_filta.SetColor(1, 1, 1, m_alpha);
+	m_filta.SetColor(1.0f, 1.0f, 1.0f, m_alpha);
 	m_filta.Draw();
 }

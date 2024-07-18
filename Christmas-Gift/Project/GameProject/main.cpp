@@ -104,13 +104,13 @@ void MainLoop(void) {
 		g_LoadingBackGround.Draw();
 
 		//ローディングマーク描画
-		g_Loading.SetSize(128, 128);
-		g_Loading.SetPos(1360, 476);
-		g_Loading.SetRect(128 * i, 0, 128 * i + 128, 128);
+		g_Loading.SetSize(128.0f, 128.0f);
+		g_Loading.SetPos(1360.0f, 476.0f);
+		g_Loading.SetRect(128.0f * i, 0, 128.0f * i + 128.0f, 128.0f);
 		g_Loading.Draw();
 		
 		//ローディング文字描画
-		g_LoadingText.SetPos(510, 476);
+		g_LoadingText.SetPos(510.0f, 476.0f);
 		g_LoadingText.Draw();
 	}
 

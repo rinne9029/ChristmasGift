@@ -65,7 +65,7 @@ void Field::CreateNavNodes(const char* file)
 		fgets(buf, 256, fp);
 
 		//ノードの座標
-		CVector3D Pos(0, 0, 0);
+		CVector3D Pos(0.0f, 0.0f, 0.0f);
 
 		sscanf_s(buf, "%f %f %f", &Pos.x, &Pos.y, &Pos.z);
 
@@ -93,10 +93,10 @@ void Field::CreateLights(const char* file)
 		//一行づつbufに格納
 		fgets(buf, 256, fp);
 
-		CVector3D Pos(0, 0, 0);			//ライトの座標
-		int No = 0;						//ライトナンバー
-		float Range = 0;				//光の大きさ
-		int IsShine = 0;				//光っているかの判断
+		CVector3D Pos(0.0f, 0.0f, 0.0f);		//ライトの座標
+		int No = 0;								//ライトナンバー
+		float Range = 0.0f;						//光の大きさ
+		int IsShine = 0;						//光っているかの判断
 		bool Shine = true;				
 
 		sscanf_s(buf, "%f %f %f %d %f %d", &Pos.x, &Pos.y, &Pos.z, &No, &Range, &IsShine);
@@ -132,14 +132,14 @@ void Field::CreateDoors(const char* file)
 		fgets(buf, 256, fp);
 
 		//ドアの座標
-		CVector3D Pos(0, 0, 0);
+		CVector3D Pos(0.0f, 0.0f, 0.0f);
 		//ドアの向き
 		float Rot;
 
 		sscanf_s(buf,"%f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot);
 
 		//ドア生成
-		new Door(Pos,CVector3D(0,DtoR(Rot),0), CVector3D(1, 1, 1), CVector3D(1, 2, 0.3));
+		new Door(Pos,CVector3D(0.0f,DtoR(Rot),0.0f), CVector3D(1.0f, 1.0f, 1.0f), CVector3D(1.0f, 2.0f, 0.3f));
 	}
 	fclose(fp);
 }
@@ -163,7 +163,7 @@ void Field::CreateSwitchs(const char* file)
 		fgets(buf, 256, fp);
 
 		//スイッチの座標
-		CVector3D Pos(0, 0, 0);
+		CVector3D Pos(0.0f, 0.0f, 0.0f);
 		//スイッチの向き
 		float Rot;
 		//スイッチの番号
@@ -172,7 +172,7 @@ void Field::CreateSwitchs(const char* file)
 		sscanf_s(buf, "%f %f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot, &No);
 
 		//スイッチ生成
-		new Switch(Pos, CVector3D(0, DtoR(Rot), 0), CVector3D(1, 1, 1),No);
+		new Switch(Pos, CVector3D(0.0f, DtoR(Rot), 0.0f), CVector3D(1.0f, 1.0f, 1.0f),No);
 	}
 	fclose(fp);
 }
@@ -196,14 +196,14 @@ void Field::CreateCloset(const char* file)
 		fgets(buf, 256, fp);
 
 		//クローゼットの座標
-		CVector3D Pos(0, 0, 0);
+		CVector3D Pos(0.0f, 0.0f, 0.0f);
 		//クローゼットの向き
 		float Rot;
 
 		sscanf_s(buf, "%f %f %f %f", &Pos.x, &Pos.y, &Pos.z, &Rot);
 
 		//クローゼット生成
-		new Closet(Pos, CVector3D(0, DtoR(Rot), 0), CVector3D(1, 0.7, 1),2);
+		new Closet(Pos, CVector3D(0.0f, DtoR(Rot), 0.0f), CVector3D(1.0f, 0.7f, 1.0f),2);
 	}
 	fclose(fp);
 }

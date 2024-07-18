@@ -19,7 +19,7 @@ Door::Door(const CVector3D& pos,const CVector3D& rot,const CVector3D& scale,cons
 	m_FlagObb = COBB(
 		m_pos,
 		m_rot,
-		CVector3D(0.7, 2.1, 0.4)
+		CVector3D(0.7f, 2.1f, 0.4f)
 	);
 
 }
@@ -36,7 +36,7 @@ void Door::Render()
 	m_model.Render();
 
 	//デバッグ用
-	Utility::DrawOBB(m_FlagObb, CVector4D(1, 0, 0, 1));
+	Utility::DrawOBB(m_FlagObb, CVector4D(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Door::Collision(Task* t)
@@ -54,7 +54,7 @@ void Door::Collision(Task* t)
 			if (!m_isopen)
 			{
 				m_isopen = true;
-				m_rot = m_rot + CVector3D(0, DtoR(90), 0);
+				m_rot = m_rot + CVector3D(0.0f, DtoR(90), 0.0f);
 				OpenCheck = 1;
 			}
 		}
@@ -63,7 +63,7 @@ void Door::Collision(Task* t)
 			if (m_isopen)
 			{
 				m_isopen = false;
-				m_rot = m_rot - CVector3D(0, DtoR(90), 0);
+				m_rot = m_rot - CVector3D(0.0f, DtoR(90), 0.0f);
 				OpenCheck = 0;
 			}
 		}
@@ -92,22 +92,22 @@ void Door::Collision(Task* t)
 				//ドアを開ける
 				if (m_isopen)
 				{
-					SOUND("SE_DoorOpen")->Volume(0.3);
+					SOUND("SE_DoorOpen")->Volume(0.3f);
 					SOUND("SE_DoorOpen")->Play();
-					m_rot = m_rot + CVector3D(0, DtoR(90), 0);
+					m_rot = m_rot + CVector3D(0.0f, DtoR(90), 0.0f);
 					//接触判定用の箱を削除
 					m_CollisionObb = COBB(
 						m_pos,
 						m_rot,
-						CVector3D(0,0,0)
+						CVector3D(0.0f,0.0f,0.0f)
 					);
 				}
 				//ドアを閉じる
 				else
 				{
-					SOUND("SE_DoorClose")->Volume(0.3);
+					SOUND("SE_DoorClose")->Volume(0.3f);
 					SOUND("SE_DoorClose")->Play();
-					m_rot = m_rot - CVector3D(0, DtoR(90), 0);
+					m_rot = m_rot - CVector3D(0.0f, DtoR(90), 0.0f);
 					//接触判定用の箱を出す
 					m_CollisionObb = COBB(
 						m_pos,

@@ -61,16 +61,16 @@ void MidPoint::Collision(Task* t)
 				//プレゼント生成
 				new PresentBox
 				(
-					CVector3D(m_pos+CVector3D(0,0.8,0)),
-					CVector3D(0, 0, 0)
+					CVector3D(m_pos+CVector3D(0.0f,0.8f,0.0f)),
+					CVector3D(0.0f, 0.0f, 0.0f)
 				);
 				
 				//脱出ポイント生成
 				new EndPoint
 				(
-					CVector3D(4.555758, 0, 6.188184),
-					CVector3D(0, 0, 0),
-					CVector3D(0.5, 1, 0.5)
+					CVector3D(4.555758f, 0.0f, 6.188184f),
+					CVector3D(0.0f, 0.0f, 0.0f),
+					CVector3D(0.5f, 1.0f, 0.5f)
 				);
 				if (m_tooltips != nullptr)
 				{

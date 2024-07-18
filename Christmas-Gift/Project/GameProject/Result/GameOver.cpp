@@ -39,23 +39,23 @@ GameOver::~GameOver()
 //強調表示処理
 void GameOver::HighLight()
 {
-	m_High = m_High + 0.1;
+	m_High = m_High + 0.1f;
 	switch (m_select)
 	{
 		//タイトル文字強調
 	case 0:
-		m_TitleText.SetPos(674, 540);
-		m_TitleText.SetSize(512 + 40 * cos(m_High), 128 + 10 * cos(m_High));
+		m_TitleText.SetPos(674.0f, 540.0f);
+		m_TitleText.SetSize(512.0f + 40.0f * cos(m_High), 128.0f + 10.0f * cos(m_High));
 		m_TitleText.Draw();
-		m_ReStartText.SetPos(674, 720);
+		m_ReStartText.SetPos(674.0f, 720.0f);
 		m_ReStartText.Draw();
 		break;
 		//リトライ文字強調
 	case 1:
-		m_TitleText.SetPos(674, 540);
+		m_TitleText.SetPos(674.0f, 540.0f);
 		m_TitleText.Draw();
-		m_ReStartText.SetPos(674, 720);
-		m_ReStartText.SetSize(512 + 40 * cos(m_High), 128 + 10 * cos(m_High));
+		m_ReStartText.SetPos(674.0f, 720.0f);
+		m_ReStartText.SetSize(512.0f + 40.0f * cos(m_High), 128.0f + 10.0f * cos(m_High));
 		m_ReStartText.Draw();
 	}
 }
@@ -70,7 +70,7 @@ void GameOver::Update()
 	//スペースキーで決定
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3);
+		SOUND("SE_Click")->Volume(0.3f);
 		SOUND("SE_Click")->Play();
 		GameData::StartFadeOut = true;
 	}
@@ -78,18 +78,18 @@ void GameOver::Update()
 	//Wキー入力
 	if (PUSH(CInput::eUp) && m_select > 0)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select--;
-		m_High = 0;	//強調リセット
+		m_High = 0.0f;	//強調リセット
 	}
 	//Sキー入力
 	if (PUSH(CInput::eDown) && m_select < 1)
 	{
-		SOUND("SE_Select")->Volume(0.3);
+		SOUND("SE_Select")->Volume(0.3f);
 		SOUND("SE_Select")->Play();
 		m_select++;
-		m_High = 0;	//強調リセット
+		m_High = 0.0f;	//強調リセット
 	}
 }
 

@@ -24,11 +24,11 @@ SleepLife::SleepLife()
 void SleepLife::Update()
 {	
 	//睡眠値の回復
-	if(GameData::FacePosition <340)
+	if(GameData::FacePosition <340.0f)
 	GameData::FacePosition += 0.05f;
 
 	//子供の睡眠が覚醒（ゲームオーバー）
-	if (GameData::FacePosition > 40) return;
+	if (GameData::FacePosition > 40.0f) return;
 	//ゲームオーバー
 	GameData::GameOverCheck = true;
 	//フェードアウト実行
@@ -39,10 +39,10 @@ void SleepLife::Update()
 void SleepLife::Draw()
 {
 	//見やすくするための背景
-	Utility::DrawQuad(CVector2D(30, 60), CVector2D(380, 140), CVector4D(0.7, 0.7, 0.7, 0.5));
+	Utility::DrawQuad(CVector2D(30.0f, 60.0f), CVector2D(380.0f, 140.0f), CVector4D(0.7f, 0.7f, 0.7f, 0.5f));
 
 	//睡眠値メーター
-	m_SleepMeter.SetPos(CVector2D(80, 100));
+	m_SleepMeter.SetPos(CVector2D(80.0f, 100.0f));
 	m_SleepMeter.Draw();
 
 	//睡眠値表情
@@ -50,35 +50,35 @@ void SleepLife::Draw()
 	{
 	case 0:
 		//大丈夫
-		m_FaceRelief.SetPos(GameData::FacePosition, 90);
-		m_FaceRelief.SetSize(70, 70);
+		m_FaceRelief.SetPos(GameData::FacePosition, 90.0f);
+		m_FaceRelief.SetSize(70.0f, 70.0f);
 		m_FaceRelief.Draw();
-		if (GameData::FacePosition < 270)	m_ChengeFace++;
+		if (GameData::FacePosition < 270.0f)	m_ChengeFace++;
 		break;
 	case 1:
 		//普通
-		m_FaceUsually.SetPos(GameData::FacePosition, 90);
-		m_FaceUsually.SetSize(70, 70);
+		m_FaceUsually.SetPos(GameData::FacePosition, 90.0f);
+		m_FaceUsually.SetSize(70.0f, 70.0f);
 		m_FaceUsually.Draw();
-		if (GameData::FacePosition < 120)	m_ChengeFace++;
-		if (GameData::FacePosition > 270)	m_ChengeFace--;
+		if (GameData::FacePosition < 120.0f)	m_ChengeFace++;
+		if (GameData::FacePosition > 270.0f)	m_ChengeFace--;
 		break;
 	case 2:
 		//やばい
-		m_FaceWorry.SetPos(GameData::FacePosition, 90);
-		m_FaceWorry.SetSize(70, 70);
+		m_FaceWorry.SetPos(GameData::FacePosition, 90.0f);
+		m_FaceWorry.SetSize(70.0f, 70.0f);
 		m_FaceWorry.Draw();
-		if (GameData::FacePosition > 120)	m_ChengeFace--;
+		if (GameData::FacePosition > 120.0f)	m_ChengeFace--;
 		break;
 	}
 	
 	//レム睡眠文字
-	m_REMText.SetPos(156, 166);
-	m_REMText.SetSize(128, 32);
+	m_REMText.SetPos(156.0f, 166.0f);
+	m_REMText.SetSize(128.0f, 32.0f);
 
 	//ノンレム睡眠文字
-	m_NREMText.SetPos(92, 166);
-	m_NREMText.SetSize(256, 32);
+	m_NREMText.SetPos(92.0f, 166.0f);
+	m_NREMText.SetSize(256.0f, 32.0f);
 
 	//睡眠状態の変化
 	if (GameData::second <= m_ChengeSleep)

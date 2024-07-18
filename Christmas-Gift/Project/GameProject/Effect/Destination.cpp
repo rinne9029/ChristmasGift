@@ -12,7 +12,7 @@ void Destination::Update()
 {
 	EffectBase::Update();
 
-	if (m_alpha < 0)	Kill();
+	if (m_alpha < 0.0f)	Kill();
 	
 }
 

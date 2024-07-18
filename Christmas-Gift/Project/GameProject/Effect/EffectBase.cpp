@@ -10,9 +10,9 @@ EffectBase::EffectBase(int Effect_Mode)
 //目的地エフェクト
 void EffectBase::DestinationEffect()
 {
-	m_pos.y += 0.01;
+	m_pos.y += 0.01f;
 	//3秒で透明になる
-	m_alpha -= 1.0f/180;
+	m_alpha -= 1.0f / 180.0f;
 }
 
 void EffectBase::Update()

@@ -28,12 +28,12 @@ void Light::Update()
 	//ライトがついている時
 	if (m_islight)
 	{
-		CLight::SetColor(m_no, CVector3D(0, 0, 0), CVector3D(1.0, 1.0, 0.9));
+		CLight::SetColor(m_no, CVector3D(0.0f, 0.0f, 0.0f), CVector3D(1.0f, 1.0f, 0.9f));
 	}
 	//ライトが消えている時
 	else
 	{
-		CLight::SetColor(m_no, CVector3D(0, 0, 0), CVector3D(0.1, 0.1, 0.1));
+		CLight::SetColor(m_no, CVector3D(0.0f, 0.0f, 0.0f), CVector3D(0.1f, 0.1f, 0.1f));
 	}
 	
 }

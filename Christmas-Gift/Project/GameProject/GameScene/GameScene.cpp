@@ -16,7 +16,7 @@
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"
 
-#define DANGER_TIME 240
+#define DANGER_TIME 240.0f
 
 //コンストラクタ
 GameScene::GameScene(int stage)
@@ -25,7 +25,7 @@ GameScene::GameScene(int stage)
 {
 	//ゲーム状況のリセット
 	GameData::isGift = false;
-	GameData::FacePosition = 340;
+	GameData::FacePosition = FACE_POSITION;
 	GameData::GameClearCheck = false;
 	GameData::GameOverCheck = false;
 	GameData::second = GAME_TIME;
@@ -55,9 +55,9 @@ GameScene::GameScene(int stage)
 		//プレイヤー生成
 		new Player
 		(
-			CVector3D(4.55, -0.2, 6.18),
-			CVector3D(0, DtoR(180), 0),
-			CVector3D(0.01, 0.01, 0.01)
+			CVector3D(4.55f, -0.2f, 6.18f),
+			CVector3D(0.0f, DtoR(180), 0.0f),
+			CVector3D(0.01f, 0.01f, 0.01f)
 		);
 
 		
@@ -94,9 +94,9 @@ GameScene::GameScene(int stage)
 		//プレゼント設置ポイント
 		new MidPoint
 		(
-			CVector3D(5.998150, 9.0, -1.6),
-			CVector3D(0, 0, 0),
-			CVector3D(1, 0.5, 1)
+			CVector3D(5.998150f, 9.0f, -1.6f),
+			CVector3D(0.0f, 0.0f, 0.0f),
+			CVector3D(1.0f, 0.5f, 1.0f)
 		);
 
 		
@@ -159,7 +159,7 @@ void GameScene::Update()
 		m_dangerfilta = new DangerFilta();		//危険状態を伝えるフィルター
 	}
 	//5分経過でゲームオーバー
-	if (GameData::second == 0)
+	if (GameData::second == 0.0f)
 	{
 		//ゲームオーバーフラグOn
 		GameData::GameOverCheck = true;

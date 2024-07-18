@@ -39,8 +39,8 @@ Ranking::~Ranking()
 void Ranking::FuwaFuwa()
 {
 	m_fuwafuwa += 0.02f;
-	m_TitleText.SetPos(704, 750 - abs(sin(m_fuwafuwa)) * 64);
-	m_TitleText.SetColor(0, 0, 0, 1);
+	m_TitleText.SetPos(704.0f, 750.0f - abs(sin(m_fuwafuwa)) * 64.0f);
+	m_TitleText.SetColor(0.0f, 0.0f, 0.0f, 1.0f);
 	m_TitleText.Draw();
 }
 
@@ -53,7 +53,7 @@ void Ranking::Update()
 	//スペースボタン入力
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3);
+		SOUND("SE_Click")->Volume(0.3f);
 		SOUND("SE_Click")->Play();
 		GameData::StartFadeOut = true;
 	}
@@ -64,8 +64,8 @@ void Ranking::Draw()
 	FuwaFuwa();
 	for (int cnt = 1; cnt <5 ; cnt++)
 	{
-		FONT_T()->Draw(300, 300 + 64 * cnt, 0, 0, 0, "%d位",cnt);
-		FONT_T()->Draw(450, 300 + 64 * cnt, 0, 0, 0,m_text[cnt-1]);
+		FONT_T()->Draw(300, 300 + 64 * cnt, 0.0f, 0.0f, 0.0f, "%d位",cnt);
+		FONT_T()->Draw(450, 300 + 64 * cnt, 0.0f, 0.0f, 0.0f,m_text[cnt-1]);
 	}
 	
 }
