@@ -11,7 +11,7 @@
 #include"UI/Pause.h"
 #include"Title/Title.h"
 #include"UI/TargetText.h"
-#include"Filta/DangerFilta.h"
+#include"UI/DangerFilta.h"
 #include"Effect/Destination.h"
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"

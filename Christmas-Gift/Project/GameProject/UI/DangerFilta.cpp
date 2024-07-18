@@ -4,7 +4,7 @@
 #define MAX_ALPHA 0.5f	//“§–¾“x
 
 DangerFilta::DangerFilta()
-	:Task(ETaskTag::eFilta, true)
+	:Task(ETaskTag::eUI, true)
 	,m_alpha(0.0f)
 	,m_time(0.0f)
 {
