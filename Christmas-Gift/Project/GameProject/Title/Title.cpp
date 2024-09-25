@@ -241,13 +241,10 @@ void Title::StageSelecte()
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		if (m_select < 2)
-		{
-			SOUND("SE_Click")->Volume(0.3f);
-			SOUND("SE_Click")->Play();
-			SOUND("BGM_TitleOP")->Stop();
-			GameData::StartFadeOut = true;
-		}
+		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Play();
+		SOUND("BGM_TitleOP")->Stop();
+		GameData::StartFadeOut = true;
 	}
 
 	//Sキー入力

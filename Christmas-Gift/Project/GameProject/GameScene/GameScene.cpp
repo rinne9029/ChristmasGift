@@ -60,8 +60,6 @@ GameScene::GameScene(int stage)
 			CVector3D(0.01f, 0.01f, 0.01f)
 		);
 
-		
-
 		//エフェクト生成
 		/*new Destination
 		(
@@ -69,9 +67,6 @@ GameScene::GameScene(int stage)
 			CVector3D(4.55, 1, 6.18),
 			CVector3D(0.1, 0.1, 0.1)
 		);*/
-
-		
-		
 
 		//敵：父親生成
 		/*new Enemy
@@ -81,15 +76,6 @@ GameScene::GameScene(int stage)
 			CVector3D(0.01, 0.01, 0.01),
 			0
 		);*/
-
-		////敵：母親生成
-		//new Enemy
-		//(
-		//	CVector3D(-2.073762, 9.891998, 1.103694),
-		//	CVector3D(-1, 0, 0),
-		//	CVector3D(0.01, 0.01, 0.01),
-		//	1
-		//);
 
 		//プレゼント設置ポイント
 		new MidPoint
@@ -109,13 +95,53 @@ GameScene::GameScene(int stage)
 	//ステージ２生成
 	case 2:
 	{
+		//テキストデータによってステージ内オブジェクトが変化
+		new Field
+		(
+			"TextData/StageNode1.txt",		//ノード
+			"TextData/LightData1.txt",		//ライト
+			"TextData/DoorData1.txt",		//ドア
+			"TextData/SwitchData1.txt",		//スイッチ
+			"TextData/ClosetData1.txt"		//クローゼット
+		);
 
-	}
-	break;
-	//ステージ３生成
-	case 3:
-	{
+		//プレイヤー生成
+		new Player
+		(
+			CVector3D(4.55f, -0.2f, 6.18f),
+			CVector3D(0.0f, DtoR(180), 0.0f),
+			CVector3D(0.01f, 0.01f, 0.01f)
+		);
 
+		//プレゼント設置ポイント
+		new MidPoint
+		(
+			CVector3D(5.998150f, 9.0f, -1.6f),
+			CVector3D(0.0f, 0.0f, 0.0f),
+			CVector3D(1.0f, 0.5f, 1.0f)
+		);
+
+		new SleepLife();			//睡眠ゲージ
+		new Timer();				//制限時間
+		new TargetText();			//現在の目標
+
+		//敵：父親生成
+		new Enemy
+		(
+			CVector3D(2.9, 0, 0.351914),
+			CVector3D(-1, 0, 0),
+			CVector3D(0.01, 0.01, 0.01),
+			0
+		);
+
+		////敵：母親生成
+		new Enemy
+		(
+			CVector3D(-2.073762, 9.891998, 1.103694),
+			CVector3D(-1, 0, 0),
+			CVector3D(0.01, 0.01, 0.01),
+			1
+		);
 	}
 	break;
 	}
