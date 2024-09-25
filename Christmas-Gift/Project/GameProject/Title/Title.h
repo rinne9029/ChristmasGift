@@ -10,7 +10,6 @@ private:
 	CImage m_Manual2;			//説明書２
 	CImage m_Stage1;			//ステージ１
 	CImage m_Stage2;			//ステージ２
-	CImage m_Stage3;			//ステージ３
 	int m_select;				//セレクトフラグ
 	int m_step;				
 	float m_fuwafuwa;			//ふわふわ表示用実数

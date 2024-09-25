@@ -4,7 +4,7 @@
 #include"GameScene/GameScene.h"
 
 #define MAXSELECT 3			//モードセレクト数
-#define MAXSTAGE  3			//ステージ数
+#define MAXSTAGE  2			//ステージ数
 #define MAXMANUAL 2			//説明枚数
 
 
@@ -28,7 +28,6 @@ Title::Title()
 	m_Manual2 = COPY_RESOURCE("Manual2", CImage);
 	m_Stage1 = COPY_RESOURCE("Stage1", CImage);
 	m_Stage2 = COPY_RESOURCE("Stage2", CImage);
-	m_Stage3 = COPY_RESOURCE("Stage3", CImage);
 }
 
 //デストラクタ
@@ -54,10 +53,6 @@ Title::~Title()
 			break;
 		case 2:
 			//ステージ2
-			new GameScene(m_select);
-			break;
-		case 3:
-			//ステージ3
 			new GameScene(m_select);
 			break;
 		}
@@ -246,7 +241,6 @@ void Title::StageSelecte()
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		//現状ステージ１までしか遊べない
 		if (m_select < 2)
 		{
 			SOUND("SE_Click")->Volume(0.3f);
@@ -286,16 +280,15 @@ void Title::StageSelecte()
 
 void Title::StageDraw()
 {
-	Utility::DrawQuad(CVector2D(0.0f, 860.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
-	Utility::DrawQuad(CVector2D(0.0f, 930.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
-	m_Stage1.SetPos(320.0f - 1920.0f * (m_select - 1), 0.0f);
+	Utility::DrawQuad(CVector2D(0.0f, 960.0f), CVector2D(1920.0f, 120.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.6f));
+	m_Stage1.SetSize(CVector2D(1600, 900));
+	m_Stage1.SetPos(160.0f + 1920.0f * (m_select - 1), 40.0f);
 	m_Stage1.Draw();
-	m_Stage2.SetPos(2240.0f - 1920.0f * (m_select - 1), 0.0f);
+	m_Stage2.SetSize(CVector2D(1600, 900));
+	m_Stage2.SetPos(2080.0f - 1920.0f * (m_select - 1), 40.0f);
 	m_Stage2.Draw();
-	m_Stage3.SetPos(4160.0f - 1920.0f * (m_select - 1), 0.0f);
-	m_Stage3.Draw();
-	FONT_T()->Draw(100, 910, 0.0f, 0.0f, 0.0f, "SPACEキーでスタート");
-	FONT_T()->Draw(100, 980, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： S入力 戻る");
+	FONT_T()->Draw(100, 1010, 0.0f, 0.0f, 0.0f, "SPACEキーでスタート");
+	FONT_T()->Draw(100, 1060, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： S入力 戻る");
 }
 
 //更新処理

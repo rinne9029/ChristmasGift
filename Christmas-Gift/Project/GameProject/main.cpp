@@ -269,7 +269,6 @@ void Init(void)
 			ADD_RESOURCE("Snow", CImage::CreateImage("Title/snow.png"));
 			ADD_RESOURCE("Stage1", CImage::CreateImage("Title/stage1.png"));
 			ADD_RESOURCE("Stage2", CImage::CreateImage("Title/stage2.png"));
-			ADD_RESOURCE("Stage3", CImage::CreateImage("Title/stage3.png"));
 
 			//ƒŠƒUƒ‹ƒg‰æ‘œ“Ç‚İ‚İ
 			ADD_RESOURCE("ClearBackGround", CImage::CreateImage("Result/ClearBackGround.png"));
