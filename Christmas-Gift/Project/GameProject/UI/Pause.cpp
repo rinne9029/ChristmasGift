@@ -13,7 +13,7 @@ void Pause::PauseMenu1()
 	{
 		//セレクトは0以下にならない
 		select--;
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		
 	}
@@ -22,13 +22,13 @@ void Pause::PauseMenu1()
 	{
 		//セレクトはMAXSELECT以上にならない
 		select++;
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 	}
 
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
 		switch (select)
 		{
@@ -51,7 +51,7 @@ void Pause::PauseMenu2()
 {
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
 		//一つ前の画面に戻る
 		step--;

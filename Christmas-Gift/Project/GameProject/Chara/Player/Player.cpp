@@ -112,7 +112,7 @@ void Player::StateClosetIn()
 	m_pos = m_Closet_pos;
 	if (PUSH(CInput::eMouseL) && count >1)
 	{
-		SOUND("SE_DoorClose")->Volume(0.3f);
+		SOUND("SE_DoorClose")->Volume(GameData::volume);
 		SOUND("SE_DoorClose")->Play();
 		//ƒJƒEƒ“ƒg‚Ì‰Šú‰»
 		count = 0;
@@ -474,7 +474,7 @@ void Player::Shot()
 					m_hide = true;
 					m_state = eState_ClosetIn;
 					//‰¹ºÄ¶
-					SOUND("SE_DoorOpen")->Volume(0.3f);
+					SOUND("SE_DoorOpen")->Volume(GameData::volume);
 					SOUND("SE_DoorOpen")->Play();
 				}
 			}

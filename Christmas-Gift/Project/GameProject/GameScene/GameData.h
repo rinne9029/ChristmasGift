@@ -30,5 +30,6 @@ public:
 
 	//À”
 	static float FacePosition;			//UIŠç‚ÌˆÊ’u
+	static float volume;				//‰¹—Ê
 
 };

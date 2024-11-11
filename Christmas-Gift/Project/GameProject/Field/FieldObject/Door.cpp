@@ -92,7 +92,7 @@ void Door::Collision(Task* t)
 				//ドアを開ける
 				if (m_isopen)
 				{
-					SOUND("SE_DoorOpen")->Volume(0.3f);
+					SOUND("SE_DoorOpen")->Volume(GameData::volume);
 					SOUND("SE_DoorOpen")->Play();
 					m_rot = m_rot + CVector3D(0.0f, DtoR(90), 0.0f);
 					//接触判定用の箱を削除
@@ -105,7 +105,7 @@ void Door::Collision(Task* t)
 				//ドアを閉じる
 				else
 				{
-					SOUND("SE_DoorClose")->Volume(0.3f);
+					SOUND("SE_DoorClose")->Volume(GameData::volume);
 					SOUND("SE_DoorClose")->Play();
 					m_rot = m_rot - CVector3D(0.0f, DtoR(90), 0.0f);
 					//接触判定用の箱を出す

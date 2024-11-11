@@ -53,7 +53,7 @@ void Ranking::Update()
 	//スペースボタン入力
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
 		GameData::StartFadeOut = true;
 	}

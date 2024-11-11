@@ -70,7 +70,7 @@ void GameOver::Update()
 	//スペースキーで決定
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
 		GameData::StartFadeOut = true;
 	}
@@ -78,7 +78,7 @@ void GameOver::Update()
 	//Wキー入力
 	if (PUSH(CInput::eUp) && m_select > 0)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		m_select--;
 		m_High = 0.0f;	//強調リセット
@@ -86,7 +86,7 @@ void GameOver::Update()
 	//Sキー入力
 	if (PUSH(CInput::eDown) && m_select < 1)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		m_select++;
 		m_High = 0.0f;	//強調リセット

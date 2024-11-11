@@ -157,7 +157,7 @@ void GameClear::Update()
 	//スペースキーで決定
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
 		//フェードアウト実行
 		GameData::StartFadeOut = true;
@@ -166,7 +166,7 @@ void GameClear::Update()
 	//Wキー入力
 	if (PUSH(CInput::eUp) && m_select > 0)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		m_select--;
 		m_High = 0.0f;	//強調リセット
@@ -174,7 +174,7 @@ void GameClear::Update()
 	//Sキー入力
 	if (PUSH(CInput::eDown) && m_select < 1)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		m_select++;
 		m_High = 0.0f;	//強調リセット
@@ -189,5 +189,5 @@ void GameClear::Draw()
 	//強調表示描画
 	HighLight();
 	//タイム表示
-	FONT_T()->Draw(1350, 250, 0.0f, 0.0f, 0.0f, "残り時間：%d秒",GameData::second);
+	FONT_T()->Draw(1350, 250, 0.0f, 0.0f, 0.0f, "残り時間：%f秒",GameData::second);
 }

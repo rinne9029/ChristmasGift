@@ -250,7 +250,7 @@ void Enemy::StateChase()
 	m_model.ChangeAnimation((int)AnimId::Run);
 
 	//追跡中のBGMの音量をリセット
-	SOUND("BGM_Chase")->Volume(0.3f);
+	SOUND("BGM_Chase")->Volume(GameData::volume);
 	if (SOUND("BGM_Chase")->CheckEnd())
 	{
 		//追跡中のBGM再生（ループあり）

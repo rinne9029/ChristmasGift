@@ -4,21 +4,34 @@
 
 class Title : public Task {
 private:
-	CImage m_BackGroundTitle;	//タイトル背景
-	CImage m_TitleRogo;			//タイトル名テキスト
-	CImage m_Manual1;			//説明書１
-	CImage m_Manual2;			//説明書２
-	CImage m_Stage1;			//ステージ１
-	CImage m_Stage2;			//ステージ２
-	int m_select;				//セレクトフラグ
-	int m_step;				
-	float m_fuwafuwa;			//ふわふわ表示用実数
-	void FuwaFuwa();			//ふわふわ表示処理
-	void ModeChenge();			//モード変更処理
-	void ManualMode();			//説明モード処理
-	void ManualDraw();			//説明描画
-	void StageSelecte();		//ステージ選択処理
-	void StageDraw();			//ステージ選択描画
+	enum TitleScene
+	{
+		eState_Title,
+		eState_Stage,
+		eState_Menu,
+		eState_Collection
+	};
+	int m_state;				//現在のステート
+	int m_select;					//セレクトフラグ
+	float m_alpha;					//透明度
+	float m_elapsedtimeY;			//Y座標を動かす経過時間	
+	float m_imageposY;				//画像のY座標
+	float m_volume;					//音量
+	CImage m_backgroundtitleimage;	//タイトル背景
+	CImage m_titlerogoimage;		//タイトル名テキスト
+	CImage m_stageimage1;			//ステージ１
+	CImage m_stageimage2;			//ステージ２
+	CImage m_collectionimage1;		//コレクション画像1
+	CImage m_collectionimage2;		//コレクション画像2
+	CImage m_collectionimage3;		//コレクション画像3
+	void TitleUpdate();			//タイトル画面の更新処理
+	void TitleDraw();			//タイトル画面の描画処理
+	void StageSelectUpdate();	//ステージ選択処理
+	void StageSelectDraw();		//ステージ選択描画
+	void TitleMenuUpdate();		//タイトルメニュー画面の更新処理
+	void TitleMenuDraw();		//タイトルメニュー画面の描画処理
+	void CollectionUpdate();	//コレクション画面の更新処理
+	void CollectionDraw();		//コレクション画面の描画処理
 public:
 	//コンストラクタ
 	Title();

@@ -3,172 +3,73 @@
 #include"Title/Snow.h"
 #include"GameScene/GameScene.h"
 
-#define MAXSELECT 3			//モードセレクト数
-#define MAXSTAGE  2			//ステージ数
-#define MAXMANUAL 2			//説明枚数
+#define MAX_SELECT 3			//モードセレクト数
+#define MAX_STAGE  2			//ステージ数
+#define MAX_MANUAL 2			//説明枚数
+#define CHANGE_IMAGE_TIME 0.5f	//ステージ画像が下に落ちるまでの時間
 
 
 //コンストラクタ
 Title::Title()
 	:Task(ETaskTag::eScene,true)
+	,m_state(eState_Title)
 	,m_select(1)
-	,m_step(0)
-	,m_fuwafuwa(0.0f)
+	,m_alpha(1.0f)
+	,m_elapsedtimeY(0.0f)
+	,m_volume(3)
 {
 	//フェードイン実行
 	GameData::StartFadeIn = true;
 
 	//サウンド再生
-	SOUND("BGM_TitleOP")->Volume(0.2f);
+	SOUND("BGM_TitleOP")->Volume(GameData::volume);
 	SOUND("BGM_TitleOP")->Play(true);
+	
 
-	m_BackGroundTitle = COPY_RESOURCE("BackGroundTitle", CImage);
-	m_TitleRogo = COPY_RESOURCE("GameTitleRogo", CImage);
-	m_Manual1 = COPY_RESOURCE("Manual1", CImage);
-	m_Manual2 = COPY_RESOURCE("Manual2", CImage);
-	m_Stage1 = COPY_RESOURCE("Stage1", CImage);
-	m_Stage2 = COPY_RESOURCE("Stage2", CImage);
+	//画像読み込み
+	m_backgroundtitleimage = COPY_RESOURCE("BackGroundTitle", CImage);
+	m_titlerogoimage = COPY_RESOURCE("GameTitleRogo", CImage);
+	m_stageimage1 = COPY_RESOURCE("Stage1", CImage);
+	m_stageimage2 = COPY_RESOURCE("Stage2", CImage);
+	m_collectionimage1 = COPY_RESOURCE("Stage2", CImage);
 }
 
 //デストラクタ
 Title::~Title()
 {
-	switch (m_step)
+	if (m_state == eState_Stage)
 	{
-	case 0:
-		switch (m_select)
-		{
-		case 3:
-			//ランキング起動
-			new Ranking("TextData/RankingData.txt");
-			break;
-		}
-		break;
-	case 10:
-		switch (m_select)
-		{
-		case 1:
-			//ステージ1
-			new GameScene(m_select);
-			break;
-		case 2:
-			//ステージ2
-			new GameScene(m_select);
-			break;
-		}
-		break;
+		new GameScene(m_select);
 	}
 }
 
-//ふわふわ動く文字
-void Title::FuwaFuwa()
+//タイトル中の更新処理
+void Title::TitleUpdate()
 {
-	m_TitleRogo.SetPos(610.0f, 50.0f);
-	m_TitleRogo.SetSize(700.0f, 700.0f);
-	m_TitleRogo.Draw();
+	//透明度
+	static float a;
+	a+=1.0f * 2.0f * CFPS::GetDeltaTime();
+	m_alpha = 1.0f - 0.4f * abs(sin(a));
 
-	m_fuwafuwa += 0.02f;
-
-	//文字を見やすくするための帯
-	Utility::DrawQuad(CVector2D(0.0f, 710.0f), CVector2D(1920.0f, 220.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
-
-	//選ばれた文字がsinカーブでふわふわ動く
-	switch (m_select)
-	{
-		//スタート文字
-	case 1:
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(350, 880 - abs(sin(m_fuwafuwa)) * 64, 0.0f, 0.0f, 0.0f, "Start");
-
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(870, 880, 0.0f, 0.0f, 0.0f, "Manual");
-		
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(1442, 880, 0.0f, 0.0f, 0.0f, "Ranking");
-		break;
-		//説明書文字
-	case 2:
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(350, 880, 0.0f, 0.0f, 0.0f, "Start");
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(870, 880 - abs(sin(m_fuwafuwa)) * 64, 0.0f, 0.0f, 0.0f, "Manual");
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(1442, 880, 0.0f, 0.0f, 0.0f, "Ranking");
-		break;
-		//ランキング文字
-	case 3:
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(350, 880, 0.0f, 0.0f, 0.0f, "Start");
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(870, 880, 0.0f, 0.0f, 0.0f, "Manual");
-		CREATE_FONT_F
-		(
-			"name",
-			"C:\\Windows\\Fonts\\BOD_CI.TTF",
-			128
-		)->Draw(1442, 880 - abs(sin(m_fuwafuwa)) * 64, 0.0f, 0.0f, 0.0f, "Ranking");
-		break;
-	}
-
-	Utility::DrawQuad(CVector2D(0.0f, 980.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
-	FONT_T()->Draw(100, 1030, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： スペース入力 決定");
-
-	
-}
-
-//モードセレクト処理
-void Title::ModeChenge()
-{
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
-		SOUND("SE_Click")->Play();
+		SOUND("SE_Click")->Volume(GameData::volume);	//音量変更
+		SOUND("SE_Click")->Play();			//再生(ループ無し)
+
 		switch (m_select)
 		{
 		case 1:
-			m_step = m_select * 10;
-			m_select = 1;
+			//ステージセレクト画面に移動
+			m_state = eState_Stage;
 			break;
 		case 2:
-			m_step = m_select * 10;
-			m_select = 1;
+			//メニュー画面に移動
+			m_state = eState_Menu;
 			break;
 		case 3:
-			SOUND("BGM_TitleOP")->Stop();
-			GameData::StartFadeOut = true;
+			//コレクション画面に移動
+			m_state = eState_Collection;
 			break;
 		}
 	}
@@ -176,72 +77,60 @@ void Title::ModeChenge()
 	//Aキー入力
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
-		SOUND("SE_Select")->Play();
-		m_select--;
-		//ふわふわ表示リセット
-		m_fuwafuwa = 0.0f;
-	}
-	//Dキー入力
-	if (PUSH(CInput::eRight) && m_select < MAXSELECT)
-	{
-		SOUND("SE_Select")->Volume(0.3f);
-		SOUND("SE_Select")->Play();
-		m_select++;
-		//ふわふわ表示リセット
-		m_fuwafuwa = 0.0f;
-	}
-}
-
-//説明モード処理
-void Title::ManualMode()
-{
-	//Sキー入力
-	if (PUSH(CInput::eDown))
-	{
-		SOUND("SE_Click")->Volume(0.3);
-		SOUND("SE_Click")->Play();
-		//モードセレクトに戻る
-		m_step = 0;
-		m_select = 1;
-	}
-
-	//Aキー入力
-	//次の説明
-	if (PUSH(CInput::eLeft) && m_select > 1)
-	{
-		SOUND("SE_Select")->Volume(0.3f);
-		SOUND("SE_Select")->Play();
+		SOUND("SE_Select")->Volume(GameData::volume);	//音量設定
+		SOUND("SE_Select")->Play();			//再生
 		m_select--;
 	}
 	//Dキー入力
-	//前の説明に戻る
-	if (PUSH(CInput::eRight) && m_select < MAXMANUAL)
+	if (PUSH(CInput::eRight) && m_select < MAX_SELECT)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
-		SOUND("SE_Select")->Play();
+		SOUND("SE_Select")->Volume(GameData::volume);	//音量設定
+		SOUND("SE_Select")->Play();			//再生
 		m_select++;
 	}
+
 }
 
-void Title::ManualDraw()
+//タイトル中の描画処理
+void Title::TitleDraw()
 {
-	Utility::DrawQuad(CVector2D(0.0f, 930.0f), CVector2D(1920.0f, 56.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
+	//ロゴ描画処理
+	m_titlerogoimage.SetPos(610.0f, 50.0f);
+	m_titlerogoimage.SetSize(700.0f, 700.0f);
+	m_titlerogoimage.Draw();
 
-	m_Manual1.SetPos(320.0f - 1920.0f * (m_select - 1), 180.0f);
-	m_Manual1.Draw();
-	m_Manual2.SetPos(2240.0f - 1920.0f * (m_select - 1), 180.0f);
-	m_Manual2.Draw();
-	FONT_T()->Draw(100, 980, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： S入力 戻る");
-	FONT_T()->Draw(1000, 880, 0.0f, 0.0f, 0.0f, "%d/2", m_select);
+	//選択中の文字に背景カラーをつける
+	Utility::DrawQuad(CVector2D(250.0f + 540 * (m_select - 1), 760.0f), CVector2D(380.0f, 170.0f), CVector4D(1.0f, 0.3f, 0.0f, m_alpha));
+
+	//文字描画処理
+	CREATE_FONT_F
+	(
+		"name",
+		"C:\\Windows\\Fonts\\BOD_CI.TTF",
+		128
+	)->Draw(350, 880, 0.0f, 0.0f, 0.0f, "Start");
+
+	CREATE_FONT_F
+	(
+		"name",
+		"C:\\Windows\\Fonts\\BOD_CI.TTF",
+		128
+	)->Draw(870, 880, 0.0f, 0.0f, 0.0f, "Menu");
+
+	CREATE_FONT_F
+	(
+		"name",
+		"C:\\Windows\\Fonts\\BOD_CI.TTF",
+		128
+	)->Draw(1350, 880, 0.0f, 0.0f, 0.0f, "Collection");
 }
 
-void Title::StageSelecte()
+void Title::StageSelectUpdate()
 {
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
 		SOUND("BGM_TitleOP")->Stop();
 		GameData::StartFadeOut = true;
@@ -250,42 +139,127 @@ void Title::StageSelecte()
 	//Sキー入力
 	if (PUSH(CInput::eDown))
 	{
-		SOUND("SE_Click")->Volume(0.3f);
+		SOUND("SE_Click")->Volume(GameData::volume);
 		SOUND("SE_Click")->Play();
-		//モードセレクトに戻る
-		m_step = 0;
+		//タイトル画面セレクトに戻る
+		m_state = eState_Title;
 		m_select = 1;
+		//経過時間リセット
+		m_elapsedtimeY = 0.0f;
+		m_imageposY = 0.0f;
 	}
 
 	//Aキー入力
 	//次のステージ
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		m_select--;
 	}
 	//Dキー入力
 	//前のステージ
-	if (PUSH(CInput::eRight) && m_select < MAXSTAGE)
+	if (PUSH(CInput::eRight) && m_select < MAX_STAGE)
 	{
-		SOUND("SE_Select")->Volume(0.3f);
+		SOUND("SE_Select")->Volume(GameData::volume);
 		SOUND("SE_Select")->Play();
 		m_select++;
 	}
 }
 
-void Title::StageDraw()
+void Title::StageSelectDraw()
+{	
+	//経過時間
+	if (m_elapsedtimeY < CHANGE_IMAGE_TIME)
+	{
+		m_elapsedtimeY += CFPS::GetDeltaTime();
+	}
+	else
+	{
+		m_elapsedtimeY == CHANGE_IMAGE_TIME;
+	}
+	//画面出現後ステージ1画像を上から下に移動させる
+	m_imageposY = 1080 * (m_elapsedtimeY / CHANGE_IMAGE_TIME);
+
+	//ステージ画像1
+	m_stageimage1.SetSize(CVector2D(1600, 900));
+	m_stageimage1.SetPos(160.0f - 1920 * (m_select - 1), 90.0f - 1080.0f + m_imageposY);
+	m_stageimage1.Draw();
+
+	//ステージ画像2
+	m_stageimage2.SetSize(CVector2D(1600, 900));
+	m_stageimage2.SetPos(2080.0f - 1920 * (m_select - 1), 90.0f - 1080.0f + m_imageposY);
+	m_stageimage2.Draw();
+
+}
+
+void Title::TitleMenuUpdate()
 {
-	Utility::DrawQuad(CVector2D(0.0f, 960.0f), CVector2D(1920.0f, 120.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.6f));
-	m_Stage1.SetSize(CVector2D(1600, 900));
-	m_Stage1.SetPos(160.0f + 1920.0f * (m_select - 1), 40.0f);
-	m_Stage1.Draw();
-	m_Stage2.SetSize(CVector2D(1600, 900));
-	m_Stage2.SetPos(2080.0f - 1920.0f * (m_select - 1), 40.0f);
-	m_Stage2.Draw();
-	FONT_T()->Draw(100, 1010, 0.0f, 0.0f, 0.0f, "SPACEキーでスタート");
-	FONT_T()->Draw(100, 1060, 0.0f, 0.0f, 0.0f, "A入力 ← ： D入力 → ： S入力 戻る");
+	//Sキー入力
+	if (PUSH(CInput::eDown))
+	{
+		SOUND("SE_Click")->Volume(GameData::volume);
+		SOUND("SE_Click")->Play();
+		SOUND("BGM_TitleOP")->Stop();
+		//タイトルセレクトに戻る
+		m_state = eState_Title;
+		m_select = 1;
+		SOUND("BGM_TitleOP")->Volume(GameData::volume);
+		SOUND("BGM_TitleOP")->Play(true);
+	}
+
+	//Aキー入力
+	//音量を下げる
+	if (PUSH(CInput::eLeft) && m_volume > 0)
+	{
+		m_volume--;
+		GameData::volume = m_volume * 0.2f;
+		SOUND("SE_Select")->Volume(GameData::volume);
+		SOUND("SE_Select")->Play();
+	}
+	//Dキー入力
+	//音量を上げる
+	if (PUSH(CInput::eRight) && m_volume < 5)
+	{
+		m_volume++;
+		GameData::volume = m_volume * 0.2f;
+		SOUND("SE_Select")->Volume(GameData::volume);
+		SOUND("SE_Select")->Play();
+	}
+}
+
+void Title::TitleMenuDraw()
+{
+	//選択中の文字に背景カラーをつける
+	Utility::DrawQuad(CVector2D(0.0f, 0.0f), CVector2D(1920.0f, 1080.0f), CVector4D(1.0f, 1.0f, 1.0f, 0.4f));
+
+	CREATE_FONT_F
+	(
+		"name",
+		"C:\\Windows\\Fonts\\BOD_CI.TTF",
+		128
+	)->Draw(350, 540, 0.0f, 0.0f, 0.0f, "Sound");
+
+}
+
+void Title::CollectionUpdate()
+{
+}
+
+void Title::CollectionDraw()
+{
+	//コレクション未取得
+	m_collectionimage1.SetColor(0, 0, 0, 1);
+	m_collectionimage2.SetColor(0, 0, 0, 1);
+	m_collectionimage3.SetColor(0, 0, 0, 1);
+	//コレクション取得
+	m_collectionimage1.SetColor(1, 1, 1, 1);
+	m_collectionimage2.SetColor(1, 1, 1, 1);
+	m_collectionimage3.SetColor(1, 1, 1, 1);
+	//描画処理
+	m_collectionimage1.Draw();
+	m_collectionimage2.Draw();
+	m_collectionimage3.Draw();
 }
 
 //更新処理
@@ -294,16 +268,19 @@ void Title::Update()
 	if (GameData::StartFadeIn) return;
 	if (GameData::StartFadeOut) return;
 
-	switch (m_step)
+	switch (m_state)
 	{
-	case 0:
-		ModeChenge();
+	case eState_Title:
+		TitleUpdate();
 		break;
-	case 10:
-		StageSelecte();
+	case eState_Stage:
+		StageSelectUpdate();
 		break;
-	case 20:
-		ManualMode();
+	case eState_Menu:
+		TitleMenuUpdate();
+		break;
+	case eState_Collection:
+		CollectionUpdate();
 		break;
 	}
 }
@@ -311,7 +288,7 @@ void Title::Update()
 //2D描画処理
 void Title::Draw()
 {
-	m_BackGroundTitle.Draw();
+	m_backgroundtitleimage.Draw();
 
 
 	//雪を描画する時間
@@ -326,17 +303,19 @@ void Title::Draw()
 		RespawnTime = 0;
 	}
 
-	//ふわふわ表示描画
-	switch (m_step)
+	switch (m_state)
 	{
-	case 0:
-		FuwaFuwa();
+	case eState_Title:
+		TitleDraw();
 		break;
-	case 10:
-		StageDraw();
+	case eState_Stage:
+		StageSelectDraw();
 		break;
-	case 20:
-		ManualDraw();
+	case eState_Menu:
+		TitleMenuDraw();
+		break;
+	case eState_Collection:
+		CollectionDraw();
 		break;
 	}
 	
