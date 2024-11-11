@@ -1,5 +1,4 @@
 #include"Title.h"
-#include"Ranking/Ranking.h"
 #include"Title/Snow.h"
 #include"GameScene/GameScene.h"
 
@@ -25,20 +24,24 @@ Title::Title()
 	SOUND("BGM_TitleOP")->Volume(GameData::volume);
 	SOUND("BGM_TitleOP")->Play(true);
 	
-
 	//画像読み込み
 	m_backgroundtitleimage = COPY_RESOURCE("BackGroundTitle", CImage);
 	m_titlerogoimage = COPY_RESOURCE("GameTitleRogo", CImage);
 	m_stageimage1 = COPY_RESOURCE("Stage1", CImage);
 	m_stageimage2 = COPY_RESOURCE("Stage2", CImage);
+	//コレクションアイテムの画像（今後更新）
 	m_collectionimage1 = COPY_RESOURCE("Stage2", CImage);
+	m_collectionimage2 = COPY_RESOURCE("Stage2", CImage);
+	m_collectionimage3 = COPY_RESOURCE("Stage2", CImage);
 }
 
 //デストラクタ
 Title::~Title()
 {
+	//ステージセレクト
 	if (m_state == eState_Stage)
 	{
+		//セレクトしたステージに移動
 		new GameScene(m_select);
 	}
 }
@@ -54,8 +57,8 @@ void Title::TitleUpdate()
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(GameData::volume);	//音量変更
-		SOUND("SE_Click")->Play();			//再生(ループ無し)
+		SOUND("SE_Click")->Volume(GameData::volume);	//音量指定
+		SOUND("SE_Click")->Play();						//再生(ループ無し)
 
 		switch (m_select)
 		{
@@ -78,17 +81,16 @@ void Title::TitleUpdate()
 	if (PUSH(CInput::eLeft) && m_select > 1)
 	{
 		SOUND("SE_Select")->Volume(GameData::volume);	//音量設定
-		SOUND("SE_Select")->Play();			//再生
+		SOUND("SE_Select")->Play();						//再生(ループ無し)
 		m_select--;
 	}
 	//Dキー入力
 	if (PUSH(CInput::eRight) && m_select < MAX_SELECT)
 	{
 		SOUND("SE_Select")->Volume(GameData::volume);	//音量設定
-		SOUND("SE_Select")->Play();			//再生
+		SOUND("SE_Select")->Play();						//再生(ループ無し)
 		m_select++;
 	}
-
 }
 
 //タイトル中の描画処理
@@ -125,22 +127,23 @@ void Title::TitleDraw()
 	)->Draw(1350, 880, 0.0f, 0.0f, 0.0f, "Collection");
 }
 
+//ステージセレクト中の更新処理
 void Title::StageSelectUpdate()
 {
 	//スペースボタン
 	if (PUSH(CInput::eButton1))
 	{
-		SOUND("SE_Click")->Volume(GameData::volume);
-		SOUND("SE_Click")->Play();
-		SOUND("BGM_TitleOP")->Stop();
-		GameData::StartFadeOut = true;
+		SOUND("SE_Click")->Volume(GameData::volume);	//音量指定
+		SOUND("SE_Click")->Play();						//サウンド再生(ループなし)
+		SOUND("BGM_TitleOP")->Stop();					//BGM停止
+		GameData::StartFadeOut = true;					//フェードアウト
 	}
 
 	//Sキー入力
 	if (PUSH(CInput::eDown))
 	{
-		SOUND("SE_Click")->Volume(GameData::volume);
-		SOUND("SE_Click")->Play();
+		SOUND("SE_Click")->Volume(GameData::volume);	//音量指定
+		SOUND("SE_Click")->Play();						//サウンド再生（ループ無し）
 		//タイトル画面セレクトに戻る
 		m_state = eState_Title;
 		m_select = 1;
@@ -167,6 +170,7 @@ void Title::StageSelectUpdate()
 	}
 }
 
+//ステージセレクト中の描画処理
 void Title::StageSelectDraw()
 {	
 	//経過時間
@@ -193,19 +197,20 @@ void Title::StageSelectDraw()
 
 }
 
+//メニュー画面中の更新処理
 void Title::TitleMenuUpdate()
 {
 	//Sキー入力
 	if (PUSH(CInput::eDown))
 	{
-		SOUND("SE_Click")->Volume(GameData::volume);
-		SOUND("SE_Click")->Play();
-		SOUND("BGM_TitleOP")->Stop();
+		SOUND("SE_Click")->Volume(GameData::volume);		//音量指定
+		SOUND("SE_Click")->Play();							//サウンド再生
+		SOUND("BGM_TitleOP")->Stop();						//サウンド停止
 		//タイトルセレクトに戻る
 		m_state = eState_Title;
 		m_select = 1;
-		SOUND("BGM_TitleOP")->Volume(GameData::volume);
-		SOUND("BGM_TitleOP")->Play(true);
+		SOUND("BGM_TitleOP")->Volume(GameData::volume);		//音量指定
+		SOUND("BGM_TitleOP")->Play(true);					//サウンド再生(ループあり)
 	}
 
 	//Aキー入力
@@ -228,6 +233,7 @@ void Title::TitleMenuUpdate()
 	}
 }
 
+//メニュー画面中の描画処理
 void Title::TitleMenuDraw()
 {
 	//選択中の文字に背景カラーをつける
@@ -242,10 +248,12 @@ void Title::TitleMenuDraw()
 
 }
 
+//コレクション画面中の更新処理
 void Title::CollectionUpdate()
 {
 }
 
+//コレクション画面中の描画処理
 void Title::CollectionDraw()
 {
 	//コレクション未取得
@@ -265,9 +273,11 @@ void Title::CollectionDraw()
 //更新処理
 void Title::Update()
 {
+	//フェードイン・フェードアウト中は処理しない
 	if (GameData::StartFadeIn) return;
 	if (GameData::StartFadeOut) return;
 
+	//各ステートごとに更新処理実行
 	switch (m_state)
 	{
 	case eState_Title:
@@ -288,8 +298,8 @@ void Title::Update()
 //2D描画処理
 void Title::Draw()
 {
+	//背景描画
 	m_backgroundtitleimage.Draw();
-
 
 	//雪を描画する時間
 	static int RespawnTime = 0;
@@ -303,6 +313,7 @@ void Title::Draw()
 		RespawnTime = 0;
 	}
 
+	//各ステートごとに描画処理実行
 	switch (m_state)
 	{
 	case eState_Title:

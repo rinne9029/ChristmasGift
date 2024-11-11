@@ -1,6 +1,5 @@
 #include "GameClear.h"
 #include"Title/Title.h"
-#include"Ranking/Ranking.h"
 
 //コンストラクタ
 GameClear::GameClear()
@@ -31,10 +30,6 @@ GameClear::~GameClear()
 		//タイトル
 	case 0:
 		new Title();
-		break;
-		//ランキング
-	case 1:
-		new Ranking("Ranking.txt");
 		break;
 	}
 }
