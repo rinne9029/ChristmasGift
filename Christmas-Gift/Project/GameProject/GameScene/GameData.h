@@ -1,5 +1,5 @@
 #pragma once
-#define GAME_TIME 300.0f
+#define GAME_TIME 600.0f
 #define FACE_POSITION 340.0f
 
 class GameData

@@ -27,6 +27,7 @@
 Player::Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale)
 	:CharaBase(ETaskTag::ePlayer, true)
 	, mp_switch(nullptr)
+	, mp_closet(nullptr)
 	, m_tooltips(nullptr)
 	, key_ang(0.0f)				
 	, m_hide(false)											
@@ -127,9 +128,13 @@ void Player::StateClosetIn()
 //更新処理
 void Player::Update()
 {
+	if (PUSH(CInput::eButton12))
+	{
+		printf("%f%f%f", m_pos.x, m_pos.y, m_pos.z);
+	}
 	//スイッチ
-	if (!mp_switch)mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
-	if (!mp_closet)mp_closet = dynamic_cast<Closet*>(TaskManager::FindObject(ETaskTag::eFieldObject));
+	if (!mp_switch)
+		mp_switch = dynamic_cast<Switch*>(TaskManager::FindObject(ETaskTag::eFieldObject));
 	//キー入力されてない時
 	//カメラの角度でキャラクターの正面角度が決まる
 	m_rot.y = Utility::NormalizeAngle(m_camera->m_rot.y + key_ang);
@@ -233,8 +238,8 @@ void Player::Update()
 				SOUND("SE_Run")->Stop();
 			}
 		}
-		Shot();
 	}
+	Shot();
 	//ベースクラスの更新
 	if(m_state != eState_ClosetIn)
 	CharaBase::Update();
@@ -282,7 +287,10 @@ void Player::Render()
 	m_model.SetScale(m_scale);	//大きさ
 	//簡易的処理
 	//一人称時モデルを描画しない
-	//m_model.Render();
+	if (m_state == eState_ClosetIn)
+	{
+		m_model.Render();
+	}
 
 	if (m_state == eState_ClosetIn) return;
 	//レイの描画（デバッグ）
@@ -454,16 +462,13 @@ void Player::Shot()
 				m_tooltips->m_Text = "隠れる";
 			}
 			
-
-			
 			//左クリックで隠れる
 			if (PUSH(CInput::eMouseL) && m_state == eState_Idle)
 			{
-				mp_closet->m_model->UpdateMatrix();
 				//触れたクローゼットの座標を保存
 				m_Closet_pos = hit_object->m_pos;
 
-				//触れたクローゼットの正面ベクトルを保存
+				//触れたクローゼットのベクトルを保存
 				m_Closet_rot = hit_object->m_rot;
 
 				if (PUSH(CInput::eMouseL))

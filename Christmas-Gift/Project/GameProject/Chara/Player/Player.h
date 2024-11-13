@@ -18,7 +18,6 @@ private:
 	Closet* mp_closet;		//クローゼット
 
 	float key_ang;			//方向ベクトルの角度
-	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
 	
 	//デバッグ用
 	CVector3D m_lS;			//レイの始点
@@ -56,6 +55,7 @@ public:
 
 	CVector3D m_Closet_rot; //カメラ用のクローゼットの正面方向ベクトル
 	CVector3D m_Closet_pos;	//クローゼット内部の座標
+	CVector3D m_copy_pos;	//タンスから元の位置に出るためのプレイヤーの座標
 	//コンストラクタ
 	Player(const CVector3D& pos,const CVector3D& rot, const CVector3D& scale);
 

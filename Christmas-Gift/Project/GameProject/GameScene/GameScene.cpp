@@ -15,6 +15,7 @@
 #include"Effect/Destination.h"
 #include"Result/GameClear.h"
 #include"Result/GameOver.h"
+#include"Item/key.h"
 
 #define DANGER_TIME 240.0f
 
@@ -51,6 +52,8 @@ GameScene::GameScene(int stage)
 			"TextData/SwitchData1.txt",		//スイッチ
 			"TextData/ClosetData1.txt"		//クローゼット
 		);
+
+		//new key(CVector3D(0, 0, 0), CVector3D(0.3, 0.3, 0.3));
 
 		//プレイヤー生成
 		new Player

@@ -18,19 +18,27 @@ Camera::Camera(const CVector3D& rot)
 //通常状態
 void Camera::StateIdle()
 {
-	//マウス操作で回転
-	CVector2D mouse_vec = CInput::GetMouseVec();
-	m_rot += CVector3D(mouse_vec.y, -mouse_vec.x, 0.0f) * CAMERA_SPEED;
+	//カメラの座標
+	CVector3D camera_pos[2] = {
+		CVector3D(0.0f,1.5f,0.0f),	//立ちの高さ
+		CVector3D(0.0f,0.7f,0.0f),	//しゃがみの高さ
+	};
 
-	//カメラの上下角度制限
-	m_rot.x = min(DtoR(40), max(DtoR(-40), m_rot.x));
+	//ctrlボタン
+	if (PUSH(CInput::eButton3) && m_state == eState_Idle) {
+		m_idx = (m_idx + 1) % 2;	//立ちとしゃがみの切り替え
+	}
+
+	//割合補間
+	m_pos = m_pos * 0.9f + camera_pos[m_idx] * 0.1f;
 }
 
 //隠れた状態
 void Camera::StateClosetIn()
 {
-	//カメラの向きをクローゼットの正面方向に変更
-	m_rot = mp_player->m_Closet_rot - CVector3D(0.0f, DtoR(90), 0.0f);
+	m_dir = mp_player->m_Closet_rot - CVector3D(0, DtoR(90), 0);
+	//クローゼットの外にカメラを移動
+	m_pos = CVector3D(sin(m_dir.y) * 1.5f, m_pos.y,cos(m_dir.y) * 1.5f);
 }
 
 //更新処理
@@ -47,21 +55,13 @@ void Camera::Update()
 		StateClosetIn();
 		break;
 	}
-
-	//カメラの座標
-	CVector3D camera_pos[2] = {
-		CVector3D(0.0f,1.5f,0.0f),	//立ちの高さ
-		CVector3D(0.0f,0.7f,0.0f),	//しゃがみの高さ
-	};
-
-	//ctrlボタン
-	if (PUSH(CInput::eButton3) && m_state == eState_Idle) {
-		m_idx = (m_idx + 1) % 2;	//立ちとしゃがみの切り替え
-	}
-
-	//割合補間
-	m_pos = m_pos * 0.9f + camera_pos[m_idx] * 0.1f;
 	
+	//マウス操作で回転
+	CVector2D mouse_vec = CInput::GetMouseVec();
+	m_rot += CVector3D(mouse_vec.y, -mouse_vec.x, 0.0f) * CAMERA_SPEED;
+
+	//カメラの上下角度制限
+	m_rot.x = min(DtoR(40), max(DtoR(-40), m_rot.x));
 }
 
 //描画処理

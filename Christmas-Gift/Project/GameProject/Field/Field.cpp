@@ -8,6 +8,7 @@
 #include"../Navigation/NavManager.h"
 #include"../Navigation/NavNode.h"
 #include"../ObjectBase/ObjectBase.h"
+#include"Item/key.h"
 
 Field* Field::ms_instance = nullptr;
 
@@ -16,11 +17,19 @@ Field::Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,con
 	:ObjectBase(ETaskTag::eField,true)
 {
 	ms_instance = this;
-
+	 
 	//コリジョンモデルの取得
 	m_colModel = GET_RESOURCE("MapCol", CModel);
 	m_colWallModel = GET_RESOURCE("WallMapCol", CModel);
 	
+	m_keypos[0] = CVector3D(-11.5, 0.93, 3.58);
+	m_keypos[1] = CVector3D(4.1,1.01,4.22);
+	m_keypos[2] = CVector3D(-5.54,1.09,1.02);
+
+	m_keyrot[0] = CVector3D(0, DtoR(90), DtoR(90));
+	m_keyrot[1] = CVector3D(0, 0, 0);
+	m_keyrot[2] = CVector3D(0, 0, 0);
+
 	//床と壁のクラスを作成
 	m_floor = new FieldFloor();
 	m_wall = new FieldWall();
@@ -36,6 +45,8 @@ Field::Field(const char* Nodefile,const char* Lightfile,const char* Doorfile,con
 	CreateSwitchs(Switchfile);
 	//クローゼット作成
 	CreateCloset(Closetfile);
+	//鍵作成
+	CreateKey();
 }
 
 Field::~Field()
@@ -206,6 +217,12 @@ void Field::CreateCloset(const char* file)
 		new Closet(Pos, CVector3D(0.0f, DtoR(Rot), 0.0f), CVector3D(1.0f, 0.7f, 1.0f),2);
 	}
 	fclose(fp);
+}
+
+//鍵を作成
+void Field::CreateKey()
+{
+	new key(CVector3D(m_keypos[0]), CVector3D(m_keyrot[0]), CVector3D(0.3, 0.3, 0.3));
 }
 
 //フィールドのコリジョンを取得

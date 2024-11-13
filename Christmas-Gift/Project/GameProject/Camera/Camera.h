@@ -8,7 +8,7 @@ class Camera : public Task {
 private:
 	Player* mp_player;		//ƒvƒŒƒCƒ„[
 
-	int m_idx;	
+	int m_idx;
 public:
 	//ó‘Ô•Ï‰»
 	enum {

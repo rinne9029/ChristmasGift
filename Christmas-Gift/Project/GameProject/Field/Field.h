@@ -14,7 +14,6 @@ private:
 	static Field* ms_instance;
 	//経路探索用ノードのテーブル
 	static std::list<CVector3D>ms_nodes;
-
 	CModel* m_colModel;		//フィールドのコリジョンモデル
 	CModel* m_colWallModel;	//壁のコリジョンモデル
 	FieldFloor* m_floor;		//床描画用のクラス
@@ -22,6 +21,9 @@ private:
 	NavNode* m_node;
 	int m_lightNo;				//ライト番号
 	int m_roomNo;				//部屋番号
+
+	CVector3D m_keypos[3];		//鍵の座標
+	CVector3D m_keyrot[3];		//鍵の回転値
 
 public:
 	//コンストラクタ
@@ -43,6 +45,9 @@ public:
 
 	//クローゼットを作成
 	void CreateCloset(const char* file);
+
+	//鍵を作成
+	void CreateKey();
 
 	//フィールドのコリジョンを取得
 	CModel* GetColModel() const;
