@@ -35,6 +35,7 @@
     <ClInclude Include="GameScene\GameData.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Item\key.h" />
     <ClInclude Include="Item\PresentBox.h" />
     <ClInclude Include="Light\Light.h" />
     <ClInclude Include="Navigation\NavManager.h" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Filta\Filta.cpp" />
     <ClCompile Include="GameScene\GameData.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
+    <ClCompile Include="Item\key.cpp" />
     <ClCompile Include="Item\PresentBox.cpp" />
     <ClCompile Include="Light\Light.cpp" />
     <ClCompile Include="main.cpp" />

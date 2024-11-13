@@ -252,6 +252,8 @@ void Init(void)
 			ADD_RESOURCE("Switch", CModel::CreateModel("object/switch.obj",1,1,1));
 			//ドア
 			ADD_RESOURCE("Door", CModel::CreateModel("object/door.obj", 1, 1, 1));
+			//鍵
+			ADD_RESOURCE("Key", CModel::CreateModel("object/key/key.obj", 1, 1, 1));
 			
 			//ステージ読み込み
 			//描画ステージ
@@ -264,8 +266,6 @@ void Init(void)
 			//タイトル関連画像読み込み
 			ADD_RESOURCE("BackGroundTitle", CImage::CreateImage("Title/BackGroundTitle.png"));
 			ADD_RESOURCE("GameTitleRogo", CImage::CreateImage("Title/TitleRogo.png"));
-			ADD_RESOURCE("Manual1", CImage::CreateImage("Title/Manual1.png"));
-			ADD_RESOURCE("Manual2", CImage::CreateImage("Title/Manual2.png"));
 			ADD_RESOURCE("Snow", CImage::CreateImage("Title/snow.png"));
 			ADD_RESOURCE("Stage1", CImage::CreateImage("Title/stage1.png"));
 			ADD_RESOURCE("Stage2", CImage::CreateImage("Title/stage2.png"));
@@ -274,7 +274,6 @@ void Init(void)
 			ADD_RESOURCE("ClearBackGround", CImage::CreateImage("Result/ClearBackGround.png"));
 			ADD_RESOURCE("OverBackGround", CImage::CreateImage("Result/OverBackGround.png"));
 			ADD_RESOURCE("TitleText", CImage::CreateImage("Result/TitleText.png"));
-			ADD_RESOURCE("RankingText", CImage::CreateImage("Result/RankingText.png"));
 			ADD_RESOURCE("ReStartText", CImage::CreateImage("Result/ReStartText.png"));
 
 			//フィルター画像読み込み

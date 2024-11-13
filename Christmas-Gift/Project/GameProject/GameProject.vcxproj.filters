@@ -125,6 +125,9 @@
     <ClInclude Include="UI\DangerFilta.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Item\key.h">
+      <Filter>Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Camera">
@@ -315,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="UI\DangerFilta.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\key.cpp">
+      <Filter>Item</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
