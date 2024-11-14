@@ -15,7 +15,6 @@
 #include"Navigation/NavManager.h"
 
 //マクロ
-#define JUMP 0.2f			//ジャンプ力
 #define WALK_SPEED 0.04f	//通常スピード
 #define DOWN_SPEED 0.02f	//しゃがみスピード
 #define RUN_SPEED 0.07f		//走りスピード
@@ -65,14 +64,6 @@ Player::~Player()
 void Player::StateIdle()
 {
 	m_camera->m_state = m_camera->eState_Idle;
-	//スペースボタン入力
-	if (PUSH(CInput::eButton1) && m_isGround)
-	{
-		//着地フラグOFF
-		m_isGround = false;
-		//ジャンプ
-		m_vec.y += JUMP;
-	}
 
 	//コントロールボタン入力
 	if (PUSH(CInput::eButton3))

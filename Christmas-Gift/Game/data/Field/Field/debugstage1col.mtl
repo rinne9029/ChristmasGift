@@ -40,7 +40,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
-map_Bump -bm 1.000000 C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Surface/BathroomMat_01_N.png
 
 newmtl GameConsole_01
 Ns 200.000000
@@ -49,8 +48,6 @@ Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 illum 3
-map_Kd C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/GameConsole_01_A.png
-map_d C:/unity/ChristmasGift_Map/Assets/Brick Project Studio/Apartment Kit/Common/Textures/Misc/GameConsole_01_A.png
 
 newmtl Int_Apt_01
 Ns 200.000000
@@ -110,5 +107,3 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
-map_Kd C:/unity/ChristmasGift_Map/Assets/PolyWorkshop/CardboardBoxesSet/Materials/Textures/cardboardBoxSet_Diffuse.tga
-map_Bump C:/unity/ChristmasGift_Map/Assets/PolyWorkshop/CardboardBoxesSet/Materials/Textures/cardboardBoxSet_Normal.tga
